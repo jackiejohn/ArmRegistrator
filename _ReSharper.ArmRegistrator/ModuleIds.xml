@@ -1,0 +1,5 @@
+<Modules>
+  <Module PersistentId="565BB1CA-7A74-4533-B944-146CF3844101" ModuleId="ArmRegistrator" />
+  <Module PersistentId="d:Miscellaneous Files" ModuleId="System.Windows.Forms" />
+  <Module PersistentId="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System.Windows.Forms_1" />
+</Modules>
