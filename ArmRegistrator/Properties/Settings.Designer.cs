@@ -46,5 +46,29 @@ namespace ArmRegistrator.Properties {
                 this["RefreshTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("12")]
+        public string LongTime {
+            get {
+                return ((string)(this["LongTime"]));
+            }
+            set {
+                this["LongTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ComPortName {
+            get {
+                return ((string)(this["ComPortName"]));
+            }
+            set {
+                this["ComPortName"] = value;
+            }
+        }
     }
 }

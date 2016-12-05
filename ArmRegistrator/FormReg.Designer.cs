@@ -28,34 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReg));
             this.PanelGrids = new System.Windows.Forms.Panel();
-            this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.ToolStripTextBoxSearch = new System.Windows.Forms.ToolStripTextBox();
             this.ToolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-            this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripLabelHoursPre = new System.Windows.Forms.ToolStripLabel();
+            this.ToolStripTextBoxHours = new System.Windows.Forms.ToolStripTextBox();
+            this.ToolStripLabelHoursPost = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrackerView = new System.Windows.Forms.DataGridView();
             this.button8 = new System.Windows.Forms.Button();
             this.BtnNotInField = new System.Windows.Forms.Button();
             this.BtnInField = new System.Windows.Forms.Button();
             this.CardView = new System.Windows.Forms.DataGridView();
-            this.BtnAllField = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.BtnConnectDbConfig = new System.Windows.Forms.Button();
-            this.BtnConnect = new System.Windows.Forms.Button();
+            this.BtnDbConfig = new System.Windows.Forms.Button();
+            this.BtnDbConnect = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.FlagTechnics = new System.Windows.Forms.CheckBox();
             this.BtnAllObjectType = new System.Windows.Forms.Button();
@@ -65,9 +55,11 @@
             this.FlagLongTimeInField = new System.Windows.Forms.CheckBox();
             this.FlagIsNotInField = new System.Windows.Forms.CheckBox();
             this.FlagIsInField = new System.Windows.Forms.CheckBox();
+            this.BtnAllField = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.BtnRModuleConnect = new System.Windows.Forms.Button();
             this.PanelGrids.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
-            this.bindingNavigator1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -76,6 +68,7 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // PanelGrids
@@ -83,73 +76,28 @@
             this.PanelGrids.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.PanelGrids.Controls.Add(this.bindingNavigator1);
+            this.PanelGrids.Controls.Add(this.toolStrip1);
             this.PanelGrids.Controls.Add(this.splitContainer1);
             this.PanelGrids.Location = new System.Drawing.Point(3, 119);
             this.PanelGrids.Name = "PanelGrids";
             this.PanelGrids.Size = new System.Drawing.Size(943, 444);
             this.PanelGrids.TabIndex = 0;
             // 
-            // bindingNavigator1
+            // toolStrip1
             // 
-            this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem;
-            this.bindingNavigator1.AutoSize = false;
-            this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
-            this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem;
-            this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripTextBoxSearch,
             this.ToolStripButtonSearch,
             this.toolStripSeparator2,
-            this.bindingNavigatorMoveFirstItem,
-            this.bindingNavigatorMovePreviousItem,
-            this.bindingNavigatorSeparator,
-            this.bindingNavigatorPositionItem,
-            this.bindingNavigatorCountItem,
-            this.bindingNavigatorSeparator1,
-            this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2,
-            this.bindingNavigatorAddNewItem,
-            this.bindingNavigatorDeleteItem});
-            this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
-            this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-            this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
-            this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
-            this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-            this.bindingNavigator1.Name = "bindingNavigator1";
-            this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(943, 50);
-            this.bindingNavigator1.Stretch = true;
-            this.bindingNavigator1.TabIndex = 1;
-            this.bindingNavigator1.Text = "bindingNavigator1";
-            // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 47);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
-            this.bindingNavigatorAddNewItem.Visible = false;
-            // 
-            // bindingNavigatorCountItem
-            // 
-            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 47);
-            this.bindingNavigatorCountItem.Text = "of {0}";
-            this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-            this.bindingNavigatorCountItem.Visible = false;
-            // 
-            // bindingNavigatorDeleteItem
-            // 
-            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 47);
-            this.bindingNavigatorDeleteItem.Text = "Delete";
-            this.bindingNavigatorDeleteItem.Visible = false;
+            this.ToolStripLabelHoursPre,
+            this.ToolStripTextBoxHours,
+            this.ToolStripLabelHoursPost});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(943, 50);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
             // 
             // ToolStripTextBoxSearch
             // 
@@ -158,90 +106,50 @@
             this.ToolStripTextBoxSearch.Name = "ToolStripTextBoxSearch";
             this.ToolStripTextBoxSearch.Size = new System.Drawing.Size(250, 27);
             this.ToolStripTextBoxSearch.ToolTipText = "Фильтр объекта";
+            this.ToolStripTextBoxSearch.TextChanged += new System.EventHandler(this.ToolStripTextBoxSearch_TextChanged);
             // 
             // ToolStripButtonSearch
             // 
             this.ToolStripButtonSearch.AutoSize = false;
             this.ToolStripButtonSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ToolStripButtonSearch.Image = global::ArmRegistrator.Properties.Resources.SearchIco;
+            this.ToolStripButtonSearch.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripButtonSearch.Image")));
             this.ToolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ToolStripButtonSearch.Name = "ToolStripButtonSearch";
             this.ToolStripButtonSearch.Size = new System.Drawing.Size(28, 28);
             this.ToolStripButtonSearch.Text = "toolStripButton1";
             this.ToolStripButtonSearch.ToolTipText = "Очистить фильтр объектов";
+            this.ToolStripButtonSearch.Click += new System.EventHandler(this.ToolStripButtonSearch_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 50);
             // 
-            // bindingNavigatorMoveFirstItem
+            // ToolStripLabelHoursPre
             // 
-            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
-            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 47);
-            this.bindingNavigatorMoveFirstItem.Text = "Move first";
-            this.bindingNavigatorMoveFirstItem.Visible = false;
+            this.ToolStripLabelHoursPre.Name = "ToolStripLabelHoursPre";
+            this.ToolStripLabelHoursPre.Size = new System.Drawing.Size(95, 47);
+            this.ToolStripLabelHoursPre.Text = "На смене более";
+            this.ToolStripLabelHoursPre.Visible = false;
             // 
-            // bindingNavigatorMovePreviousItem
+            // ToolStripTextBoxHours
             // 
-            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 47);
-            this.bindingNavigatorMovePreviousItem.Text = "Move previous";
-            this.bindingNavigatorMovePreviousItem.Visible = false;
+            this.ToolStripTextBoxHours.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.ToolStripTextBoxHours.MaxLength = 2;
+            this.ToolStripTextBoxHours.Name = "ToolStripTextBoxHours";
+            this.ToolStripTextBoxHours.Size = new System.Drawing.Size(25, 50);
+            this.ToolStripTextBoxHours.Text = "00";
+            this.ToolStripTextBoxHours.Visible = false;
+            this.ToolStripTextBoxHours.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ToolStripTextBoxHours_KeyDown);
+            this.ToolStripTextBoxHours.Validating += new System.ComponentModel.CancelEventHandler(this.ToolStripTextBoxHours_Validating);
+            this.ToolStripTextBoxHours.Validated += new System.EventHandler(this.ToolStripTextBoxHours_Validated);
             // 
-            // bindingNavigatorSeparator
+            // ToolStripLabelHoursPost
             // 
-            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 50);
-            this.bindingNavigatorSeparator.Visible = false;
-            // 
-            // bindingNavigatorPositionItem
-            // 
-            this.bindingNavigatorPositionItem.AccessibleName = "Position";
-            this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 23);
-            this.bindingNavigatorPositionItem.Text = "0";
-            this.bindingNavigatorPositionItem.ToolTipText = "Current position";
-            this.bindingNavigatorPositionItem.Visible = false;
-            // 
-            // bindingNavigatorSeparator1
-            // 
-            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 50);
-            this.bindingNavigatorSeparator1.Visible = false;
-            // 
-            // bindingNavigatorMoveNextItem
-            // 
-            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 47);
-            this.bindingNavigatorMoveNextItem.Text = "Move next";
-            this.bindingNavigatorMoveNextItem.Visible = false;
-            // 
-            // bindingNavigatorMoveLastItem
-            // 
-            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 47);
-            this.bindingNavigatorMoveLastItem.Text = "Move last";
-            this.bindingNavigatorMoveLastItem.Visible = false;
-            // 
-            // bindingNavigatorSeparator2
-            // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 50);
-            this.bindingNavigatorSeparator2.Visible = false;
+            this.ToolStripLabelHoursPost.Name = "ToolStripLabelHoursPost";
+            this.ToolStripLabelHoursPost.Size = new System.Drawing.Size(53, 47);
+            this.ToolStripLabelHoursPost.Text = "часа(ов)";
+            this.ToolStripLabelHoursPost.Visible = false;
             // 
             // splitContainer1
             // 
@@ -303,6 +211,7 @@
             this.BtnNotInField.TabIndex = 9;
             this.BtnNotInField.Text = "Закончить смену";
             this.BtnNotInField.UseVisualStyleBackColor = true;
+            this.BtnNotInField.Click += new System.EventHandler(this.BtnNotInField_Click);
             // 
             // BtnInField
             // 
@@ -315,6 +224,7 @@
             this.BtnInField.TabIndex = 8;
             this.BtnInField.Text = "Начать смену";
             this.BtnInField.UseVisualStyleBackColor = true;
+            this.BtnInField.Click += new System.EventHandler(this.BtnInField_Click);
             // 
             // CardView
             // 
@@ -332,23 +242,13 @@
             this.CardView.RowHeadersVisible = false;
             this.CardView.Size = new System.Drawing.Size(286, 305);
             this.CardView.TabIndex = 0;
-            // 
-            // BtnAllField
-            // 
-            this.BtnAllField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnAllField.Location = new System.Drawing.Point(6, 21);
-            this.BtnAllField.Name = "BtnAllField";
-            this.BtnAllField.Size = new System.Drawing.Size(68, 68);
-            this.BtnAllField.TabIndex = 5;
-            this.BtnAllField.Text = "Все";
-            this.BtnAllField.UseVisualStyleBackColor = true;
-            this.BtnAllField.Click += new System.EventHandler(this.BtnAllField_Click);
+            this.CardView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.CardView_CellPainting);
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.BtnConnectDbConfig);
-            this.groupBox1.Controls.Add(this.BtnConnect);
+            this.groupBox1.Controls.Add(this.BtnDbConfig);
+            this.groupBox1.Controls.Add(this.BtnDbConnect);
             this.groupBox1.Location = new System.Drawing.Point(731, 15);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(206, 98);
@@ -356,31 +256,31 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "База данных";
             // 
-            // BtnConnectDbConfig
+            // BtnDbConfig
             // 
-            this.BtnConnectDbConfig.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnConnectDbConfig.Image = ((System.Drawing.Image)(resources.GetObject("BtnConnectDbConfig.Image")));
-            this.BtnConnectDbConfig.Location = new System.Drawing.Point(102, 21);
-            this.BtnConnectDbConfig.Name = "BtnConnectDbConfig";
-            this.BtnConnectDbConfig.Size = new System.Drawing.Size(96, 68);
-            this.BtnConnectDbConfig.TabIndex = 12;
-            this.BtnConnectDbConfig.Text = "Настройка";
-            this.BtnConnectDbConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.BtnConnectDbConfig.UseVisualStyleBackColor = true;
-            this.BtnConnectDbConfig.Click += new System.EventHandler(this.BtnConnectDbConfig_Click);
+            this.BtnDbConfig.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnDbConfig.Image = ((System.Drawing.Image)(resources.GetObject("BtnDbConfig.Image")));
+            this.BtnDbConfig.Location = new System.Drawing.Point(102, 21);
+            this.BtnDbConfig.Name = "BtnDbConfig";
+            this.BtnDbConfig.Size = new System.Drawing.Size(96, 68);
+            this.BtnDbConfig.TabIndex = 12;
+            this.BtnDbConfig.Text = "Настройка";
+            this.BtnDbConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnDbConfig.UseVisualStyleBackColor = true;
+            this.BtnDbConfig.Click += new System.EventHandler(this.BtnDbConfig_Click);
             // 
-            // BtnConnect
+            // BtnDbConnect
             // 
-            this.BtnConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnConnect.Image = global::ArmRegistrator.Properties.Resources.ImageConnectionDeactive;
-            this.BtnConnect.Location = new System.Drawing.Point(6, 21);
-            this.BtnConnect.Name = "BtnConnect";
-            this.BtnConnect.Size = new System.Drawing.Size(96, 68);
-            this.BtnConnect.TabIndex = 11;
-            this.BtnConnect.Text = "Подключение";
-            this.BtnConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.BtnConnect.UseVisualStyleBackColor = true;
-            this.BtnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
+            this.BtnDbConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnDbConnect.Image = global::ArmRegistrator.Properties.Resources.ImageConnectionDeactive;
+            this.BtnDbConnect.Location = new System.Drawing.Point(6, 21);
+            this.BtnDbConnect.Name = "BtnDbConnect";
+            this.BtnDbConnect.Size = new System.Drawing.Size(96, 68);
+            this.BtnDbConnect.TabIndex = 11;
+            this.BtnDbConnect.Text = "Подключение";
+            this.BtnDbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnDbConnect.UseVisualStyleBackColor = true;
+            this.BtnDbConnect.Click += new System.EventHandler(this.BtnDbConnect_Click);
             // 
             // groupBox2
             // 
@@ -476,11 +376,12 @@
             // 
             this.FlagLongTimeInField.Appearance = System.Windows.Forms.Appearance.Button;
             this.FlagLongTimeInField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FlagLongTimeInField.Image = ((System.Drawing.Image)(resources.GetObject("FlagLongTimeInField.Image")));
             this.FlagLongTimeInField.Location = new System.Drawing.Point(210, 21);
             this.FlagLongTimeInField.Name = "FlagLongTimeInField";
             this.FlagLongTimeInField.Size = new System.Drawing.Size(68, 68);
             this.FlagLongTimeInField.TabIndex = 16;
-            this.FlagLongTimeInField.Text = "На смене более 12 часов";
+            this.FlagLongTimeInField.Text = "Более";
             this.FlagLongTimeInField.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FlagLongTimeInField.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.FlagLongTimeInField.UseVisualStyleBackColor = true;
@@ -520,6 +421,41 @@
             this.FlagIsInField.UseVisualStyleBackColor = true;
             this.FlagIsInField.Click += new System.EventHandler(this.FlagIsInField_Click);
             // 
+            // BtnAllField
+            // 
+            this.BtnAllField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnAllField.Image = ((System.Drawing.Image)(resources.GetObject("BtnAllField.Image")));
+            this.BtnAllField.Location = new System.Drawing.Point(6, 21);
+            this.BtnAllField.Name = "BtnAllField";
+            this.BtnAllField.Size = new System.Drawing.Size(68, 68);
+            this.BtnAllField.TabIndex = 5;
+            this.BtnAllField.Text = "Все";
+            this.BtnAllField.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnAllField.UseVisualStyleBackColor = true;
+            this.BtnAllField.Click += new System.EventHandler(this.BtnAllField_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.BtnRModuleConnect);
+            this.groupBox4.Location = new System.Drawing.Point(584, 15);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(89, 98);
+            this.groupBox4.TabIndex = 18;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Радиомодуль";
+            // 
+            // BtnRModuleConnect
+            // 
+            this.BtnRModuleConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnRModuleConnect.Location = new System.Drawing.Point(10, 21);
+            this.BtnRModuleConnect.Name = "BtnRModuleConnect";
+            this.BtnRModuleConnect.Size = new System.Drawing.Size(68, 68);
+            this.BtnRModuleConnect.TabIndex = 17;
+            this.BtnRModuleConnect.Text = "Связь";
+            this.BtnRModuleConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnRModuleConnect.UseVisualStyleBackColor = true;
+            this.BtnRModuleConnect.Click += new System.EventHandler(this.BtnRModuleConnect_Click);
+            // 
             // FormReg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -529,14 +465,15 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox4);
             this.MinimumSize = new System.Drawing.Size(965, 604);
             this.Name = "FormReg";
             this.Text = "АРМ регистрации";
             this.Load += new System.EventHandler(this.FormReg_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormReg_FormClosed);
             this.PanelGrids.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
-            this.bindingNavigator1.ResumeLayout(false);
-            this.bindingNavigator1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -545,6 +482,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -552,7 +490,6 @@
         #endregion
 
         private System.Windows.Forms.Panel PanelGrids;
-        private System.Windows.Forms.BindingNavigator bindingNavigator1;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
@@ -575,8 +512,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button BtnConnect;
-        private System.Windows.Forms.Button BtnConnectDbConfig;
+        private System.Windows.Forms.Button BtnDbConnect;
+        private System.Windows.Forms.Button BtnDbConfig;
         private System.Windows.Forms.ToolStripTextBox ToolStripTextBoxSearch;
         private System.Windows.Forms.ToolStripButton ToolStripButtonSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -586,7 +523,12 @@
         private System.Windows.Forms.CheckBox FlagIsInField;
         private System.Windows.Forms.CheckBox FlagIsNotInField;
         private System.Windows.Forms.CheckBox FlagLongTimeInField;
-
+        private System.Windows.Forms.ToolStripTextBox ToolStripTextBoxHours;
+        private System.Windows.Forms.ToolStripLabel ToolStripLabelHoursPost;
+        private System.Windows.Forms.ToolStripLabel ToolStripLabelHoursPre;
+        private System.Windows.Forms.Button BtnRModuleConnect;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ToolStrip toolStrip1;
     }
 }
 

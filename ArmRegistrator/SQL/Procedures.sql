@@ -11,12 +11,15 @@ CREATE PROCEDURE [dbo].[pa_ArmRegistrSelect]
 AS
 BEGIN
 	SET NOCOUNT ON;
-
+	declare @bitTrue as bit, @bitFalse as bit
+	select @bitTrue=1, @bitFalse=0
 	SELECT 
 		o.ObjectId
 		,isnull(e.number,v.number) as _Number
 		,dbo.fn_getFullDescription(o.ObjectId) as [_Object]
-		,InField
+		,o.InField
+		, case when f.maxhChanged is null then case when o.InField =1 then 'На смене' else 'Не на смене' end 
+			else CONVERT(varchar(50),f.maxhChanged,20) end as InFieldTime
 		, Code
 		--, o.ServiceId
 		, s.Name as ServiceName
@@ -56,7 +59,8 @@ BEGIN
 		, e.Name
 		, e.Patronymic
 		, e.Position
-		, 0 as LongTimeInField
+		--, case when DATEDIFF(hour,isnull(f.maxhChanged,GETUTCDATE()),GETUTCDATE())>12 then @bitTrue  else @bitFalse end as LongTimeInField
+		, case when o.InField=1 then DATEDIFF(hour,isnull(f.maxhChanged,GETUTCDATE()),GETUTCDATE())else 0 end as LongTime
 		
 	from dbo.[Object] o
 		inner join ObjectType ot on o.ObjectTypeId=ot.ObjectTypeId
@@ -64,6 +68,10 @@ BEGIN
 		left outer join Vehicle v on o.ObjectId=v.ObjectId
 		left outer join VehicleType vt on v.VehicleTypeId=vt.VehicleTypeId
 		left outer join Employee e on o.ObjectId=e.ObjectId
+		left outer join 
+			(select ObjectId, MAX(hChanged) as maxhChanged
+			from ObjectInFieldH
+			group by ObjectId) f on o.ObjectId = f.ObjectId
 	where isnull(IsDeleted,0)=0 and o.ObjectTypeId!=4
 		
 END

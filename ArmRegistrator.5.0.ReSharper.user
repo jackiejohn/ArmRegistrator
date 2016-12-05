@@ -9,43 +9,44 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:DBWrapper.cs" caret="765" fromTop="10" />
       <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:AppStaticMethods.cs" caret="1943" fromTop="29" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:TriggerButton.cs" caret="229" fromTop="9" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.Designer.cs" caret="34688" fromTop="15" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="24009" fromTop="26" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:DBWrapper.cs" caret="765" fromTop="10" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.Designer.cs" caret="661" fromTop="19" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:Program.cs" caret="492" fromTop="17" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="631" fromTop="13" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="28818" fromTop="15" />
     </RecentFiles>
     <RecentEdits>
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="14855" fromTop="5" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="964" fromTop="16" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.Designer.cs" caret="37187" fromTop="15" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.Designer.cs" caret="37187" fromTop="15" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25896" fromTop="22" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="24449" fromTop="16" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25896" fromTop="16" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="24733" fromTop="19" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="9322" fromTop="29" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="24873" fromTop="16" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="8589" fromTop="10" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="7625" fromTop="19" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="9842" fromTop="8" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="10656" fromTop="25" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="10621" fromTop="24" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="10542" fromTop="23" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="10040" fromTop="12" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25896" fromTop="28" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25295" fromTop="22" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25295" fromTop="22" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25461" fromTop="25" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25645" fromTop="25" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25873" fromTop="28" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25295" fromTop="7" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25243" fromTop="18" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="22482" fromTop="7" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="25896" fromTop="34" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="22619" fromTop="12" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="22977" fromTop="18" />
-      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="24009" fromTop="26" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="33502" fromTop="17" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="37871" fromTop="16" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="30728" fromTop="25" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="30480" fromTop="31" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="30334" fromTop="29" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="30337" fromTop="26" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="30189" fromTop="27" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="29628" fromTop="21" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="36023" fromTop="6" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="27320" fromTop="15" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="31068" fromTop="37" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="438" fromTop="16" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="816" fromTop="26" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="1402" fromTop="27" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="1030" fromTop="18" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="30013" fromTop="33" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="39" fromTop="1" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="30044" fromTop="25" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="29987" fromTop="21" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="346" fromTop="13" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="1533" fromTop="16" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="1695" fromTop="16" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:ChoisePortDlg.cs" caret="1672" fromTop="16" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="28295" fromTop="7" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="28701" fromTop="16" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="26743" fromTop="19" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="26842" fromTop="24" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="26673" fromTop="20" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="26061" fromTop="10" />
+      <File id="565BB1CA-7A74-4533-B944-146CF3844101/f:FormReg.cs" caret="26352" fromTop="19" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -62,25 +63,25 @@
   <CompletionStatisticsManager>
     <ItemStatistics item="Default">
       <Item value="ImageList`0" priority="0" />
-      <Item value="new" priority="6" />
+      <Item value="new" priority="9" />
       <Item value="ImageList" priority="0" />
-      <Item value="Properties" priority="1" />
+      <Item value="Properties" priority="6" />
       <Item value="Resources`0" priority="1" />
-      <Item value="Settings`0" priority="0" />
+      <Item value="Settings`0" priority="5" />
       <Item value="global" priority="0" />
       <Item value="ArmRegistrator" priority="1" />
       <Item value="imList" priority="1" />
-      <Item value="Image`0" priority="2" />
+      <Item value="Image`0" priority="3" />
       <Item value="BtnConnect" priority="2" />
       <Item value="SearchDirectionHint`0" priority="0" />
-      <Item value="private" priority="10" />
-      <Item value="void" priority="7" />
-      <Item value="TrackerView" priority="7" />
-      <Item value="false" priority="10" />
-      <Item value="CardView" priority="1" />
-      <Item value="var" priority="3" />
+      <Item value="private" priority="17" />
+      <Item value="void" priority="11" />
+      <Item value="TrackerView" priority="12" />
+      <Item value="false" priority="17" />
+      <Item value="CardView" priority="2" />
+      <Item value="var" priority="14" />
       <Item value="GetDefaultColumnTitles`0" priority="0" />
-      <Item value="foreach" priority="2" />
+      <Item value="foreach" priority="4" />
       <Item value="DataGridViewTextBoxColumn`0" priority="0" />
       <Item value="Name" priority="1" />
       <Item value="pair" priority="2" />
@@ -89,29 +90,29 @@
       <Item value="Automatic" priority="1" />
       <Item value="AutoSizeMode" priority="1" />
       <Item value="AllCells" priority="1" />
-      <Item value="DataGridView`0" priority="3" />
+      <Item value="DataGridView`0" priority="7" />
       <Item value="column" priority="2" />
-      <Item value="bool" priority="3" />
+      <Item value="bool" priority="6" />
       <Item value="_dataConfigured" priority="0" />
       <Item value="DataSet`0" priority="0" />
-      <Item value="_dsQuarry" priority="0" />
+      <Item value="_dsQuarry" priority="1" />
       <Item value="SqlDataAdapter`0" priority="0" />
       <Item value="throw" priority="0" />
       <Item value="NotImplementedException`0" priority="0" />
-      <Item value="if" priority="6" />
+      <Item value="if" priority="13" />
       <Item value="isConnected" priority="0" />
-      <Item value="true" priority="6" />
+      <Item value="true" priority="15" />
       <Item value="DataColumn`0" priority="3" />
       <Item value="columns" priority="2" />
       <Item value="ICollection" priority="0" />
       <Item value="DataColumnCollection`0" priority="2" />
       <Item value="DataColumnCollection" priority="0" />
       <Item value="DataColumn" priority="0" />
-      <Item value="Dictionary" priority="1" />
-      <Item value="string" priority="7" />
-      <Item value="dgv" priority="2" />
+      <Item value="Dictionary" priority="2" />
+      <Item value="string" priority="18" />
+      <Item value="dgv" priority="8" />
       <Item value="static" priority="0" />
-      <Item value="ex" priority="0" />
+      <Item value="ex" priority="1" />
       <Item value="HeaderText" priority="2" />
       <Item value="DataGridViewCheckBoxColumn`0" priority="0" />
       <Item value="colName" priority="1" />
@@ -124,19 +125,19 @@
       <Item value="GetPreferredSize`0" priority="0" />
       <Item value="TrackerViewSetColumnWidth`0" priority="0" />
       <Item value="cellAdress" priority="0" />
-      <Item value="DataRowView`0" priority="0" />
-      <Item value="row" priority="0" />
+      <Item value="DataRowView`0" priority="2" />
+      <Item value="row" priority="3" />
       <Item value="switch" priority="0" />
       <Item value="objectType" priority="1" />
       <Item value="case" priority="0" />
       <Item value="dgvCard" priority="0" />
       <Item value="DataTable`0" priority="0" />
       <Item value="table" priority="2" />
-      <Item value="return" priority="4" />
+      <Item value="return" priority="17" />
       <Item value="ds" priority="0" />
-      <Item value="null" priority="1" />
+      <Item value="null" priority="2" />
       <Item value="DataGridViewAutoSizeColumnMode`0" priority="0" />
-      <Item value="BindingSource`0" priority="1" />
+      <Item value="BindingSource`0" priority="2" />
       <Item value="bs" priority="1" />
       <Item value="StringBuilder`0" priority="0" />
       <Item value="StringBuilder" priority="0" />
@@ -148,18 +149,85 @@
       <Item value="FlagIsInField" priority="2" />
       <Item value="FlagIsNotInField" priority="2" />
       <Item value="sbField" priority="1" />
-      <Item value="FlagLongTimeInField" priority="3" />
+      <Item value="FlagLongTimeInField" priority="4" />
       <Item value="commandEnable" priority="2" />
       <Item value="BtnNotInField" priority="1" />
       <Item value="BtnInField" priority="0" />
       <Item value="enableBtn" priority="0" />
+      <Item value="dic" priority="3" />
+      <Item value="columnName" priority="4" />
+      <Item value="newDic" priority="1" />
+      <Item value="desc" priority="1" />
+      <Item value="e" priority="17" />
+      <Item value="sender" priority="2" />
+      <Item value="inField" priority="0" />
+      <Item value="Color`0" priority="2" />
+      <Item value="col" priority="1" />
+      <Item value="All" priority="0" />
+      <Item value="style" priority="2" />
+      <Item value="ToolStripTextBoxSearch" priority="0" />
+      <Item value="_filter" priority="0" />
+      <Item value="MainMenu`0" priority="0" />
+      <Item value="MessageBox`0" priority="4" />
+      <Item value="SqlCommand`0" priority="0" />
+      <Item value="using" priority="0" />
+      <Item value="SqlConnection" priority="0" />
+      <Item value="conStr" priority="0" />
+      <Item value="connection" priority="2" />
+      <Item value="try" priority="0" />
+      <Item value="cmd" priority="3" />
+      <Item value="StoredProcedure" priority="0" />
+      <Item value="finally" priority="0" />
+      <Item value="SqlException`0" priority="0" />
+      <Item value="Environment`0" priority="1" />
+      <Item value="OK" priority="2" />
+      <Item value="Warning" priority="1" />
+      <Item value="RefreshDataSetTable`0" priority="0" />
+      <Item value="_adapters" priority="0" />
+      <Item value="retVal" priority="1" />
+      <Item value="int" priority="0" />
+      <Item value="out" priority="0" />
+      <Item value="objectId" priority="0" />
+      <Item value="TransposedTableRefresh`0" priority="0" />
+      <Item value="YesNo" priority="0" />
+      <Item value="Question" priority="0" />
+      <Item value="No" priority="0" />
+      <Item value="longTime" priority="0" />
+      <Item value="ToolStripTextBoxHours" priority="1" />
+      <Item value="isVisible" priority="1" />
+      <Item value="ToolStripLabelHours" priority="0" />
+      <Item value="BtnRModuleConnect" priority="2" />
+      <Item value="RadioModule" priority="2" />
+      <Item value="RModule`0" priority="1" />
+      <Item value="Configuration`0" priority="1" />
+      <Item value="configuration" priority="0" />
+      <Item value="RModule" priority="0" />
+      <Item value="portName" priority="7" />
+      <Item value="_rModule" priority="16" />
+      <Item value="Stop" priority="0" />
+      <Item value="config" priority="4" />
+      <Item value="while" priority="0" />
+      <Item value="tryConnect" priority="2" />
+      <Item value="BtnRModuleConnectSetImage`0" priority="0" />
+      <Item value="ChoisePortDlg`0" priority="0" />
+      <Item value="public" priority="0" />
+      <Item value="this" priority="0" />
+      <Item value="FieldPort" priority="0" />
+      <Item value="resString" priority="1" />
+      <Item value="frm" priority="0" />
+      <Item value="else" priority="0" />
+      <Item value="Action" priority="0" />
+      <Item value="newImg" priority="0" />
+      <Item value="Bitmap`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@ArmRegistrator.Properties.Settings">
-      <Item value="Default" priority="0" />
+      <Item value="Default" priority="5" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@ArmRegistrator.Properties.Resources">
       <Item value="ImageConnectionActive" priority="1" />
       <Item value="ImageConnectionDeactive" priority="0" />
+      <Item value="RModuleConnected" priority="0" />
+      <Item value="RModuleNotConnected" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Windows.Forms.ImageList">
       <Item value="Images" priority="0" />
@@ -172,12 +240,18 @@
       <Item value="ImageKey" priority="0" />
       <Item value="Image" priority="0" />
       <Item value="Enabled" priority="3" />
+      <Item value="InvokeRequired" priority="0" />
+      <Item value="Invoke`0" priority="0" />
+      <Item value="BeginInvoke`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Windows.Forms.DataGridView">
       <Item value="AutoGenerateColumns" priority="0" />
-      <Item value="Columns" priority="1" />
-      <Item value="CurrentRow" priority="0" />
-      <Item value="DataSource" priority="1" />
+      <Item value="Columns" priority="2" />
+      <Item value="CurrentRow" priority="4" />
+      <Item value="DataSource" priority="2" />
+      <Item value="Rows" priority="0" />
+      <Item value="Invalidate`0" priority="0" />
+      <Item value="SelectedRows" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.KeyValuePair`2">
       <Item value="Key" priority="1" />
@@ -192,6 +266,9 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.Dictionary`2">
       <Item value="Keys" priority="0" />
+      <Item value="ContainsKey`0" priority="1" />
+      <Item value="Remove`0" priority="0" />
+      <Item value="Add`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Data.DataTable">
       <Item value="Columns" priority="1" />
@@ -203,18 +280,21 @@
       <Item value="HeaderText" priority="1" />
       <Item value="Width" priority="0" />
       <Item value="AutoSizeMode" priority="0" />
+      <Item value="Name" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Windows.Forms.DataGridViewTextBoxColumn">
       <Item value="AutoSizeMode" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Data.DataRowView">
-      <Item value="Row" priority="0" />
+      <Item value="Row" priority="2" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Windows.Forms.DataGridViewRow">
-      <Item value="DataBoundItem" priority="0" />
+      <Item value="DataBoundItem" priority="2" />
+      <Item value="Index" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Object">
       <Item value="Equals`0" priority="0" />
+      <Item value="ToString`0" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Windows.Forms.DataGridViewAutoSizeColumnMode">
       <Item value="Fill" priority="0" />
@@ -223,7 +303,7 @@
       <Item value="Filter" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Windows.Forms.CheckBox">
-      <Item value="Checked" priority="10" />
+      <Item value="Checked" priority="11" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Text.StringBuilder">
       <Item value="Append`0" priority="4" />
@@ -234,6 +314,109 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.String">
       <Item value="Length" priority="0" />
+      <Item value="Equals`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.String">
+      <Item value="Empty" priority="3" />
+      <Item value="IsNullOrEmpty`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataGridViewRowPrePaintEventArgs">
+      <Item value="RowIndex" priority="1" />
+      <Item value="PaintCellsBackground`0" priority="0" />
+      <Item value="ClipBounds" priority="1" />
+      <Item value="InheritedRowStyle" priority="1" />
+      <Item value="Handled" priority="0" />
+      <Item value="PaintCells`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Drawing.Color">
+      <Item value="Green" priority="0" />
+      <Item value="Red" priority="0" />
+      <Item value="LightGreen" priority="0" />
+      <Item value="IndianRed" priority="0" />
+      <Item value="MediumVioletRed" priority="0" />
+      <Item value="OrangeRed" priority="1" />
+      <Item value="PaleVioletRed" priority="0" />
+      <Item value="Orange" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataGridViewCellStyle">
+      <Item value="BackColor" priority="0" />
+      <Item value="ApplyStyle`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Windows.Forms.DataGridViewPaintParts">
+      <Item value="Background" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataGridViewCellPaintingEventArgs">
+      <Item value="CellStyle" priority="1" />
+      <Item value="ColumnIndex" priority="3" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.ToolStripTextBox">
+      <Item value="Text" priority="2" />
+      <Item value="Visible" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Windows.Forms.MessageBox">
+      <Item value="Show`0" priority="4" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ArmRegistrator.Properties.Settings">
+      <Item value="ConnectionString" priority="0" />
+      <Item value="LongTime" priority="1" />
+      <Item value="ComPortName" priority="2" />
+      <Item value="Save`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Data.SqlClient.SqlConnection">
+      <Item value="Open`0" priority="0" />
+      <Item value="CreateCommand`0" priority="0" />
+      <Item value="Close`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Data.SqlClient.SqlCommand">
+      <Item value="CommandType" priority="0" />
+      <Item value="CommandText" priority="0" />
+      <Item value="Parameters" priority="0" />
+      <Item value="ExecuteNonQuery`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Data.SqlClient.SqlParameterCollection">
+      <Item value="AddWithValue`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Environment">
+      <Item value="NewLine" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Data.SqlClient.SqlException">
+      <Item value="Message" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Int32">
+      <Item value="TryParse`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataGridViewSelectedRowCollection">
+      <Item value="Count" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.ToolStripLabel">
+      <Item value="Visible" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@RadioModule.Configuration">
+      <Item value="GetDefault`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:RadioModule.RModule">
+      <Item value="ComOpen`0" priority="0" />
+      <Item value="InitRModule`0" priority="1" />
+      <Item value="IsInit" priority="0" />
+      <Item value="StartCommunication`0" priority="0" />
+      <Item value="StopCommunication`0" priority="3" />
+      <Item value="OnPortError" priority="0" />
+      <Item value="DeInitRModule`0" priority="0" />
+      <Item value="Dispose`0" priority="0" />
+      <Item value="OnDataRecived" priority="0" />
+      <Item value="OnAckRecived" priority="0" />
+      <Item value="OnErrReceived" priority="0" />
+      <Item value="BaudRate" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:RadioModule.Configuration">
+      <Item value="IsDefault" priority="0" />
+      <Item value="TimeWaitSerialPortBeforeReadUsec" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.ComboBox">
+      <Item value="Text" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ArmRegistrator.ChoisePortDlg">
+      <Item value="FieldPort" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

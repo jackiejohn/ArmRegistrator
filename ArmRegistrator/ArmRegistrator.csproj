@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Imports\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
     </Reference>
+    <Reference Include="RadioModule, Version=1.0.6179.20956, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BSSRV\Building_Release\RadioModule.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -62,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppStaticMethods.cs" />
+    <Compile Include="ChoisePortDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChoisePortDlg.Designer.cs">
+      <DependentUpon>ChoisePortDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="DBWrapper.cs" />
     <Compile Include="FormReg.cs">
       <SubType>Form</SubType>
@@ -71,6 +81,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ChoisePortDlg.resx">
+      <DependentUpon>ChoisePortDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReg.resx">
       <DependentUpon>FormReg.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,9 +106,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TriggerButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -106,12 +116,17 @@
     <None Include="Icons\Все 48.ico" />
     <None Include="Icons\Люди 48.ico" />
     <None Include="Icons\Настройка 48.ico" />
+    <None Include="Icons\Search.ico" />
+    <None Include="Icons\Сигнал отсутствует 48.ico" />
+    <None Include="Icons\Есть сигнал 48.ico" />
     <Content Include="LOGO2.ico" />
-    <None Include="Resources\ImageConnectionActive.bmp" />
-    <None Include="Resources\DelCross1.bmp" />
-    <None Include="Resources\Icon11.ico" />
-    <None Include="Resources\DelCross.bmp" />
     <None Include="Resources\Icon1.ico" />
+    <None Include="Resources\Сигнал отсутствует 481.ico" />
+    <None Include="Resources\Есть сигнал 481.ico" />
+    <None Include="Resources\Сигнал отсутствует 48.ico" />
+    <None Include="Resources\Есть сигнал 48.ico" />
+    <None Include="Resources\ImageConnectionActive.bmp" />
+    <None Include="Resources\DelCross.bmp" />
     <None Include="Resources\Автотранспорт_48.ico" />
     <None Include="Resources\Все_48.ico" />
     <None Include="Resources\Люди_48.ico" />
