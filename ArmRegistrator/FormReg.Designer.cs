@@ -58,6 +58,7 @@
             this.BtnAllField = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.BtnRModuleConnect = new System.Windows.Forms.Button();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.PanelGrids.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -192,6 +193,7 @@
             // button8
             // 
             this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button8.Enabled = false;
             this.button8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button8.Location = new System.Drawing.Point(217, 342);
             this.button8.Name = "button8";
@@ -447,6 +449,7 @@
             // BtnRModuleConnect
             // 
             this.BtnRModuleConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnRModuleConnect.Image = global::ArmRegistrator.Properties.Resources.RModuleNotConnected;
             this.BtnRModuleConnect.Location = new System.Drawing.Point(10, 21);
             this.BtnRModuleConnect.Name = "BtnRModuleConnect";
             this.BtnRModuleConnect.Size = new System.Drawing.Size(68, 68);
@@ -455,6 +458,12 @@
             this.BtnRModuleConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.BtnRModuleConnect.UseVisualStyleBackColor = true;
             this.BtnRModuleConnect.Click += new System.EventHandler(this.BtnRModuleConnect_Click);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(86, 47);
+            this.toolStripLabel1.Text = "toolStripLabel1";
             // 
             // FormReg
             // 
@@ -466,11 +475,14 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(965, 604);
             this.Name = "FormReg";
             this.Text = "АРМ регистрации";
             this.Load += new System.EventHandler(this.FormReg_Load);
+            this.SizeChanged += new System.EventHandler(this.FormReg_SizeChanged);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormReg_FormClosed);
+            this.ResizeEnd += new System.EventHandler(this.FormReg_ResizeEnd);
             this.PanelGrids.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -490,17 +502,6 @@
         #endregion
 
         private System.Windows.Forms.Panel PanelGrids;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
-        private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
-        private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView TrackerView;
         private System.Windows.Forms.DataGridView CardView;
@@ -529,6 +530,7 @@
         private System.Windows.Forms.Button BtnRModuleConnect;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }
 

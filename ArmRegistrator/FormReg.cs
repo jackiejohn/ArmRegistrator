@@ -5,10 +5,14 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using DataGridViewExtendedControls.DataGridViewProgress;
 using Microsoft.Data.ConnectionUI;
 using RadioModule;
+using SharedTypes.Paks;
+using SharedTypes.Queue;
+using Timer = System.Windows.Forms.Timer;
 
 namespace ArmRegistrator
 {
@@ -26,9 +30,16 @@ namespace ArmRegistrator
             CreateTrackerViewColumns();
             CreateCardViewColumns();
         }
+        private void FormReg_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (_rModule != null) _rModule.StopCommunication();
+        }
         private void GetDefaultParamValues()
         {
             ToolStripTextBoxHours.Text = Properties.Settings.Default.LongTime;
+            WindowState = Properties.Settings.Default.IsMaximized ? FormWindowState.Maximized : FormWindowState.Normal;
+            Width = Properties.Settings.Default.FormWidth;
+            Height = Properties.Settings.Default.FormHeight;
         }
         private void CreateCardViewColumns()
         {
@@ -45,25 +56,7 @@ namespace ArmRegistrator
             TrackerViewAddProgressColumns();
             TrackerViewAddCheckBoxColumns();
         }
-        private static void CreateDataGridViewColumn(DataGridView dgv, Dictionary<string ,string> columns)
-        {
-            dgv.AutoGenerateColumns = false;
-            DataGridViewTextBoxColumn lastColumn=null;
-            foreach (KeyValuePair<string, string> pair in columns)
-            {
-                var column = new DataGridViewTextBoxColumn
-                {
-                    Name = pair.Key,
-                    DataPropertyName = pair.Key,
-                    HeaderText = pair.Value,
-                    SortMode = DataGridViewColumnSortMode.Automatic,
-                    //AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                };
-                lastColumn = column;
-                dgv.Columns.Add(column);
-            }
-            //if (lastColumn!=null) lastColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        }
+        
         private void TrackerViewAddCheckBoxColumns()
         {
             DataGridView dgv = TrackerView;
@@ -155,7 +148,7 @@ namespace ArmRegistrator
             var dgvCard = CardView;
             if (dgv.CurrentRow == null)
             {
-                SetCommandButtonEnabled(null);
+                ButtonsFieldSetEnabled(null);
                 dgvCard.DataSource = null;
                 return;
             }
@@ -164,7 +157,7 @@ namespace ArmRegistrator
             //_lastRow = dgv.CurrentRow;
 
             var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
-            SetCommandButtonEnabled((bool)row["InField"]);
+            if (_rModuleConnected) ButtonsFieldSetEnabled((bool)row["InField"]);
 
             var objectType = (int)row["ObjectTypeId"];
 
@@ -178,6 +171,49 @@ namespace ArmRegistrator
             if (dgvCard.DataSource == null) dgvCard.DataSource = table;
             else if (!dgvCard.DataSource.Equals(table)) dgvCard.DataSource = table;
             TransposedTableRefresh(((DataRowView)dgv.CurrentRow.DataBoundItem).Row, table);
+        }
+        
+        private void CardView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            var dgv = (DataGridView)sender;
+            var row = ((DataRowView)dgv.Rows[e.RowIndex].DataBoundItem).Row;
+            if (row["Name"].ToString() == "InFieldTime" && dgv.Columns[e.ColumnIndex].Name == "Value")
+            {
+                var dgvTrack = TrackerView;
+                if (dgvTrack.CurrentRow != null)
+                {
+                    var inField = (bool)((DataRowView)dgvTrack.CurrentRow.DataBoundItem).Row["InField"];
+                    //var longTime = (bool)((DataRowView)dgvTrack.CurrentRow.DataBoundItem).Row["LongTimeInField"];
+                    var style = e.CellStyle;
+                    Color col = Color.LightGreen;
+                    //if (longTime) col = Color.Orange;
+                    if (!inField) col = Color.OrangeRed;
+                    style.BackColor = col;
+                    e.CellStyle.ApplyStyle(style);
+                }
+            }
+        }
+
+        private void FArm_StartTimer()
+        {
+            if (_timer == null)
+            {
+                _timer = new Timer();
+                _timer.Tick += FArm_TimerTick;
+            }
+            int interval = Properties.Settings.Default.RefreshTime * 1000;
+            if (interval == 0) return;
+            _timer.Interval = interval;
+            _timer.Start();
+        }
+        private void FArm_StopTimer()
+        {
+            _timer.Stop();
+        }
+        private void FArm_TimerTick(object sender, EventArgs e)
+        {
+            RefreshDataSetTable(_dsQuarry, _adapters, TrackerView);
         }
 
         private static DataGridViewProgressCell GetDefaultProgressCell()
@@ -227,7 +263,7 @@ namespace ArmRegistrator
             var dic = GetDefaultTrackerColumnTitles();
             var columnNames = new[]
                                   {
-                                      "InField", "_Number", "Code", "_Object", "ObjectTypeName", "Description", "Charge"
+                                      "InField", "_Number", "Code", "_Object", "ObjectTypeName", "Charge"
                                       , "Error", "ErrorCode",
                                   };
             var newDic = new Dictionary<string, string>();
@@ -248,29 +284,26 @@ namespace ArmRegistrator
                                                  };
         }
         
-        
-        
-
-        private void FArm_StartTimer()
+        private static void CreateDataGridViewColumn(DataGridView dgv, Dictionary<string, string> columns)
         {
-            if (_timer == null)
+            dgv.AutoGenerateColumns = false;
+            DataGridViewTextBoxColumn lastColumn = null;
+            foreach (KeyValuePair<string, string> pair in columns)
             {
-                _timer = new Timer();
-                _timer.Tick += FArm_TimerTick;
+                var column = new DataGridViewTextBoxColumn
+                {
+                    Name = pair.Key,
+                    DataPropertyName = pair.Key,
+                    HeaderText = pair.Value,
+                    SortMode = DataGridViewColumnSortMode.Automatic,
+                    //AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                };
+                lastColumn = column;
+                dgv.Columns.Add(column);
             }
-            int interval = Properties.Settings.Default.RefreshTime * 1000;
-            if (interval == 0) return;
-            _timer.Interval = interval;
-            _timer.Start();
+            //if (lastColumn!=null) lastColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
-        private void FArm_StopTimer()
-        {
-            _timer.Stop();
-        }
-        private void FArm_TimerTick(object sender, EventArgs e)
-        {
-            RefreshDataSetTable(_dsQuarry, _adapters, TrackerView);
-        }
+        
         private static void RefreshDataSetTable(DataSet dataSet, Dictionary<string, SqlDataAdapter> adapters, DataGridView dgv)
         {
             var tblNames = new[] { "Object" };
@@ -388,6 +421,7 @@ namespace ArmRegistrator
             }
             return table;
         }
+
         private static Collection<string> GetDefaultColumnsWithButton()
         {
             return new Collection<string>{
@@ -571,6 +605,7 @@ namespace ArmRegistrator
                 _rModule.StopCommunication();
                 _rModuleConnected = false;
                 BtnRModuleConnectSetImage(false);
+                ButtonsFieldSetEnabled(null);
             }
         }
         private void BtnDbConnectSetImage(bool isConnected)
@@ -641,6 +676,8 @@ namespace ArmRegistrator
                 if (_rModule==null)
                 {
                     _rModule = new RModule(portName, config) {BaudRate = 9600};
+                    //var parser = new Parser(new[] { "OK\r", "ERROR\r" }, ModulePak.PakSize, ModulePak.AddressBytesCount);
+                    //_rModule.SetParser(parser);
                 }
                 if (_rModule.IsInit) return true;
                 
@@ -657,8 +694,8 @@ namespace ArmRegistrator
             Properties.Settings.Default.Save();
             _rModule.OnPortError += RModuleOnPortError;
             _rModule.OnDataReceived += RModuleOnDataReceived;
-            _rModule.OnAckReceived += RModuleOnAckReceived;
-            _rModule.OnErrReceived += RModuleOnErrReceived;
+            //_rModule.OnAckReceived += RModuleOnAckReceived;
+            //_rModule.OnErrReceived += RModuleOnErrReceived;
             return true;
         }
 
@@ -672,27 +709,46 @@ namespace ArmRegistrator
             return resString;
         }
 
+        private void InputHoursVisibility()
+        {
+            bool isVisible = FlagLongTimeInField.Checked;
+            ToolStripTextBoxHours.Visible = isVisible;
+            ToolStripLabelHoursPre.Visible = isVisible;
+            ToolStripLabelHoursPost.Visible = isVisible;
+        }
+        private void ButtonsFieldSetEnabled(object commandEnable)
+        {
+            if (commandEnable == null)
+            {
+                BtnInField.Enabled = false;
+                BtnNotInField.Enabled = false;
+                return;
+            }
+            var enableBtn = (bool)commandEnable;
+            BtnInField.Enabled = !enableBtn;
+            BtnNotInField.Enabled = enableBtn;
+        }
+
         private void RModuleOnErrReceived(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
-
         private void RModuleOnAckReceived(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
-
         private void RModuleOnDataReceived(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _mreHaveData.Set();
         }
-
         private void RModuleOnPortError(object sender, EventArgs e)
         {
             _rModule.StopCommunication();
             _rModule.Dispose();
             _rModule = null;
+            _rModuleConnected = false;
             BtnRModuleConnectSetImage(false);
+            ButtonsFieldSetEnabled(null);
         }
 
         private void FlagPersonal_Click(object sender, EventArgs e)
@@ -727,26 +783,7 @@ namespace ArmRegistrator
             TrackerViewSetFilter();
         }
 
-        private void InputHoursVisibility()
-        {
-            bool isVisible = FlagLongTimeInField.Checked;
-            ToolStripTextBoxHours.Visible = isVisible;
-            ToolStripLabelHoursPre.Visible = isVisible;
-            ToolStripLabelHoursPost.Visible = isVisible;
-        }
         
-        private void SetCommandButtonEnabled(object commandEnable)
-        {
-            if (commandEnable==null)
-            {
-                BtnInField.Enabled = false;
-                BtnNotInField.Enabled = false;
-                return;
-            }
-            var enableBtn = (bool) commandEnable;
-            BtnInField.Enabled = !enableBtn;
-            BtnNotInField.Enabled = enableBtn;
-        }
         private void ToolStripTextBoxHours_Validated(object sender, EventArgs e)
         {
             Properties.Settings.Default.LongTime = ((ToolStripTextBox)sender).Text;
@@ -800,33 +837,12 @@ namespace ArmRegistrator
         private Timer _timer;
         private string _filter = string.Empty;
         private RModule _rModule;
-
-        private void CardView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            var dgv = (DataGridView)sender;
-            var row = ((DataRowView)dgv.Rows[e.RowIndex].DataBoundItem).Row;
-            if (row["Name"].ToString() == "InFieldTime" && dgv.Columns[e.ColumnIndex].Name=="Value")
-            {
-                var dgvTrack = TrackerView;
-                if (dgvTrack.CurrentRow != null)
-                {
-                    var inField = (bool)((DataRowView)dgvTrack.CurrentRow.DataBoundItem).Row["InField"];
-                    //var longTime = (bool)((DataRowView)dgvTrack.CurrentRow.DataBoundItem).Row["LongTimeInField"];
-                    var style = e.CellStyle;
-                    Color col = Color.LightGreen;
-                    //if (longTime) col = Color.Orange;
-                    if (!inField) col = Color.OrangeRed;
-                    style.BackColor = col;
-                    e.CellStyle.ApplyStyle(style);
-                }
-            }
-        }
-
+        private ManualResetEvent _mreHaveData = new ManualResetEvent(true);
+        private ManualResetEvent _mreWaitData = new ManualResetEvent(true);
 
         private bool SetInFieldState()
         {
-            bool retVal = true;
+            
             DataGridView dgv = TrackerView;
             if (dgv == null) return false;
             if (dgv.CurrentRow == null) return false;
@@ -837,8 +853,116 @@ namespace ArmRegistrator
             bool inField;
             if (!bool.TryParse(row["InField"].ToString(), out inField)) return false;
 
-            string conStr = Properties.Settings.Default.ConnectionString;
+            UInt16 status;
+            bool sended = GetStatusFromObject(out status, objectId);
+            var statusWord = new PakStatusWord(status);
+            bool retVal = true;
+            if (inField)
+            {
+                if (sended )
+                {
+                    
+                    if(!statusWord.LampMode) retVal = SetObjectPassiveMode(out status, objectId);
+                    if (retVal) retVal = ExecSql_SetObjectInField(objectId, true);
+                }
+                else
+                {
+                    if (OperatorRiskAgree())
+                    {
+                        if (ExecSql_AddEvent(objectId, "Со смены")) retVal = ExecSql_SetObjectInField(objectId, true);
+                    }
+                }
+            }
+            else
+            {
+                Cursor = Cursors.WaitCursor;
+                bool stateGood=!(statusWord.Error || statusWord.Charge<9);
+                if (sended && stateGood)
+                {
+                    if(statusWord.LampMode) retVal = SetObjectWorkMode(out status, objectId);
+                    if (retVal && !PakStatusWord.Instance(status).LampMode) retVal = ExecSql_SetObjectInField(objectId, false);
+                }
+                if (retVal && sended && !stateGood) retVal = false;
+                Cursor = Cursors.Default;
+                if (retVal && !sended)
+                {
+                    if (OperatorRiskAgree())
+                    {
+                       if(ExecSql_AddEvent(objectId,"На смену")) retVal = ExecSql_SetObjectInField(objectId, false);
+                    }
+                }
+            }
+            return retVal;
+        }
+
+        private static bool OperatorRiskAgree()
+        {
+            return MessageBox.Show("Трекер не доступен. Изменяем режим под вашу ответственность?"
+                                   , "Изменение режима объекта", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) ==
+                   DialogResult.Yes;
+        }
+
+        private bool SendCommandToObject(out UInt16 status, UInt16 adr, PakCommands command, TimeSpan waitTime )
+        {
+            status = default(UInt16);
+            var pakReqCoord = new PakStructRequest();
             
+
+            // Пакет запроса координат
+            const ushort pakNumber = UInt16.MaxValue;
+            pakReqCoord.SetRequestCoordinate(adr, pakNumber, command, 0, 0);
+            pakReqCoord.ActualDateTime();
+            pakReqCoord.WriteCrc16();
+            var tpReq = new ModulePak(pakReqCoord);
+            //_mreWaitData.Reset();
+            var queue = (CQueue<ModulePak>)_rModule.InQueue;
+            queue.DequeueAll();
+            _mreHaveData.Reset();
+            _rModule.OutQueueEnq(tpReq);
+            bool sign = _mreHaveData.WaitOne(TimeSpan.FromSeconds(10));
+            //bool sign = _mreHaveData.WaitOne(10););)
+            if (!sign) return false; //Не дождались ответа от трекера
+            ModulePak pak;
+            for (int i = 0; i < 2; i++)
+            {
+                while (queue.TryDequeue(out pak))
+                {
+                    var ps = pak.Structure as PakStructAnsw1;
+                    if (ps != null)
+                    {
+                        if (ps.Adress == adr && ps.IsCrcOk())
+                        {
+                            status = ps.Status;
+                            return true;
+                        }
+                    }
+                }
+                Thread.Sleep(waitTime); // Ждем, что пройдут тесты
+                //Thread.Sleep(TimeSpan.FromSeconds(1)); 
+            }
+            
+            return false;
+        }
+        private bool GetStatusFromObject(out UInt16 status, int objectId)
+        {
+            //return SendCommandToObject(out status, (UInt16)(objectId), PakCommands.RequestCoord);
+            return SendCommandToObject(out status, (UInt16)(objectId), PakCommands.RequestStatus, TimeSpan.FromMilliseconds(500));
+        }
+
+        private bool SetObjectPassiveMode(out UInt16 status, int objectId)
+        {
+            return SendCommandToObject(out status, (UInt16) (objectId), PakCommands.SetModePassive,TimeSpan.FromSeconds(1));
+        }
+
+        private bool SetObjectWorkMode(out UInt16 status, int objectId)
+        {
+            return SendCommandToObject(out status, (UInt16)(objectId), PakCommands.SetModeWork, TimeSpan.FromSeconds(3));
+        }
+
+        private static bool ExecSql_SetObjectInField(int objectId, bool currentFieldState)
+        {
+            string conStr = Properties.Settings.Default.ConnectionString;
+            bool retVal = true;
             using (var connection = new SqlConnection(conStr))
             {
                 try
@@ -848,7 +972,40 @@ namespace ArmRegistrator
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText ="p_SetObjectInField";
                     cmd.Parameters.AddWithValue("@ObjectId", objectId);
-                    cmd.Parameters.AddWithValue("@InField", !inField);
+                    cmd.Parameters.AddWithValue("@InField", !currentFieldState);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(
+                        "Ошибка выполнения процедуры." + Environment.NewLine + "Текст сообщения:" + ex.Message
+                        , "Ошибка выполнения SQL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    retVal = false;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return retVal;
+        }
+        private static bool ExecSql_AddEvent(int objectId, string value)
+        {
+            string conStr = Properties.Settings.Default.ConnectionString;
+            bool retVal = true;
+            using (var connection = new SqlConnection(conStr))
+            {
+                try
+                {
+                    connection.Open();
+                    var cmd=connection.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText ="p_AddEvent";
+                    cmd.Parameters.AddWithValue("@EventTypeId", 1);
+                    cmd.Parameters.AddWithValue("@Message", "Изменение режима объекта без непосредственного контроля");
+                    cmd.Parameters.AddWithValue("@Source", "АРМ-Р");
+                    cmd.Parameters.AddWithValue("@ObjectId", objectId);
+                    cmd.Parameters.AddWithValue("@Value", value);
                     cmd.ExecuteNonQuery();
                 }
                 catch (SqlException ex)
@@ -866,10 +1023,23 @@ namespace ArmRegistrator
             return retVal;
         }
 
-        private void FormReg_FormClosed(object sender, FormClosedEventArgs e)
+        private void FormReg_ResizeEnd(object sender, EventArgs e)
         {
-            if (_rModule!=null) _rModule.StopCommunication();
+            Properties.Settings.Default.FormWidth = Width;
+            Properties.Settings.Default.FormHeight = Height;
+            Properties.Settings.Default.Save();
         }
+
+        private void FormReg_SizeChanged(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.IsMaximized != (WindowState == FormWindowState.Maximized))
+            {
+                Properties.Settings.Default.IsMaximized = WindowState == FormWindowState.Maximized;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        
 
         
 

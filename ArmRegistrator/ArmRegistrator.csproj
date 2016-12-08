@@ -48,6 +48,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BSSRV\Building_Release\RadioModule.dll</HintPath>
     </Reference>
+    <Reference Include="SharedTypes, Version=1.0.6184.25919, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BSSRV\Building_Release\SharedTypes.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -119,10 +123,10 @@
     <None Include="Icons\Search.ico" />
     <None Include="Icons\Сигнал отсутствует 48.ico" />
     <None Include="Icons\Есть сигнал 48.ico" />
+    <None Include="Icons\Сигнал есть 48.ico" />
+    <None Include="Icons\Сигнала нет 48.ico" />
     <Content Include="LOGO2.ico" />
     <None Include="Resources\Icon1.ico" />
-    <None Include="Resources\Сигнал отсутствует 481.ico" />
-    <None Include="Resources\Есть сигнал 481.ico" />
     <None Include="Resources\Сигнал отсутствует 48.ico" />
     <None Include="Resources\Есть сигнал 48.ico" />
     <None Include="Resources\ImageConnectionActive.bmp" />
