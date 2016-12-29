@@ -478,7 +478,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(965, 604);
             this.Name = "FormReg";
-            this.Text = "АРМ регистрации";
+            this.Text = "СПА-Карьер: АРМ регистрации";
             this.Load += new System.EventHandler(this.FormReg_Load);
             this.SizeChanged += new System.EventHandler(this.FormReg_SizeChanged);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormReg_FormClosed);

@@ -12,7 +12,7 @@
     <AssemblyName>ArmRegistrator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>LOGO2.ico</ApplicationIcon>
+    <ApplicationIcon>ArmRegistrator 32.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -125,6 +125,7 @@
     <None Include="Icons\Есть сигнал 48.ico" />
     <None Include="Icons\Сигнал есть 48.ico" />
     <None Include="Icons\Сигнала нет 48.ico" />
+    <Content Include="ArmRegistrator 32.ico" />
     <Content Include="LOGO2.ico" />
     <None Include="Resources\Icon1.ico" />
     <None Include="Resources\Сигнал отсутствует 48.ico" />
@@ -147,4 +148,14 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName)==Debug goto endif
+DEL /F /Q "c:\Work\Projects\Install\Files\ArmRegistrator\*.*"
+XCOPY "$(TargetDir)*.dll" "c:\Work\Projects\Install\Files\ArmRegistrator\" /s /d /i /k /r /y
+XCOPY "$(TargetDir)*.exe" "c:\Work\Projects\Install\Files\ArmRegistrator\" /s /d /i /k /r /y
+XCOPY "$(TargetDir)*.config" "c:\Work\Projects\Install\Files\ArmRegistrator\" /s /d /i /k /r /y
+DEL /F /Q "c:\Work\Projects\Install\Files\ArmRegistrator\*.vshost*"
+:endif
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>
