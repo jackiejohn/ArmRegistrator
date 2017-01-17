@@ -516,9 +516,14 @@ namespace ArmRegistrator
 
             foreach (KeyValuePair<string, string> pair in tableKeyDict)
             {
-                DataRow dr = dataSet.Tables[pair.Key].Select("", string.Format("{0} desc", pair.Value))[0];
-                int tmp;
-                int.TryParse(dr[pair.Value].ToString(), out tmp);
+                DataRow[] drs = dataSet.Tables[pair.Key].Select("", string.Format("{0} desc", pair.Value));
+                int tmp=0;
+                if (drs.Length>0)
+                {
+                    DataRow dr = drs[0];
+                    int.TryParse(dr[pair.Value].ToString(), out tmp);
+                }
+                
                 DataColumn dt = dataSet.Tables[pair.Key].Columns[pair.Value];
                 dt.AutoIncrement = true;
                 dt.AutoIncrementSeed = tmp + 1;
@@ -827,6 +832,8 @@ namespace ArmRegistrator
         private void SetFullFilter(string searchFilter)
         {
             var bs = (BindingSource)TrackerView.DataSource;
+            if (bs==null) return;
+            searchFilter=searchFilter.Replace("'", "");
             bs.Filter = String.Format("({0} like '%{1}%' or {2} like '%{1}%') and ({3}) ", "_Object", searchFilter, "Code", _filter);
         }
 
