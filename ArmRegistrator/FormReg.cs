@@ -937,7 +937,7 @@ namespace ArmRegistrator
                     var ps = pak.Structure as PakStructAnsw1;
                     if (ps != null)
                     {
-                        if (ps.Adress == adr && ps.IsCrcOk())
+                        if (ps.Address == adr && ps.IsCrcOk())
                         {
                             status = ps.Status;
                             return true;
