@@ -22,3 +22,5 @@ C:\Work\Projects\ArmRegistrator\ArmRegistrator\obj\Release\ArmRegistrator.Proper
 C:\Work\Projects\ArmRegistrator\ArmRegistrator\obj\Release\ArmRegistrator.csproj.GenerateResource.Cache
 C:\Work\Projects\ArmRegistrator\ArmRegistrator\obj\Release\ArmRegistrator.exe
 C:\Work\Projects\ArmRegistrator\ArmRegistrator\obj\Release\ArmRegistrator.pdb
+C:\Work\Projects\ArmRegistrator\ArmRegistrator\bin\Release\DataGridViewExtendedControls.pdb
+C:\Work\Projects\ArmRegistrator\ArmRegistrator\obj\Release\ArmRegistrator.FormReplacement.resources

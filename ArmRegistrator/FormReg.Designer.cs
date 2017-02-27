@@ -39,7 +39,7 @@
             this.ToolStripLabelHoursPost = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrackerView = new System.Windows.Forms.DataGridView();
-            this.button8 = new System.Windows.Forms.Button();
+            this.BtnReplace = new System.Windows.Forms.Button();
             this.BtnNotInField = new System.Windows.Forms.Button();
             this.BtnInField = new System.Windows.Forms.Button();
             this.CardView = new System.Windows.Forms.DataGridView();
@@ -166,7 +166,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.button8);
+            this.splitContainer1.Panel2.Controls.Add(this.BtnReplace);
             this.splitContainer1.Panel2.Controls.Add(this.BtnNotInField);
             this.splitContainer1.Panel2.Controls.Add(this.BtnInField);
             this.splitContainer1.Panel2.Controls.Add(this.CardView);
@@ -190,17 +190,20 @@
             this.TrackerView.TabIndex = 0;
             this.TrackerView.SelectionChanged += new System.EventHandler(this.TrackerView_SelectionChanged);
             // 
-            // button8
+            // BtnReplace
             // 
-            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button8.Enabled = false;
-            this.button8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button8.Location = new System.Drawing.Point(217, 342);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(74, 68);
-            this.button8.TabIndex = 10;
-            this.button8.Text = "Замена устройства";
-            this.button8.UseVisualStyleBackColor = true;
+            this.BtnReplace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnReplace.Enabled = false;
+            this.BtnReplace.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnReplace.Image = ((System.Drawing.Image)(resources.GetObject("BtnReplace.Image")));
+            this.BtnReplace.Location = new System.Drawing.Point(217, 342);
+            this.BtnReplace.Name = "BtnReplace";
+            this.BtnReplace.Size = new System.Drawing.Size(74, 68);
+            this.BtnReplace.TabIndex = 10;
+            this.BtnReplace.Text = "Замена";
+            this.BtnReplace.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnReplace.UseVisualStyleBackColor = true;
+            this.BtnReplace.Click += new System.EventHandler(this.BtnReplace_Click);
             // 
             // BtnNotInField
             // 
@@ -505,7 +508,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView TrackerView;
         private System.Windows.Forms.DataGridView CardView;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button BtnReplace;
         private System.Windows.Forms.Button BtnNotInField;
         private System.Windows.Forms.Button BtnInField;
         private System.Windows.Forms.Button BtnAllObjectType;

@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DataGridViewExtendedControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DataGridViewExtendedControls, Version=1.1.6257.29706, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Imports\DataGridViewExtendedControls.dll</HintPath>
+      <HintPath>..\..\BSSRV\Building_Release\DataGridViewExtendedControls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -83,6 +83,14 @@
     <Compile Include="FormReg.Designer.cs">
       <DependentUpon>FormReg.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormRegHelper.cs" />
+    <Compile Include="FormReplacement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReplacement.Designer.cs">
+      <DependentUpon>FormReplacement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReplacementHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ChoisePortDlg.resx">
@@ -90,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReg.resx">
       <DependentUpon>FormReg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReplacement.resx">
+      <DependentUpon>FormReplacement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -121,11 +132,12 @@
     <None Include="Icons\Люди 48.ico" />
     <None Include="Icons\Настройка 48.ico" />
     <None Include="Icons\Search.ico" />
-    <None Include="Icons\Сигнал отсутствует 48.ico" />
-    <None Include="Icons\Есть сигнал 48.ico" />
     <None Include="Icons\Сигнал есть 48.ico" />
     <None Include="Icons\Сигнала нет 48.ico" />
     <Content Include="ArmRegistrator 32.ico" />
+    <Content Include="Icons\Вызов формы.ico" />
+    <Content Include="Icons\Объединение.ico" />
+    <Content Include="Icons\Развод.ico" />
     <Content Include="LOGO2.ico" />
     <None Include="Resources\Icon1.ico" />
     <None Include="Resources\Сигнал отсутствует 48.ico" />

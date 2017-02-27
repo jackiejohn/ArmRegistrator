@@ -4,8 +4,6 @@ using Microsoft.Data.ConnectionUI;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.Windows.Forms;
-//using Security.Windows.Forms;
-//using System.Threading.Tasks;
 
 
 namespace ArmRegistrator
@@ -126,18 +124,18 @@ namespace ArmRegistrator
 
         public static DialogResult InputBox(string title, string promtText, ref string value)
         {
-            Form form = new Form();
-            Label label = new Label();
-            TextBox textBox=new TextBox();
-            Button buttonOk=new Button();
-            Button buttonCancel=new Button();
+            var form = new Form();
+            var label = new Label();
+            var textBox=new TextBox();
+            var buttonOk=new Button();
+            var buttonCancel=new Button();
 
             form.Text = title;
             label.Text = promtText;
             textBox.Text = value;
             
-            buttonOk.Text = "Ввод";
-            buttonCancel.Text = "Отмена";
+            buttonOk.Text = @"Ввод";
+            buttonCancel.Text = @"Отмена";
             buttonOk.DialogResult = DialogResult.OK;
             buttonCancel.DialogResult = DialogResult.Cancel;
 
@@ -180,5 +178,7 @@ namespace ArmRegistrator
                     || value is double
                     || value is decimal;
         }
+
+        
     }
 }

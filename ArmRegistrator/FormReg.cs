@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -8,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using DataGridViewExtendedControls.DataGridViewProgress;
+using DataGridViewExtendedControls.Utils;
 using Microsoft.Data.ConnectionUI;
 using RadioModule;
 using SharedTypes.Paks;
@@ -21,6 +21,11 @@ namespace ArmRegistrator
         public FormReg()
         {
             InitializeComponent();
+        }
+
+        public void RefreshObjectTable()
+        {
+            RefreshDataSetTables(_dsQuarry, _adapters, new[]{"Object"});
         }
 
         private void FormReg_Load(object sender, EventArgs e)
@@ -44,41 +49,23 @@ namespace ArmRegistrator
         private void CreateCardViewColumns()
         {
             var dgv = CardView;
-            var columns = GetDefaultCardColumnTitles();
-            CreateDataGridViewColumn(dgv, columns);
+            var columns = FormRegHelper.GetDefaultCardColumnTitles();
+            StaticMethods.CreateDataGridViewColumn(dgv, columns);
             dgv.Columns["Value"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
         private void CreateTrackerViewColumns()
         {
             var dgv = TrackerView;
-            var columns = GetVisibleTrackerColumnTitles();
-            CreateDataGridViewColumn(dgv, columns);
+            var columns = FormRegHelper.GetVisibleTrackerColumnNames();
+            StaticMethods.CreateDataGridViewColumn(dgv, columns);
             TrackerViewAddProgressColumns();
             TrackerViewAddCheckBoxColumns();
         }
         
         private void TrackerViewAddCheckBoxColumns()
         {
-            DataGridView dgv = TrackerView;
-            if (dgv.Columns == null) return;
-
-            
             var colsName = new[] { "InField", "Error" };
-            foreach (string colName in colsName)
-            {
-                int indxCharge = dgv.Columns[colName].Index;
-
-                var checkColumn = new DataGridViewCheckBoxColumn()
-                {
-                    Name = colName,
-                    SortMode = DataGridViewColumnSortMode.Automatic,
-                    DataPropertyName = colName,
-                    HeaderText = dgv.Columns[colName].HeaderText,
-                };
-                dgv.Columns.Remove(colName);
-                dgv.Columns.Insert(indxCharge, checkColumn);
-            }
-            
+            StaticMethods.DataGridViewChangeColumnsToCheckBox(TrackerView, colsName);
         }
         private void TrackerViewAddProgressColumns()
         {
@@ -103,20 +90,20 @@ namespace ArmRegistrator
             dgv.Columns.Insert(indxCharge - 1, progressColumn);
 
         }
-        private void TrackerViewSetColumnWidth()
-        {
-            DataGridView dgv = TrackerView;
-            foreach (DataGridViewColumn column in dgv.Columns)
-            {
-                column.Width = column.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, false);
-            }
-        }
+        //private void TrackerViewSetColumnWidth()
+        //{
+        //    DataGridView dgv = TrackerView;
+        //    foreach (DataGridViewColumn column in dgv.Columns)
+        //    {
+        //        column.Width = column.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, false);
+        //    }
+        //}
         private void TrackerViewSetFilter()
         {
             DataGridView dgv = TrackerView;
-            BindingSource bs = (BindingSource)dgv.DataSource;
+            var bs = (BindingSource)dgv.DataSource;
             if (bs == null) return;
-            StringBuilder sbType = new StringBuilder(" or 1<>1");
+            var sbType = new StringBuilder(" or 1<>1");
             if (FlagPersonal.Checked) sbType.Append(" or ObjectTypeId=1");
             if (FlagTransport.Checked) sbType.Append(" or ObjectTypeId=2");
             if (FlagTechnics.Checked) sbType.Append(" or ObjectTypeId=3");
@@ -127,7 +114,7 @@ namespace ArmRegistrator
                 sbType.Append(")");
             }
 
-            StringBuilder sbField = new StringBuilder(" or 1<>1");
+            var sbField = new StringBuilder(" or 1<>1");
             if (FlagIsInField.Checked) sbField.Append(" or InField=1");
             if (FlagIsNotInField.Checked) sbField.Append(" or InField=0");
             if (FlagLongTimeInField.Checked) sbField.AppendFormat(" or LongTime>={0}", ToolStripTextBoxHours.Text);
@@ -137,7 +124,7 @@ namespace ArmRegistrator
                 // sbField.Insert(0, "(");
                 //sbField.Append(")");
             }
-            sbType.AppendFormat("and({0})", sbField);
+            sbType.AppendFormat("and({0}) and (ServiceId>0)", sbField);
             _filter = sbType.ToString();
             SetFullFilter(ToolStripTextBoxSearch.Text);
             //bs.Filter = sbType.ToString();
@@ -213,7 +200,7 @@ namespace ArmRegistrator
         }
         private void FArm_TimerTick(object sender, EventArgs e)
         {
-            RefreshDataSetTable(_dsQuarry, _adapters, TrackerView);
+            RefreshDataSetTables(_dsQuarry, _adapters,null);
         }
 
         private static DataGridViewProgressCell GetDefaultProgressCell()
@@ -229,84 +216,10 @@ namespace ArmRegistrator
             };
         }
         
-        private static Dictionary<string, string> GetDefaultTrackerColumnTitles()
+        private static void RefreshDataSetTables(DataSet dataSet, Dictionary<string, SqlDataAdapter> adapters, IEnumerable<string> tblNames)
         {
-            return new Dictionary<string, string>
-                                                 {
-                                                     {"InField", "На смене"},
-                                                     {"ObjectId", "ID"},
-                                                     {"_Number", "Номер"},
-                                                     {"Code", "Маркер"},
-                                                     {"_Object", "Объект"},
-                                                     {"ObjectTypeName", "Тип"},
-                                                     {"ServiceName", "Служба"},
-                                                     {"Description", "Примечания"},
-                                                     {"Charge", "Батарея"}, 
-                                                     {"FuelLevel", "Уровень топлива"},
-                                                     {"Error", "Устр-во неисправно"},
-                                                     {"ErrorCode", "Код ошибки"},
-                                                     {"VehicleTypeName", "Тип ТС"},
-                                                     {"FuelLevelMax", "Уровень топлива(max)"},
-                                                     {"Chief", "Ответственный"},
-                                                     {"Phone", "Телефон"},
-                                                     {"Surname", "Фамилия"},
-                                                     {"Name", "Имя"},
-                                                     {"Patronymic", "Отчество"},
-                                                     {"Position", "Должность"},
-                                                     {"LongTimeInField","Более 12 ч."},
-                                                     {"InFieldTime","Время смены"}
-                                                     
-                                                 };
-        }
-        private static Dictionary<string, string> GetVisibleTrackerColumnTitles()
-        {
-            var dic = GetDefaultTrackerColumnTitles();
-            var columnNames = new[]
-                                  {
-                                      "InField", "_Number", "Code", "_Object", "ObjectTypeName", "Charge"
-                                      , "Error", "ErrorCode",
-                                  };
-            var newDic = new Dictionary<string, string>();
-            foreach (string columnName in columnNames)
-            {
-                string desc = string.Empty;
-                if (dic.ContainsKey(columnName)) desc = dic[columnName];
-                newDic.Add(columnName,desc);
-            }
-            return newDic;
-        }
-        private static Dictionary<string,string> GetDefaultCardColumnTitles()
-        {
-            return new Dictionary<string, string>
-                                                 {
-                                                     {"Title", "Параметр"},
-                                                     {"Value", "Значение"},
-                                                 };
-        }
-        
-        private static void CreateDataGridViewColumn(DataGridView dgv, Dictionary<string, string> columns)
-        {
-            dgv.AutoGenerateColumns = false;
-            DataGridViewTextBoxColumn lastColumn = null;
-            foreach (KeyValuePair<string, string> pair in columns)
-            {
-                var column = new DataGridViewTextBoxColumn
-                {
-                    Name = pair.Key,
-                    DataPropertyName = pair.Key,
-                    HeaderText = pair.Value,
-                    SortMode = DataGridViewColumnSortMode.Automatic,
-                    //AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                };
-                lastColumn = column;
-                dgv.Columns.Add(column);
-            }
-            //if (lastColumn!=null) lastColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        }
-        
-        private static void RefreshDataSetTable(DataSet dataSet, Dictionary<string, SqlDataAdapter> adapters, DataGridView dgv)
-        {
-            var tblNames = new[] { "Object" };
+            //var tblNames = new[] { "Object" };
+            if (tblNames == null) tblNames = adapters.Keys;
             try
             {
                 foreach (string tblName in tblNames)
@@ -319,8 +232,6 @@ namespace ArmRegistrator
                 MessageBox.Show(string.Format("Возникла ошибка при обновлении данных." + Environment.NewLine
                                               + "Текст ошибки: {0}", ex.Message), "Ошибка обновления", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            //if (dgv.CurrentRow != null) TransposedTableRefresh(((DataRowView)dgv.CurrentRow.DataBoundItem).Row, dataSet.Tables["ObjectT"]);
         }
         
         private bool Arm_ConfigDataComponents()
@@ -334,7 +245,12 @@ namespace ArmRegistrator
             {
                 conn.Open();
                 ConfigDataCreateDataAdapter(_dsQuarry, conn, "Object", "pa_ArmRegistrSelect", new KeyValuePair<string, SqlDbType>("ObjectId", SqlDbType.Int), _adapters);
+                //ConfigDataCreateDataAdapter(_dsQuarry, conn, "ObjectMayR", "pa_ArmRegistrMayReplacement", new KeyValuePair<string, SqlDbType>("ObjectId", SqlDbType.Int), _adapters);
+                //ConfigDataCreateDataAdapter(_dsQuarry, conn, "ObjectReplacement", "pa_ArmRegistrReplObjects", new KeyValuePair<string, SqlDbType>("ObjectId", SqlDbType.Int), _adapters);
+
                 SetPrimaryKeyOnTable(_dsQuarry, "Object", "ObjectId");
+                //SetPrimaryKeyOnTable(_dsQuarry, "ObjectMayR", "ObjectId");
+                //SetPrimaryKeyOnTable(_dsQuarry, "ObjectReplacement", "ObjectId");
             }
             catch (Exception ex)
             {
@@ -365,7 +281,7 @@ namespace ArmRegistrator
                                           _dsQuarry.Tables[tableName].Columns["InFieldTime"],
                                           
                                       };
-            Dictionary<string, string> columnTitles = GetDefaultTrackerColumnTitles();
+            Dictionary<string, string> columnTitles = FormRegHelper.GetDefaultTrackerColumnTitles();
             CreateTransposedTable(_dsQuarry, vehicleColumns, string.Format("{0}VT", tableName), columnTitles);
             var employeeColumns = new[]
                                       {
@@ -382,15 +298,9 @@ namespace ArmRegistrator
                                           _dsQuarry.Tables[tableName].Columns["InFieldTime"],
                                       };
             CreateTransposedTable(_dsQuarry, employeeColumns, string.Format("{0}ET", tableName), columnTitles);
-
-            
-            
-            //CardView.DataSource = CreateTransposedTable(_dsQuarry, _dsQuarry.Tables[tableName], string.Format("{0}T", tableName), columnTitles);
-            //CardViewConfigColumns();
-            //RModulesViewConfigColumnAndTitles(columnTitles);
-
             return true;
         }
+
         private static DataTable CreateTransposedTable(DataSet ds, IEnumerable<DataColumn> columns,string transTableName, Dictionary<string, string> columnsTitle)
         {
             if (columns == null) return null;
@@ -406,8 +316,8 @@ namespace ArmRegistrator
                 table.PrimaryKey = new[] { keyColumn };
                 ds.Tables.Add(table);
             }
-            
-            var buttonCollection = GetDefaultColumnsWithButton(); //TODO: возможно не надо
+
+            var buttonCollection = FormRegHelper.GetDefaultColumnsWithButton(); //TODO: возможно не надо так как коллекция пустая
             foreach (DataColumn column in columns)
             {
                 if (columnsTitle.ContainsKey(column.ColumnName))
@@ -422,31 +332,7 @@ namespace ArmRegistrator
             return table;
         }
 
-        private static Collection<string> GetDefaultColumnsWithButton()
-        {
-            return new Collection<string>{
-                         /*"InField", 
-                         "BaseStationId", 
-                         "Latitude", 
-                         "Longitude", 
-                         "Altitude", 
-                         "Azimuth", 
-                         "Speed", 
-                         "Charge", 
-                         "FuelLevel", 
-                         "Error", 
-                         "ErrorCode", 
-                         "SatelliteUsage", 
-                         "PacketLossRate", 
-                         "Caution",
-                         "Emergency",
-                         "Notification",
-                         "Answer",
-                         "PacketError",
-                         "NoMotion",
-                         "NoGpsSignal",*/
-                     };
-        }
+        
         private static void ConfigDataCreateDataAdapter(DataSet dataSet, SqlConnection conn, string tableName, string selCommand, KeyValuePair<string, SqlDbType> keyCol, Dictionary<string, SqlDataAdapter> adapters)
         {
             SqlDataAdapter adp = CreateDataAdapter(dataSet, conn, tableName, selCommand, keyCol);
@@ -548,6 +434,7 @@ namespace ArmRegistrator
                 _dataConfigured = true;
                 BtnDbConnectSetImage(true);
                 FArm_StartTimer();
+                BtnReplace.Enabled = true;
             }
             else
             {
@@ -555,8 +442,9 @@ namespace ArmRegistrator
                 BtnDbConnectSetImage(false);
                 FArm_StopTimer();
                 _dsQuarry.Clear();
+                BtnReplace.Enabled = false;
             }
-            TrackerViewSetColumnWidth();
+            StaticMethods.DataGridViewSetColumnWidth(TrackerView);
             TrackerViewSetFilter();
         }
         private void BtnDbConfig_Click(object sender, EventArgs e)
@@ -649,7 +537,7 @@ namespace ArmRegistrator
 
             if (SetInFieldState())
             {
-                RefreshDataSetTable(_dsQuarry, _adapters, TrackerView);
+                RefreshDataSetTables(_dsQuarry, _adapters, null);
                 TrackerView_SelectionChanged(TrackerView, e);
             }
         }
@@ -663,7 +551,7 @@ namespace ArmRegistrator
             }
             if (SetInFieldState())
             {
-                RefreshDataSetTable(_dsQuarry, _adapters, TrackerView);
+                RefreshDataSetTables(_dsQuarry, _adapters,null);
                 TrackerView_SelectionChanged(TrackerView, e);
             }
         }
@@ -850,26 +738,33 @@ namespace ArmRegistrator
         private bool SetInFieldState()
         {
             
-            DataGridView dgv = TrackerView;
-            if (dgv == null) return false;
-            if (dgv.CurrentRow == null) return false;
-            if (dgv.CurrentRow.Index < 0) return false;
-            var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
-            int objectId ;
-            if (!int.TryParse(row["ObjectId"].ToString(), out objectId)) return false;
-            bool inField;
-            if (!bool.TryParse(row["InField"].ToString(), out inField)) return false;
+            //DataGridView dgv = TrackerView;
+            //if (dgv == null) return false;
+            //if (dgv.CurrentRow == null) return false;
+            //if (dgv.CurrentRow.Index < 0) return false;
+            //var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
+            var row = (DataRow)StaticMethods.GetCurrentDataRow(TrackerView);
+            if (row==null) return false;
+            int objectId= Convert.ToInt32(row["ObjectId"]);
+            int trakObjId = objectId;
+
+            if (!Convert.IsDBNull(row["_ActiveObjectId"])) trakObjId = Convert.ToInt32(row["_ActiveObjectId"]);
+            
+            //if (!int.TryParse(row["ObjectId"].ToString(), out objectId)) return false;
+            bool inField = Convert.ToBoolean(row["InField"]);
+            //if (!bool.TryParse(row["InField"].ToString(), out inField)) return false;
 
             UInt16 status;
-            bool sended = GetStatusFromObject(out status, objectId);
+            //bool sended = GetStatusFromObject(out status, objectId);
+            bool sended = GetStatusFromObject(out status, trakObjId);
             var statusWord = new PakStatusWord(status);
             bool retVal = true;
             if (inField)
             {
                 if (sended )
                 {
-                    
-                    if(!statusWord.LampMode) retVal = SetObjectPassiveMode(out status, objectId);
+                    //if(!statusWord.LampMode) retVal = SetObjectPassiveMode(out status, objectId);
+                    if (!statusWord.LampMode) retVal = SetObjectPassiveMode(out status, trakObjId);
                     if (retVal) retVal = ExecSql_SetObjectInField(objectId, true);
                 }
                 else
@@ -886,8 +781,18 @@ namespace ArmRegistrator
                 bool stateGood=!(statusWord.Error || statusWord.Charge<9);
                 if (sended && stateGood)
                 {
-                    if(statusWord.LampMode) retVal = SetObjectWorkMode(out status, objectId);
+                    //if(statusWord.LampMode) retVal = SetObjectWorkMode(out status, objectId);
+                    if (statusWord.LampMode) retVal = SetObjectWorkMode(out status, trakObjId);
                     if (retVal && !PakStatusWord.Instance(status).LampMode) retVal = ExecSql_SetObjectInField(objectId, false);
+                }
+                else
+                {
+                    var sb = new StringBuilder("Изменение режима не вохможно по следующим причинам:");
+                    sb.AppendLine();
+                    if (statusWord.Error) sb.AppendLine(" - ошибка оборудования");
+                    if (statusWord.Charge < 9) sb.AppendLine(" - низкий заряд батареи");
+                    if (statusWord.Charge < 9) sb.AppendLine(" - нет связи с трекером");
+                    MessageBox.Show(sb.ToString(), "Изменение режима", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 if (retVal && sended && !stateGood) retVal = false;
                 Cursor = Cursors.Default;
@@ -1046,12 +951,12 @@ namespace ArmRegistrator
             }
         }
 
-        
-
-        
-
-        
-
-        
+        private void BtnReplace_Click(object sender, EventArgs e)
+        {
+            using (var frm = new FormReplacement(_dsQuarry,this))
+            {
+                frm.ShowDialog(this);
+            }
+        }
     }
 }
