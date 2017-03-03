@@ -32,33 +32,34 @@
             this.PanelGrids = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.ToolStripTextBoxSearch = new System.Windows.Forms.ToolStripTextBox();
-            this.ToolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripLabelHoursPre = new System.Windows.Forms.ToolStripLabel();
             this.ToolStripTextBoxHours = new System.Windows.Forms.ToolStripTextBox();
             this.ToolStripLabelHoursPost = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrackerView = new System.Windows.Forms.DataGridView();
-            this.BtnReplace = new System.Windows.Forms.Button();
             this.BtnNotInField = new System.Windows.Forms.Button();
             this.BtnInField = new System.Windows.Forms.Button();
             this.CardView = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.FlagIsNotHaveModem = new System.Windows.Forms.CheckBox();
+            this.ToolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
+            this.BtnReplace = new System.Windows.Forms.Button();
             this.BtnDbConfig = new System.Windows.Forms.Button();
             this.BtnDbConnect = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.FlagTechnics = new System.Windows.Forms.CheckBox();
             this.BtnAllObjectType = new System.Windows.Forms.Button();
             this.FlagTransport = new System.Windows.Forms.CheckBox();
             this.FlagPersonal = new System.Windows.Forms.CheckBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.FlagLongTimeInField = new System.Windows.Forms.CheckBox();
             this.FlagIsNotInField = new System.Windows.Forms.CheckBox();
             this.FlagIsInField = new System.Windows.Forms.CheckBox();
             this.BtnAllField = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.BtnRModuleConnect = new System.Windows.Forms.Button();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.PanelGrids.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -81,7 +82,7 @@
             this.PanelGrids.Controls.Add(this.splitContainer1);
             this.PanelGrids.Location = new System.Drawing.Point(3, 119);
             this.PanelGrids.Name = "PanelGrids";
-            this.PanelGrids.Size = new System.Drawing.Size(943, 444);
+            this.PanelGrids.Size = new System.Drawing.Size(960, 444);
             this.PanelGrids.TabIndex = 0;
             // 
             // toolStrip1
@@ -96,7 +97,7 @@
             this.ToolStripLabelHoursPost});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(943, 50);
+            this.toolStrip1.Size = new System.Drawing.Size(960, 50);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -108,18 +109,6 @@
             this.ToolStripTextBoxSearch.Size = new System.Drawing.Size(250, 27);
             this.ToolStripTextBoxSearch.ToolTipText = "Фильтр объекта";
             this.ToolStripTextBoxSearch.TextChanged += new System.EventHandler(this.ToolStripTextBoxSearch_TextChanged);
-            // 
-            // ToolStripButtonSearch
-            // 
-            this.ToolStripButtonSearch.AutoSize = false;
-            this.ToolStripButtonSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ToolStripButtonSearch.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripButtonSearch.Image")));
-            this.ToolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ToolStripButtonSearch.Name = "ToolStripButtonSearch";
-            this.ToolStripButtonSearch.Size = new System.Drawing.Size(28, 28);
-            this.ToolStripButtonSearch.Text = "toolStripButton1";
-            this.ToolStripButtonSearch.ToolTipText = "Очистить фильтр объектов";
-            this.ToolStripButtonSearch.Click += new System.EventHandler(this.ToolStripButtonSearch_Click);
             // 
             // toolStripSeparator2
             // 
@@ -171,8 +160,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.BtnInField);
             this.splitContainer1.Panel2.Controls.Add(this.CardView);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(940, 416);
-            this.splitContainer1.SplitterDistance = 645;
+            this.splitContainer1.Size = new System.Drawing.Size(957, 416);
+            this.splitContainer1.SplitterDistance = 591;
             this.splitContainer1.TabIndex = 0;
             // 
             // TrackerView
@@ -186,24 +175,9 @@
             this.TrackerView.Location = new System.Drawing.Point(0, 28);
             this.TrackerView.Name = "TrackerView";
             this.TrackerView.ReadOnly = true;
-            this.TrackerView.Size = new System.Drawing.Size(645, 388);
+            this.TrackerView.Size = new System.Drawing.Size(588, 388);
             this.TrackerView.TabIndex = 0;
             this.TrackerView.SelectionChanged += new System.EventHandler(this.TrackerView_SelectionChanged);
-            // 
-            // BtnReplace
-            // 
-            this.BtnReplace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnReplace.Enabled = false;
-            this.BtnReplace.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnReplace.Image = ((System.Drawing.Image)(resources.GetObject("BtnReplace.Image")));
-            this.BtnReplace.Location = new System.Drawing.Point(217, 342);
-            this.BtnReplace.Name = "BtnReplace";
-            this.BtnReplace.Size = new System.Drawing.Size(74, 68);
-            this.BtnReplace.TabIndex = 10;
-            this.BtnReplace.Text = "Замена";
-            this.BtnReplace.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.BtnReplace.UseVisualStyleBackColor = true;
-            this.BtnReplace.Click += new System.EventHandler(this.BtnReplace_Click);
             // 
             // BtnNotInField
             // 
@@ -245,7 +219,7 @@
             this.CardView.Name = "CardView";
             this.CardView.ReadOnly = true;
             this.CardView.RowHeadersVisible = false;
-            this.CardView.Size = new System.Drawing.Size(286, 305);
+            this.CardView.Size = new System.Drawing.Size(325, 305);
             this.CardView.TabIndex = 0;
             this.CardView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.CardView_CellPainting);
             // 
@@ -254,12 +228,100 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.BtnDbConfig);
             this.groupBox1.Controls.Add(this.BtnDbConnect);
-            this.groupBox1.Location = new System.Drawing.Point(731, 15);
+            this.groupBox1.Location = new System.Drawing.Point(748, 15);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(206, 98);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "База данных";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.FlagTechnics);
+            this.groupBox2.Controls.Add(this.BtnAllObjectType);
+            this.groupBox2.Controls.Add(this.FlagTransport);
+            this.groupBox2.Controls.Add(this.FlagPersonal);
+            this.groupBox2.Location = new System.Drawing.Point(3, 15);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(285, 98);
+            this.groupBox2.TabIndex = 9;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Управление списком";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.FlagLongTimeInField);
+            this.groupBox3.Controls.Add(this.FlagIsNotInField);
+            this.groupBox3.Controls.Add(this.FlagIsInField);
+            this.groupBox3.Controls.Add(this.BtnAllField);
+            this.groupBox3.Location = new System.Drawing.Point(294, 15);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(284, 98);
+            this.groupBox3.TabIndex = 10;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Фильтр";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.FlagIsNotHaveModem);
+            this.groupBox4.Controls.Add(this.BtnRModuleConnect);
+            this.groupBox4.Location = new System.Drawing.Point(584, 15);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(160, 98);
+            this.groupBox4.TabIndex = 18;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Радиомодем";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(86, 47);
+            this.toolStripLabel1.Text = "toolStripLabel1";
+            // 
+            // FlagIsNotHaveModem
+            // 
+            this.FlagIsNotHaveModem.Appearance = System.Windows.Forms.Appearance.Button;
+            this.FlagIsNotHaveModem.BackColor = System.Drawing.Color.Transparent;
+            this.FlagIsNotHaveModem.Checked = true;
+            this.FlagIsNotHaveModem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.FlagIsNotHaveModem.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FlagIsNotHaveModem.Image = global::ArmRegistrator.Properties.Resources.ModemNotHave;
+            this.FlagIsNotHaveModem.Location = new System.Drawing.Point(84, 21);
+            this.FlagIsNotHaveModem.Name = "FlagIsNotHaveModem";
+            this.FlagIsNotHaveModem.Size = new System.Drawing.Size(68, 68);
+            this.FlagIsNotHaveModem.TabIndex = 18;
+            this.FlagIsNotHaveModem.Text = "Модем";
+            this.FlagIsNotHaveModem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.FlagIsNotHaveModem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.FlagIsNotHaveModem.UseVisualStyleBackColor = false;
+            this.FlagIsNotHaveModem.Click += new System.EventHandler(this.FlagIsNotHaveModem_Click);
+            // 
+            // ToolStripButtonSearch
+            // 
+            this.ToolStripButtonSearch.AutoSize = false;
+            this.ToolStripButtonSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ToolStripButtonSearch.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripButtonSearch.Image")));
+            this.ToolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ToolStripButtonSearch.Name = "ToolStripButtonSearch";
+            this.ToolStripButtonSearch.Size = new System.Drawing.Size(28, 28);
+            this.ToolStripButtonSearch.Text = "toolStripButton1";
+            this.ToolStripButtonSearch.ToolTipText = "Очистить фильтр объектов";
+            this.ToolStripButtonSearch.Click += new System.EventHandler(this.ToolStripButtonSearch_Click);
+            // 
+            // BtnReplace
+            // 
+            this.BtnReplace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnReplace.Enabled = false;
+            this.BtnReplace.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnReplace.Image = ((System.Drawing.Image)(resources.GetObject("BtnReplace.Image")));
+            this.BtnReplace.Location = new System.Drawing.Point(256, 342);
+            this.BtnReplace.Name = "BtnReplace";
+            this.BtnReplace.Size = new System.Drawing.Size(74, 68);
+            this.BtnReplace.TabIndex = 10;
+            this.BtnReplace.Text = "Замена";
+            this.BtnReplace.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnReplace.UseVisualStyleBackColor = true;
+            this.BtnReplace.Click += new System.EventHandler(this.BtnReplace_Click);
             // 
             // BtnDbConfig
             // 
@@ -286,19 +348,6 @@
             this.BtnDbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.BtnDbConnect.UseVisualStyleBackColor = true;
             this.BtnDbConnect.Click += new System.EventHandler(this.BtnDbConnect_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.FlagTechnics);
-            this.groupBox2.Controls.Add(this.BtnAllObjectType);
-            this.groupBox2.Controls.Add(this.FlagTransport);
-            this.groupBox2.Controls.Add(this.FlagPersonal);
-            this.groupBox2.Location = new System.Drawing.Point(3, 15);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(285, 98);
-            this.groupBox2.TabIndex = 9;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Управление списком";
             // 
             // FlagTechnics
             // 
@@ -364,19 +413,6 @@
             this.FlagPersonal.UseVisualStyleBackColor = true;
             this.FlagPersonal.Click += new System.EventHandler(this.FlagPersonal_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.FlagLongTimeInField);
-            this.groupBox3.Controls.Add(this.FlagIsNotInField);
-            this.groupBox3.Controls.Add(this.FlagIsInField);
-            this.groupBox3.Controls.Add(this.BtnAllField);
-            this.groupBox3.Location = new System.Drawing.Point(294, 15);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(284, 98);
-            this.groupBox3.TabIndex = 10;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Фильтр";
-            // 
             // FlagLongTimeInField
             // 
             this.FlagLongTimeInField.Appearance = System.Windows.Forms.Appearance.Button;
@@ -439,16 +475,6 @@
             this.BtnAllField.UseVisualStyleBackColor = true;
             this.BtnAllField.Click += new System.EventHandler(this.BtnAllField_Click);
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.BtnRModuleConnect);
-            this.groupBox4.Location = new System.Drawing.Point(584, 15);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(89, 98);
-            this.groupBox4.TabIndex = 18;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Радиомодуль";
-            // 
             // BtnRModuleConnect
             // 
             this.BtnRModuleConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -462,24 +488,18 @@
             this.BtnRModuleConnect.UseVisualStyleBackColor = true;
             this.BtnRModuleConnect.Click += new System.EventHandler(this.BtnRModuleConnect_Click);
             // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(86, 47);
-            this.toolStripLabel1.Text = "toolStripLabel1";
-            // 
             // FormReg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(949, 566);
+            this.ClientSize = new System.Drawing.Size(966, 566);
             this.Controls.Add(this.PanelGrids);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(965, 604);
+            this.MinimumSize = new System.Drawing.Size(982, 604);
             this.Name = "FormReg";
             this.Text = "СПА-Карьер: АРМ регистрации";
             this.Load += new System.EventHandler(this.FormReg_Load);
@@ -534,6 +554,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.CheckBox FlagIsNotHaveModem;
     }
 }
 

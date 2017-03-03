@@ -136,6 +136,8 @@
     <None Include="Icons\Сигнала нет 48.ico" />
     <Content Include="ArmRegistrator 32.ico" />
     <Content Include="Icons\Вызов формы.ico" />
+    <None Include="Icons\Модем Используем.ico" />
+    <None Include="Icons\Модем Не используем.ico" />
     <Content Include="Icons\Объединение.ico" />
     <Content Include="Icons\Развод.ico" />
     <Content Include="LOGO2.ico" />

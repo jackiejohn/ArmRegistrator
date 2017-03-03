@@ -23,3 +23,4 @@ C:\Work\Projects\ArmRegistrator\ArmRegistrator\bin\Debug\TrafficParsers.pdb
 C:\Work\Projects\ArmRegistrator\ArmRegistrator\bin\Debug\Store.pdb
 C:\Work\Projects\ArmRegistrator\ArmRegistrator\obj\Debug\ArmRegistrator.ChoisePortDlg.resources
 C:\Work\Projects\ArmRegistrator\ArmRegistrator\obj\Debug\ArmRegistrator.FormReplacement.resources
+C:\Work\Projects\ArmRegistrator\ArmRegistrator\bin\Debug\DataGridViewExtendedControls.pdb

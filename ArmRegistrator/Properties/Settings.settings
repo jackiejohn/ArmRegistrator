@@ -18,9 +18,12 @@
       <Value Profile="(Default)">604</Value>
     </Setting>
     <Setting Name="FormWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">965</Value>
+      <Value Profile="(Default)">982</Value>
     </Setting>
     <Setting Name="IsMaximized" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="HaveModem" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

@@ -81,6 +81,20 @@ namespace ArmRegistrator.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap ModemHave {
+            get {
+                object obj = ResourceManager.GetObject("ModemHave", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap ModemNotHave {
+            get {
+                object obj = ResourceManager.GetObject("ModemNotHave", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap RModuleConnected {
             get {
                 object obj = ResourceManager.GetObject("RModuleConnected", resourceCulture);

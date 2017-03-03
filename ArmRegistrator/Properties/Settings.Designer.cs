@@ -85,7 +85,7 @@ namespace ArmRegistrator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("965")]
+        [global::System.Configuration.DefaultSettingValueAttribute("982")]
         public int FormWidth {
             get {
                 return ((int)(this["FormWidth"]));
@@ -104,6 +104,18 @@ namespace ArmRegistrator.Properties {
             }
             set {
                 this["IsMaximized"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HaveModemState {
+            get {
+                return ((bool)(this["HaveModemState"]));
+            }
+            set {
+                this["HaveModemState"] = value;
             }
         }
     }

@@ -34,6 +34,7 @@ namespace ArmRegistrator
             BtnDbConnectSetImage(false);
             CreateTrackerViewColumns();
             CreateCardViewColumns();
+            HaveModemChange(FlagIsNotHaveModem.Checked);
         }
         private void FormReg_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -45,6 +46,7 @@ namespace ArmRegistrator
             WindowState = Properties.Settings.Default.IsMaximized ? FormWindowState.Maximized : FormWindowState.Normal;
             Width = Properties.Settings.Default.FormWidth;
             Height = Properties.Settings.Default.FormHeight;
+            FlagIsNotHaveModem.Checked = Properties.Settings.Default.HaveModemState;
         }
         private void CreateCardViewColumns()
         {
@@ -131,7 +133,39 @@ namespace ArmRegistrator
         }
         private void TrackerView_SelectionChanged(object sender, EventArgs e)
         {
-            var dgv = (DataGridView)sender;
+            ChangeTrackViewRow();
+            //var dgv = (DataGridView)sender;
+            //var dgvCard = CardView;
+            //if (dgv.CurrentRow == null)
+            //{
+            //    ButtonsFieldSetEnabled(null);
+            //    dgvCard.DataSource = null;
+            //    return;
+            //}
+            //if (dgv.CurrentRow.Index < 0) return;
+            ////if (_lastRow == dgv.CurrentRow) return;
+            ////_lastRow = dgv.CurrentRow;
+
+            //var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
+            //if (_rModuleConnected) ButtonsFieldSetEnabled((bool)row["InField"]);
+
+            //var objectType = (int)row["ObjectTypeId"];
+
+            //DataTable table = _dsQuarry.Tables["ObjectVT"];
+
+            //if (objectType == 1)
+            //{
+            //    table = _dsQuarry.Tables["ObjectET"];
+            //}
+            //if (table == null) return;
+            //if (dgvCard.DataSource == null) dgvCard.DataSource = table;
+            //else if (!dgvCard.DataSource.Equals(table)) dgvCard.DataSource = table;
+            //TransposedTableRefresh(row, table);
+        }
+
+        private void ChangeTrackViewRow ()
+        {
+            var dgv = TrackerView;
             var dgvCard = CardView;
             if (dgv.CurrentRow == null)
             {
@@ -140,8 +174,6 @@ namespace ArmRegistrator
                 return;
             }
             if (dgv.CurrentRow.Index < 0) return;
-            //if (_lastRow == dgv.CurrentRow) return;
-            //_lastRow = dgv.CurrentRow;
 
             var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
             if (_rModuleConnected) ButtonsFieldSetEnabled((bool)row["InField"]);
@@ -157,7 +189,7 @@ namespace ArmRegistrator
             if (table == null) return;
             if (dgvCard.DataSource == null) dgvCard.DataSource = table;
             else if (!dgvCard.DataSource.Equals(table)) dgvCard.DataSource = table;
-            TransposedTableRefresh(((DataRowView)dgv.CurrentRow.DataBoundItem).Row, table);
+            TransposedTableRefresh(row, table);
         }
         
         private void CardView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -489,13 +521,14 @@ namespace ArmRegistrator
             if (!_rModuleConnected)
             {
                 if (!ConnectToRModule()) return;
-                _rModule.StartCommunication();
+                if (_rModule != null) _rModule.StartCommunication();
                 _rModuleConnected = true;
                 BtnRModuleConnectSetImage(true);
+                ChangeTrackViewRow();
             }
             else
             {
-                _rModule.StopCommunication();
+                if (_rModule!=null) _rModule.StopCommunication();
                 _rModuleConnected = false;
                 BtnRModuleConnectSetImage(false);
                 ButtonsFieldSetEnabled(null);
@@ -526,34 +559,153 @@ namespace ArmRegistrator
             }
             
         }
-        private void BtnInField_Click(object sender, EventArgs e)
+        private void FlagIsNotHaveModemSetImage(bool haveModem)
         {
-            if (TrackerView.SelectedRows.Count > 1)
+            var newImg = haveModem ? Properties.Resources.ModemHave : Properties.Resources.ModemNotHave;
+            if (FlagIsNotHaveModem.InvokeRequired)
             {
-                if (MessageBox.Show("Выделено несколько строк! На смену заступит только один"
-                    + Environment.NewLine + "Продолжаем?", "Обратите внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                    return;
+                FlagIsNotHaveModem.BeginInvoke(new Action<Bitmap>(img => { FlagIsNotHaveModem.Image = img; }), newImg);
+            }
+            else
+            {
+                FlagIsNotHaveModem.Image = newImg;
             }
 
-            if (SetInFieldState())
-            {
-                RefreshDataSetTables(_dsQuarry, _adapters, null);
-                TrackerView_SelectionChanged(TrackerView, e);
-            }
+        }
+        private void BtnInField_Click(object sender, EventArgs e)
+        {
+            ChangeInFieldState();
         }
         private void BtnNotInField_Click(object sender, EventArgs e)
         {
+            ChangeInFieldState();
+        }
+        private void ChangeInFieldState()
+        {
             if (TrackerView.SelectedRows.Count > 1)
             {
-                if (MessageBox.Show("Выделено несколько строк! Со смены вернется только один"
+                if (MessageBox.Show("Выделено несколько строк! Изменения коснутся только одиного"
                     + Environment.NewLine + "Продолжаем?", "Обратите внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     return;
             }
-            if (SetInFieldState())
+            var row = StaticMethods.GetCurrentDataRow(TrackerView);
+            if (row == null) return;
+
+            int objectId = Convert.ToInt32(row["ObjectId"]);
+            int trakObjId = objectId;
+
+            if (!Convert.IsDBNull(row["_ActiveObjectId"])) trakObjId = Convert.ToInt32(row["_ActiveObjectId"]);
+            bool inField = Convert.ToBoolean(row["InField"]);
+            
+            bool lampMode = true;
+            bool workMode = true;
+            bool sended=true;
+            bool addEvent = true;
+            if (!_isNoModem)
             {
-                RefreshDataSetTables(_dsQuarry, _adapters,null);
-                TrackerView_SelectionChanged(TrackerView, e);
+                UInt16 status;
+                Cursor = Cursors.WaitCursor;
+                sended = GetStatusFromObject(out status, trakObjId);
+                Cursor = Cursors.Default;
+                var statusWord = new PakStatusWord(status);
+                lampMode = statusWord.LampMode;
+                workMode = sended && !(statusWord.Error || statusWord.Charge < 9);
+                
+                if(!inField)
+                {
+                    var sb = new StringBuilder("Изменение режима НЕ ДОПУСТИМО по следующим причинам:");
+                    sb.AppendLine();
+                    if (!sended) sb.AppendLine(" - нет связи с трекером");
+                    else
+                    {
+                        if (statusWord.Error) sb.AppendLine(" - ошибка оборудования");
+                        if (statusWord.Charge < 9) sb.AppendLine(" - низкий заряд батареи");
+                    }
+                    MessageBox.Show(sb.ToString(), "Изменение режима", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                addEvent = false;
+                if(!sended)
+                {
+                    if (!OperatorRiskAgree()) return;
+                    addEvent = true;
+                }
             }
+
+            Cursor = Cursors.WaitCursor;
+            bool retVal;
+            if (inField) retVal = InFieldUnSet(!(_isNoModem || lampMode || !sended), addEvent, objectId, trakObjId);
+            else retVal = InFieldSet(!(_isNoModem || workMode||!sended), addEvent, objectId, trakObjId);
+            Cursor = Cursors.Default;
+
+            if (retVal)
+            //if (SetInFieldState(objectId,trakObjId,inField))
+            {
+                RefreshDataSetTables(_dsQuarry, _adapters, null);
+                ChangeTrackViewRow();
+            }
+        }
+        private bool InFieldUnSet(bool setWorkMode, bool addEvent, int objectId, int trakObjId )
+        {
+            bool retVal=true;
+            UInt16 status;
+            if (setWorkMode) retVal = SendObjectPassiveMode(out status, trakObjId);
+            if (addEvent) retVal = ExecSql_AddEvent(objectId, "Со смены");
+            
+            if (retVal) retVal = ExecSql_SetObjectInField(objectId, true);
+            return retVal;
+            //if (sended)
+            //{
+            //    if (!statusWord.LampMode) retVal = SendObjectPassiveMode(out status, trakObjId);
+            //    if (retVal) retVal = ExecSql_SetObjectInField(objectId, true);
+            //}
+            //else
+            //{
+            //    if (OperatorRiskAgree())
+            //    {
+            //        if (ExecSql_AddEvent(objectId, "Со смены")) retVal = ExecSql_SetObjectInField(objectId, true);
+            //    }
+            //}
+            
+        }
+
+        private bool InFieldSet(bool setLampMode, bool addEvent, int objectId, int trakObjId)
+        {
+            bool retVal = true;
+            UInt16 status;
+            if (setLampMode)
+            {
+                retVal = SendObjectWorkMode(out status, trakObjId);
+                retVal = retVal && !PakStatusWord.Instance(status).LampMode;
+            }
+    
+            if (addEvent) retVal = ExecSql_AddEvent(objectId, "На смену");
+            if (retVal) retVal = ExecSql_SetObjectInField(objectId, false);
+            return retVal;
+
+            //bool stateGood = !(statusWord.Error || statusWord.Charge < 9);
+            //if (sended && stateGood)
+            //{
+            //    if (statusWord.LampMode) retVal = SendObjectWorkMode(out status, trakObjId);
+            //    if (retVal && !PakStatusWord.Instance(status).LampMode) retVal = ExecSql_SetObjectInField(objectId, false);
+            //}
+            //else
+            //{
+            //    var sb = new StringBuilder("Изменение режима не возможно по следующим причинам:");
+            //    sb.AppendLine();
+            //    if (statusWord.Error) sb.AppendLine(" - ошибка оборудования");
+            //    if (statusWord.Charge < 9) sb.AppendLine(" - низкий заряд батареи");
+            //    if (!sended) sb.AppendLine(" - нет связи с трекером");
+            //    MessageBox.Show(sb.ToString(), "Изменение режима", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //if (retVal && sended && !stateGood) retVal = false;
+            
+            //if (retVal && !sended)
+            //{
+            //    if (OperatorRiskAgree())
+            //    {
+            //        if (ExecSql_AddEvent(objectId, "На смену")) retVal = ExecSql_SetObjectInField(objectId, false);
+            //    }
+            //}
         }
 
         private bool ConnectToRModule()
@@ -577,7 +729,7 @@ namespace ArmRegistrator
                 tryConnect = false;
                 if (!_rModule.InitRModule())
                 {
-                    MessageBox.Show("Не удается инициализировать радиомодуль на порту " + portName,
+                    MessageBox.Show("Не удается инициализировать радиомодем на порту " + portName,
                                     "Ошибка инициализации радиомодуля", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     portName = string.Empty;
                     tryConnect = true;
@@ -734,28 +886,20 @@ namespace ArmRegistrator
         private RModule _rModule;
         private ManualResetEvent _mreHaveData = new ManualResetEvent(true);
         private ManualResetEvent _mreWaitData = new ManualResetEvent(true);
+        private bool _isNoModem;
 
-        private bool SetInFieldState()
+        private bool SetInFieldState(int objectId, int trakObjId, bool inField)
         {
-            
-            //DataGridView dgv = TrackerView;
-            //if (dgv == null) return false;
-            //if (dgv.CurrentRow == null) return false;
-            //if (dgv.CurrentRow.Index < 0) return false;
-            //var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
-            var row = (DataRow)StaticMethods.GetCurrentDataRow(TrackerView);
-            if (row==null) return false;
-            int objectId= Convert.ToInt32(row["ObjectId"]);
-            int trakObjId = objectId;
+            //var row = StaticMethods.GetCurrentDataRow(TrackerView);
+            //if (row==null) return false;
 
-            if (!Convert.IsDBNull(row["_ActiveObjectId"])) trakObjId = Convert.ToInt32(row["_ActiveObjectId"]);
-            
-            //if (!int.TryParse(row["ObjectId"].ToString(), out objectId)) return false;
-            bool inField = Convert.ToBoolean(row["InField"]);
-            //if (!bool.TryParse(row["InField"].ToString(), out inField)) return false;
+            //int objectId= Convert.ToInt32(row["ObjectId"]);
+            //int trakObjId = objectId;
+
+            //if (!Convert.IsDBNull(row["_ActiveObjectId"])) trakObjId = Convert.ToInt32(row["_ActiveObjectId"]);
+            //bool inField = Convert.ToBoolean(row["InField"]);
 
             UInt16 status;
-            //bool sended = GetStatusFromObject(out status, objectId);
             bool sended = GetStatusFromObject(out status, trakObjId);
             var statusWord = new PakStatusWord(status);
             bool retVal = true;
@@ -763,8 +907,7 @@ namespace ArmRegistrator
             {
                 if (sended )
                 {
-                    //if(!statusWord.LampMode) retVal = SetObjectPassiveMode(out status, objectId);
-                    if (!statusWord.LampMode) retVal = SetObjectPassiveMode(out status, trakObjId);
+                    if (!statusWord.LampMode) retVal = SendObjectPassiveMode(out status, trakObjId);
                     if (retVal) retVal = ExecSql_SetObjectInField(objectId, true);
                 }
                 else
@@ -781,13 +924,12 @@ namespace ArmRegistrator
                 bool stateGood=!(statusWord.Error || statusWord.Charge<9);
                 if (sended && stateGood)
                 {
-                    //if(statusWord.LampMode) retVal = SetObjectWorkMode(out status, objectId);
-                    if (statusWord.LampMode) retVal = SetObjectWorkMode(out status, trakObjId);
+                    if (statusWord.LampMode) retVal = SendObjectWorkMode(out status, trakObjId);
                     if (retVal && !PakStatusWord.Instance(status).LampMode) retVal = ExecSql_SetObjectInField(objectId, false);
                 }
                 else
                 {
-                    var sb = new StringBuilder("Изменение режима не вохможно по следующим причинам:");
+                    var sb = new StringBuilder("Изменение режима не возможно по следующим причинам:");
                     sb.AppendLine();
                     if (statusWord.Error) sb.AppendLine(" - ошибка оборудования");
                     if (statusWord.Charge < 9) sb.AppendLine(" - низкий заряд батареи");
@@ -811,6 +953,15 @@ namespace ArmRegistrator
         {
             return MessageBox.Show("Трекер не доступен. Изменяем режим под вашу ответственность?"
                                    , "Изменение режима объекта", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) ==
+                   DialogResult.Yes;
+        }
+
+        private static bool OperatorRiskAgreeModem()
+        {
+            return MessageBox.Show("АРМ прекращает использование радиомодема." 
+                + Environment.NewLine+ "Изменения режимов будут проводиться под вашей ответственностью." 
+                + Environment.NewLine+ "Продолжаем?"
+                                   , "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
                    DialogResult.Yes;
         }
 
@@ -861,12 +1012,12 @@ namespace ArmRegistrator
             return SendCommandToObject(out status, (UInt16)(objectId), PakCommands.RequestStatus, TimeSpan.FromMilliseconds(500));
         }
 
-        private bool SetObjectPassiveMode(out UInt16 status, int objectId)
+        private bool SendObjectPassiveMode(out UInt16 status, int objectId)
         {
             return SendCommandToObject(out status, (UInt16) (objectId), PakCommands.SetModePassive,TimeSpan.FromSeconds(1));
         }
 
-        private bool SetObjectWorkMode(out UInt16 status, int objectId)
+        private bool SendObjectWorkMode(out UInt16 status, int objectId)
         {
             return SendCommandToObject(out status, (UInt16)(objectId), PakCommands.SetModeWork, TimeSpan.FromSeconds(3));
         }
@@ -957,6 +1108,38 @@ namespace ArmRegistrator
             {
                 frm.ShowDialog(this);
             }
+        }
+
+        private void FlagIsNotHaveModem_Click(object sender, EventArgs e)
+        {
+            bool state = ((CheckBox) sender).Checked;
+            if (state)
+            {
+                if (!OperatorRiskAgreeModem())
+                {
+                    ((CheckBox) sender).Checked = false;
+                    return;
+                }
+            }
+            HaveModemChange(state);
+            ChangeTrackViewRow();
+            SaveHaveModemProp(state);
+        }
+
+        private static void SaveHaveModemProp(bool state)
+        {
+            Properties.Settings.Default.HaveModemState = state;
+            Properties.Settings.Default.Save();
+        }
+
+        private void HaveModemChange(bool state)
+        {
+            _rModuleConnected = true;
+            BtnRModuleConnect.Enabled = !state;
+            _isNoModem = state;
+            FlagIsNotHaveModemSetImage(!state);
+            if (state) { BtnRModuleConnectSetImage(true); }
+            else { BtnRModuleConnect_Click(null, null); }
         }
     }
 }
