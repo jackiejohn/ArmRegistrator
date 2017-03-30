@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -214,25 +216,31 @@ namespace ArmRegistrator
             }
         }
 
-        private void FArm_StartTimer()
+        private void TimerStart()
         {
             if (_timer == null)
             {
                 _timer = new Timer();
-                _timer.Tick += FArm_TimerTick;
+                _timer.Tick += TimerTick;
             }
             int interval = Properties.Settings.Default.RefreshTime * 1000;
             if (interval == 0) return;
             _timer.Interval = interval;
             _timer.Start();
         }
-        private void FArm_StopTimer()
+        private void TimerStop()
         {
-            _timer.Stop();
+            if (_timer !=null) _timer.Stop();
         }
-        private void FArm_TimerTick(object sender, EventArgs e)
+        private void TimerTick(object sender, EventArgs e)
         {
             RefreshDataSetTables(_dsQuarry, _adapters,null);
+        }
+
+        private bool TimerIsStarted()
+        {
+            if (_timer==null) return false;
+            return _timer.Enabled;
         }
 
         private static DataGridViewProgressCell GetDefaultProgressCell()
@@ -248,7 +256,7 @@ namespace ArmRegistrator
             };
         }
         
-        private static void RefreshDataSetTables(DataSet dataSet, Dictionary<string, SqlDataAdapter> adapters, IEnumerable<string> tblNames)
+        private void RefreshDataSetTables(DataSet dataSet, Dictionary<string, SqlDataAdapter> adapters, IEnumerable<string> tblNames)
         {
             //var tblNames = new[] { "Object" };
             if (tblNames == null) tblNames = adapters.Keys;
@@ -261,8 +269,11 @@ namespace ArmRegistrator
             }
             catch (Exception ex)
             {
+                var timerState = TimerIsStarted();
+                TimerStop();
                 MessageBox.Show(string.Format("Возникла ошибка при обновлении данных." + Environment.NewLine
                                               + "Текст ошибки: {0}", ex.Message), "Ошибка обновления", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (timerState) TimerStart();
             }
         }
         
@@ -333,10 +344,10 @@ namespace ArmRegistrator
             return true;
         }
 
-        private static DataTable CreateTransposedTable(DataSet ds, IEnumerable<DataColumn> columns,string transTableName, Dictionary<string, string> columnsTitle)
+        private static void CreateTransposedTable(DataSet ds, IEnumerable<DataColumn> columns, string transTableName, Dictionary<string, string> columnsTitle)
         {
-            if (columns == null) return null;
-            if (ds == null) return null;
+            if (columns == null) return;
+            if (ds == null) return;
             var table = ds.Tables[transTableName];
             if (table == null)
             {
@@ -361,7 +372,7 @@ namespace ArmRegistrator
                     table.Rows.Add(row);
                 }
             }
-            return table;
+            return;
         }
 
         
@@ -375,7 +386,13 @@ namespace ArmRegistrator
             var adapter = new SqlDataAdapter { SelectCommand = conn.CreateCommand() };
 
             adapter.SelectCommand.CommandText = selCommand;
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
             adapter.TableMappings.Add("Table", tableName);
+            //if (tableName.Equals("Object"))
+            //{
+            //    adapter.FillSchema(dataSet, SchemaType.Mapped);
+            //    dataSet.Tables["Object"].Columns["Time"].DateTimeMode = DataSetDateTime.Utc;
+            //}
             adapter.Fill(dataSet);
 
             Dictionary<string, SqlDbType> cols = DbWrapper.GetColumnsDictionary(dataSet, tableName);
@@ -455,6 +472,13 @@ namespace ArmRegistrator
                 var name = (string)dataRow["Name"];
                 dataRow["Value"] = row[name];
             }
+            var rows = transTable.Select("Name='InFieldTime'");
+            if (rows.Length==0)return;
+            DataRow transRow = rows[0];
+            DateTime newTime;
+            var ci = new CultureInfo("en-US");
+            var parsed = DateTime.TryParse(transRow["Value"].ToString(), ci, DateTimeStyles.AssumeUniversal,out newTime);
+            if (parsed) transRow["Value"] = newTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
             return;
         }
         
@@ -465,14 +489,14 @@ namespace ArmRegistrator
                 if (!Arm_ConfigDataComponents()) return;
                 _dataConfigured = true;
                 BtnDbConnectSetImage(true);
-                FArm_StartTimer();
+                TimerStart();
                 BtnReplace.Enabled = true;
             }
             else
             {
                 _dataConfigured = false;
                 BtnDbConnectSetImage(false);
-                FArm_StopTimer();
+                TimerStop();
                 _dsQuarry.Clear();
                 BtnReplace.Enabled = false;
             }
@@ -653,27 +677,14 @@ namespace ArmRegistrator
             
             if (retVal) retVal = ExecSql_SetObjectInField(objectId, true);
             return retVal;
-            //if (sended)
-            //{
-            //    if (!statusWord.LampMode) retVal = SendObjectPassiveMode(out status, trakObjId);
-            //    if (retVal) retVal = ExecSql_SetObjectInField(objectId, true);
-            //}
-            //else
-            //{
-            //    if (OperatorRiskAgree())
-            //    {
-            //        if (ExecSql_AddEvent(objectId, "Со смены")) retVal = ExecSql_SetObjectInField(objectId, true);
-            //    }
-            //}
-            
         }
 
         private bool InFieldSet(bool setLampMode, bool addEvent, int objectId, int trakObjId)
         {
             bool retVal = true;
-            UInt16 status;
             if (setLampMode)
             {
+                UInt16 status;
                 retVal = SendObjectWorkMode(out status, trakObjId);
                 retVal = retVal && !PakStatusWord.Instance(status).LampMode;
             }
@@ -681,61 +692,46 @@ namespace ArmRegistrator
             if (addEvent) retVal = ExecSql_AddEvent(objectId, "На смену");
             if (retVal) retVal = ExecSql_SetObjectInField(objectId, false);
             return retVal;
-
-            //bool stateGood = !(statusWord.Error || statusWord.Charge < 9);
-            //if (sended && stateGood)
-            //{
-            //    if (statusWord.LampMode) retVal = SendObjectWorkMode(out status, trakObjId);
-            //    if (retVal && !PakStatusWord.Instance(status).LampMode) retVal = ExecSql_SetObjectInField(objectId, false);
-            //}
-            //else
-            //{
-            //    var sb = new StringBuilder("Изменение режима не возможно по следующим причинам:");
-            //    sb.AppendLine();
-            //    if (statusWord.Error) sb.AppendLine(" - ошибка оборудования");
-            //    if (statusWord.Charge < 9) sb.AppendLine(" - низкий заряд батареи");
-            //    if (!sended) sb.AppendLine(" - нет связи с трекером");
-            //    MessageBox.Show(sb.ToString(), "Изменение режима", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //}
-            //if (retVal && sended && !stateGood) retVal = false;
-            
-            //if (retVal && !sended)
-            //{
-            //    if (OperatorRiskAgree())
-            //    {
-            //        if (ExecSql_AddEvent(objectId, "На смену")) retVal = ExecSql_SetObjectInField(objectId, false);
-            //    }
-            //}
         }
 
         private bool ConnectToRModule()
         {
             var config = Configuration.GetDefault();
             string portName = Properties.Settings.Default.ComPortName;
-            
+            string baudRate = Properties.Settings.Default.ComPortBaudRate;
+
             bool tryConnect = true;
             while (tryConnect)
             {
-                if (string.IsNullOrEmpty(portName)) portName = ChoiceComPort();
-                if (string.IsNullOrEmpty(portName)) return false;
+                if (string.IsNullOrEmpty(portName))
+                {
+                    string[] portSettings = ChoiceComPort();
+                    portName = portSettings[0];
+                    baudRate = portSettings[1];
+                    if (string.IsNullOrEmpty(portName)) return false;
+                }
+                
                 if (_rModule==null)
                 {
-                    _rModule = new RModule(portName, config) {BaudRate = 9600};
+                    _rModule = new RModule(portName, config) { BaudRate = Convert.ToInt32(baudRate) };//{BaudRate = 9600};//TODO: Зделать возможность выбора скорости
                     //var parser = new Parser(new[] { "OK\r", "ERROR\r" }, ModulePak.PakSize, ModulePak.AddressBytesCount);
                     //_rModule.SetParser(parser);
                 }
                 if (_rModule.IsInit) return true;
                 
                 tryConnect = false;
-                if (!_rModule.InitRModule())
+                var initResult = _rModule.InitRModule();
+                if (!string.IsNullOrEmpty(initResult))
                 {
                     MessageBox.Show("Не удается инициализировать радиомодем на порту " + portName,
-                                    "Ошибка инициализации радиомодуля", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    "Ошибка инициализации радиомодуля (" + initResult + ")", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     portName = string.Empty;
                     tryConnect = true;
                 }
+                _rModule.SetDefaultParser();
             }
             Properties.Settings.Default.ComPortName = portName;
+            Properties.Settings.Default.ComPortBaudRate = baudRate;
             Properties.Settings.Default.Save();
             _rModule.OnPortError += RModuleOnPortError;
             _rModule.OnDataReceived += RModuleOnDataReceived;
@@ -744,12 +740,16 @@ namespace ArmRegistrator
             return true;
         }
 
-        private string ChoiceComPort()
+        private string[] ChoiceComPort()
         {
-            var frm = new ChoisePortDlg(Properties.Settings.Default.ComPortName);
+            var frm = new ChoisePortDlg(Properties.Settings.Default.ComPortName, Properties.Settings.Default.ComPortBaudRate);
             DialogResult result = frm.ShowDialog(this);
-            string resString=string.Empty;
-            if (result == DialogResult.OK) resString = frm.FieldPort.Text;
+            var resString= new string[2];
+            if (result == DialogResult.OK)
+            {
+                resString[0] = frm.FieldPort.Text;
+                resString[1] = frm.FieldBaudRate.Text;
+            }
             frm.Dispose();
             return resString;
         }
@@ -884,70 +884,8 @@ namespace ArmRegistrator
         private Timer _timer;
         private string _filter = string.Empty;
         private RModule _rModule;
-        private ManualResetEvent _mreHaveData = new ManualResetEvent(true);
-        private ManualResetEvent _mreWaitData = new ManualResetEvent(true);
+        private readonly ManualResetEvent _mreHaveData = new ManualResetEvent(true);
         private bool _isNoModem;
-
-        private bool SetInFieldState(int objectId, int trakObjId, bool inField)
-        {
-            //var row = StaticMethods.GetCurrentDataRow(TrackerView);
-            //if (row==null) return false;
-
-            //int objectId= Convert.ToInt32(row["ObjectId"]);
-            //int trakObjId = objectId;
-
-            //if (!Convert.IsDBNull(row["_ActiveObjectId"])) trakObjId = Convert.ToInt32(row["_ActiveObjectId"]);
-            //bool inField = Convert.ToBoolean(row["InField"]);
-
-            UInt16 status;
-            bool sended = GetStatusFromObject(out status, trakObjId);
-            var statusWord = new PakStatusWord(status);
-            bool retVal = true;
-            if (inField)
-            {
-                if (sended )
-                {
-                    if (!statusWord.LampMode) retVal = SendObjectPassiveMode(out status, trakObjId);
-                    if (retVal) retVal = ExecSql_SetObjectInField(objectId, true);
-                }
-                else
-                {
-                    if (OperatorRiskAgree())
-                    {
-                        if (ExecSql_AddEvent(objectId, "Со смены")) retVal = ExecSql_SetObjectInField(objectId, true);
-                    }
-                }
-            }
-            else
-            {
-                Cursor = Cursors.WaitCursor;
-                bool stateGood=!(statusWord.Error || statusWord.Charge<9);
-                if (sended && stateGood)
-                {
-                    if (statusWord.LampMode) retVal = SendObjectWorkMode(out status, trakObjId);
-                    if (retVal && !PakStatusWord.Instance(status).LampMode) retVal = ExecSql_SetObjectInField(objectId, false);
-                }
-                else
-                {
-                    var sb = new StringBuilder("Изменение режима не возможно по следующим причинам:");
-                    sb.AppendLine();
-                    if (statusWord.Error) sb.AppendLine(" - ошибка оборудования");
-                    if (statusWord.Charge < 9) sb.AppendLine(" - низкий заряд батареи");
-                    if (statusWord.Charge < 9) sb.AppendLine(" - нет связи с трекером");
-                    MessageBox.Show(sb.ToString(), "Изменение режима", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                if (retVal && sended && !stateGood) retVal = false;
-                Cursor = Cursors.Default;
-                if (retVal && !sended)
-                {
-                    if (OperatorRiskAgree())
-                    {
-                       if(ExecSql_AddEvent(objectId,"На смену")) retVal = ExecSql_SetObjectInField(objectId, false);
-                    }
-                }
-            }
-            return retVal;
-        }
 
         private static bool OperatorRiskAgree()
         {
@@ -976,7 +914,7 @@ namespace ArmRegistrator
             pakReqCoord.SetRequestCoordinate(adr, pakNumber, command, 0, 0);
             pakReqCoord.ActualDateTime();
             pakReqCoord.WriteCrc16();
-            var tpReq = new ModulePak(pakReqCoord);
+            var tpReq = new ModulePak(pakReqCoord,false);
             //_mreWaitData.Reset();
             var queue = (CQueue<ModulePak>)_rModule.InQueue;
             queue.DequeueAll();
@@ -986,7 +924,8 @@ namespace ArmRegistrator
             //bool sign = _mreHaveData.WaitOne(10););)
             if (!sign) return false; //Не дождались ответа от трекера
             ModulePak pak;
-            for (int i = 0; i < 2; i++)
+            int i;
+            for (i = 0; i < 2; ++i)//for (int i = 0; i < 2; i++)
             {
                 while (queue.TryDequeue(out pak))
                 {
@@ -1003,7 +942,7 @@ namespace ArmRegistrator
                 Thread.Sleep(waitTime); // Ждем, что пройдут тесты
                 //Thread.Sleep(TimeSpan.FromSeconds(1)); 
             }
-            
+            Debug.WriteLine("RetryCount " +i);
             return false;
         }
         private bool GetStatusFromObject(out UInt16 status, int objectId)
@@ -1022,7 +961,7 @@ namespace ArmRegistrator
             return SendCommandToObject(out status, (UInt16)(objectId), PakCommands.SetModeWork, TimeSpan.FromSeconds(3));
         }
 
-        private static bool ExecSql_SetObjectInField(int objectId, bool currentFieldState)
+        private bool ExecSql_SetObjectInField(int objectId, bool currentFieldState)
         {
             string conStr = Properties.Settings.Default.ConnectionString;
             bool retVal = true;
@@ -1040,9 +979,13 @@ namespace ArmRegistrator
                 }
                 catch (SqlException ex)
                 {
+                    var timerState = TimerIsStarted();
+                    TimerStop();
                     MessageBox.Show(
                         "Ошибка выполнения процедуры." + Environment.NewLine + "Текст сообщения:" + ex.Message
                         , "Ошибка выполнения SQL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (timerState) TimerStart();
+                    
                     retVal = false;
                 }
                 finally
@@ -1052,7 +995,7 @@ namespace ArmRegistrator
             }
             return retVal;
         }
-        private static bool ExecSql_AddEvent(int objectId, string value)
+        private bool ExecSql_AddEvent(int objectId, string value)
         {
             string conStr = Properties.Settings.Default.ConnectionString;
             bool retVal = true;
@@ -1073,9 +1016,12 @@ namespace ArmRegistrator
                 }
                 catch (SqlException ex)
                 {
+                    var timerState = TimerIsStarted();
+                    TimerStop();
                     MessageBox.Show(
                         "Ошибка выполнения процедуры." + Environment.NewLine + "Текст сообщения:" + ex.Message
                         , "Ошибка выполнения SQL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (timerState) TimerStart();
                     retVal = false;
                 }
                 finally

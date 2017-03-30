@@ -110,12 +110,36 @@ namespace ArmRegistrator.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HaveModem {
+            get {
+                return ((bool)(this["HaveModem"]));
+            }
+            set {
+                this["HaveModem"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool HaveModemState {
             get {
                 return ((bool)(this["HaveModemState"]));
             }
             set {
                 this["HaveModemState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ComPortBaudRate {
+            get {
+                return ((string)(this["ComPortBaudRate"]));
+            }
+            set {
+                this["ComPortBaudRate"] = value;
             }
         }
     }

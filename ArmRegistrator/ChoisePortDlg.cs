@@ -10,9 +10,10 @@ namespace ArmRegistrator
         {
             InitializeComponent();
         }
-        public ChoisePortDlg(string portName):this()
+        public ChoisePortDlg(string portName, string baudRate):this()
         {
             FieldPort.Text = portName;
+            FieldBaudRate.Text = baudRate;
         }
 
         private void FieldPort_Enter(object sender, EventArgs e)
@@ -33,11 +34,14 @@ namespace ArmRegistrator
         {
             // Com-порт
             string[] fieldPorts = SerialPort.GetPortNames();
+            string[] fieldBaudRates = new[] { "1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200" };
             FieldPort.Items.Clear();
             if (fieldPorts.Length != 0)
             {
                 FieldPort.Items.AddRange(fieldPorts);
-                FieldPort.SelectedIndex = 0;
+                if (string.IsNullOrEmpty(FieldPort.Text)) FieldPort.SelectedIndex = 0;
+                FieldBaudRate.Items.AddRange(fieldBaudRates);
+                if (string.IsNullOrEmpty(FieldBaudRate.Text)) FieldBaudRate.SelectedIndex = 0;
             }
             else
             {
@@ -47,6 +51,12 @@ namespace ArmRegistrator
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
+            if(string.IsNullOrEmpty(FieldPort.Text) || string.IsNullOrEmpty(FieldBaudRate.Text))
+            {
+                MessageBox.Show("Не указан порт или скорость!", "Информация", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                return;
+            }
             DialogResult = DialogResult.OK;
         }
 
