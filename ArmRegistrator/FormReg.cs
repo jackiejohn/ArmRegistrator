@@ -8,12 +8,12 @@ using System.Globalization;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using ConcurrenceType;
 using DataGridViewExtendedControls.DataGridViewProgress;
 using DataGridViewExtendedControls.Utils;
 using Microsoft.Data.ConnectionUI;
 using RadioModule;
 using SharedTypes.Paks;
-using SharedTypes.Queue;
 using Timer = System.Windows.Forms.Timer;
 
 namespace ArmRegistrator
@@ -55,7 +55,9 @@ namespace ArmRegistrator
             var dgv = CardView;
             var columns = FormRegHelper.GetDefaultCardColumnTitles();
             StaticMethods.CreateDataGridViewColumn(dgv, columns);
-            dgv.Columns["Value"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            var colValue = dgv.Columns["Value"];
+            if (colValue ==null ) throw new NullReferenceException("Столбец Value не найден");
+            colValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
         private void CreateTrackerViewColumns()
         {
@@ -77,7 +79,9 @@ namespace ArmRegistrator
             if (dgv.Columns == null) return;
 
             const string colName = "Charge";
-            int indxCharge = dgv.Columns[colName].Index;
+            var col = dgv.Columns[colName];
+            if (col==null) return;
+            int indxCharge = col.Index;
 
             DataGridViewProgressCell cell = GetDefaultProgressCell();
             cell.BarStyle = ProgressCellProgressStyle.Visible;
@@ -87,21 +91,13 @@ namespace ArmRegistrator
                 SortMode = DataGridViewColumnSortMode.Automatic,
                 DataPropertyName = colName,
                 CellTemplate = cell,
-                //AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                HeaderText = dgv.Columns[colName].HeaderText,
+                HeaderText = col.HeaderText,
             };
             dgv.Columns.Remove(colName);
             dgv.Columns.Insert(indxCharge - 1, progressColumn);
 
         }
-        //private void TrackerViewSetColumnWidth()
-        //{
-        //    DataGridView dgv = TrackerView;
-        //    foreach (DataGridViewColumn column in dgv.Columns)
-        //    {
-        //        column.Width = column.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, false);
-        //    }
-        //}
+        
         private void TrackerViewSetFilter()
         {
             DataGridView dgv = TrackerView;
@@ -288,12 +284,7 @@ namespace ArmRegistrator
             {
                 conn.Open();
                 ConfigDataCreateDataAdapter(_dsQuarry, conn, "Object", "pa_ArmRegistrSelect", new KeyValuePair<string, SqlDbType>("ObjectId", SqlDbType.Int), _adapters);
-                //ConfigDataCreateDataAdapter(_dsQuarry, conn, "ObjectMayR", "pa_ArmRegistrMayReplacement", new KeyValuePair<string, SqlDbType>("ObjectId", SqlDbType.Int), _adapters);
-                //ConfigDataCreateDataAdapter(_dsQuarry, conn, "ObjectReplacement", "pa_ArmRegistrReplObjects", new KeyValuePair<string, SqlDbType>("ObjectId", SqlDbType.Int), _adapters);
-
                 SetPrimaryKeyOnTable(_dsQuarry, "Object", "ObjectId");
-                //SetPrimaryKeyOnTable(_dsQuarry, "ObjectMayR", "ObjectId");
-                //SetPrimaryKeyOnTable(_dsQuarry, "ObjectReplacement", "ObjectId");
             }
             catch (Exception ex)
             {
@@ -662,7 +653,6 @@ namespace ArmRegistrator
             Cursor = Cursors.Default;
 
             if (retVal)
-            //if (SetInFieldState(objectId,trakObjId,inField))
             {
                 RefreshDataSetTables(_dsQuarry, _adapters, null);
                 ChangeTrackViewRow();
@@ -1086,6 +1076,14 @@ namespace ArmRegistrator
             FlagIsNotHaveModemSetImage(!state);
             if (state) { BtnRModuleConnectSetImage(true); }
             else { BtnRModuleConnect_Click(null, null); }
+        }
+
+        private void BtnStartReader_Click(object sender, EventArgs e)
+        {
+            using (var frm = new FormBar())
+            {
+                frm.ShowDialog(this);
+            }
         }
     }
 }

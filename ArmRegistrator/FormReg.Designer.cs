@@ -39,6 +39,7 @@
             this.ToolStripLabelHoursPost = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrackerView = new System.Windows.Forms.DataGridView();
+            this.BtnStartReader = new System.Windows.Forms.Button();
             this.BtnReplace = new System.Windows.Forms.Button();
             this.BtnNotInField = new System.Windows.Forms.Button();
             this.BtnInField = new System.Windows.Forms.Button();
@@ -167,6 +168,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.BtnStartReader);
             this.splitContainer1.Panel2.Controls.Add(this.BtnReplace);
             this.splitContainer1.Panel2.Controls.Add(this.BtnNotInField);
             this.splitContainer1.Panel2.Controls.Add(this.BtnInField);
@@ -190,6 +192,19 @@
             this.TrackerView.Size = new System.Drawing.Size(588, 388);
             this.TrackerView.TabIndex = 0;
             this.TrackerView.SelectionChanged += new System.EventHandler(this.TrackerView_SelectionChanged);
+            // 
+            // BtnStartReader
+            // 
+            this.BtnStartReader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnStartReader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnStartReader.Location = new System.Drawing.Point(169, 342);
+            this.BtnStartReader.Name = "BtnStartReader";
+            this.BtnStartReader.Size = new System.Drawing.Size(74, 68);
+            this.BtnStartReader.TabIndex = 11;
+            this.BtnStartReader.Text = "Ридер";
+            this.BtnStartReader.UseVisualStyleBackColor = true;
+            this.BtnStartReader.Visible = false;
+            this.BtnStartReader.Click += new System.EventHandler(this.BtnStartReader_Click);
             // 
             // BtnReplace
             // 
@@ -555,6 +570,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.CheckBox FlagIsNotHaveModem;
+        private System.Windows.Forms.Button BtnStartReader;
     }
 }
 
