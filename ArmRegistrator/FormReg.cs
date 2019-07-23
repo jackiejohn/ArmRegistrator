@@ -30,6 +30,7 @@ namespace ArmRegistrator
             RefreshDataSetTables(_dsQuarry, _adapters, new[]{"Object"});
         }
 
+        #region Form Events
         private void FormReg_Load(object sender, EventArgs e)
         {
             GetDefaultParamValues();
@@ -42,6 +43,291 @@ namespace ArmRegistrator
         {
             if (_rModule != null) _rModule.StopCommunication();
         }
+        private void FormReg_ResizeEnd(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.FormWidth = Width;
+            Properties.Settings.Default.FormHeight = Height;
+            Properties.Settings.Default.Save();
+        }
+        private void FormReg_SizeChanged(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.IsMaximized != (WindowState == FormWindowState.Maximized))
+            {
+                Properties.Settings.Default.IsMaximized = WindowState == FormWindowState.Maximized;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void CardView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            var dgv = (DataGridView)sender;
+            var row = ((DataRowView)dgv.Rows[e.RowIndex].DataBoundItem).Row;
+            if (row["Name"].ToString() == "InFieldTime" && dgv.Columns[e.ColumnIndex].Name == "Value")
+            {
+                var dgvTrack = TrackerView;
+                if (dgvTrack.CurrentRow != null)
+                {
+                    var inField = (bool)((DataRowView)dgvTrack.CurrentRow.DataBoundItem).Row["InField"];
+                    //var longTime = (bool)((DataRowView)dgvTrack.CurrentRow.DataBoundItem).Row["LongTimeInField"];
+                    var style = e.CellStyle;
+                    Color col = Color.LightGreen;
+                    //if (longTime) col = Color.Orange;
+                    if (!inField) col = Color.OrangeRed;
+                    style.BackColor = col;
+                    e.CellStyle.ApplyStyle(style);
+                }
+            }
+        }
+        private void TrackerView_SelectionChanged(object sender, EventArgs e)
+        {
+            ChangeTrackViewRow();
+            //var dgv = (DataGridView)sender;
+            //var dgvCard = CardView;
+            //if (dgv.CurrentRow == null)
+            //{
+            //    ButtonsFieldSetEnabled(null);
+            //    dgvCard.DataSource = null;
+            //    return;
+            //}
+            //if (dgv.CurrentRow.Index < 0) return;
+            ////if (_lastRow == dgv.CurrentRow) return;
+            ////_lastRow = dgv.CurrentRow;
+
+            //var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
+            //if (_rModuleConnected) ButtonsFieldSetEnabled((bool)row["InField"]);
+
+            //var objectType = (int)row["ObjectTypeId"];
+
+            //DataTable table = _dsQuarry.Tables["ObjectVT"];
+
+            //if (objectType == 1)
+            //{
+            //    table = _dsQuarry.Tables["ObjectET"];
+            //}
+            //if (table == null) return;
+            //if (dgvCard.DataSource == null) dgvCard.DataSource = table;
+            //else if (!dgvCard.DataSource.Equals(table)) dgvCard.DataSource = table;
+            //TransposedTableRefresh(row, table);
+        }
+
+        private void BtnReplace_Click(object sender, EventArgs e)
+        {
+            using (var frm = new FormReplacement(_dsQuarry, this))
+            {
+                frm.ShowDialog(this);
+            }
+        }
+        private void BtnStartReader_Click(object sender, EventArgs e)
+        {
+            using (var frm = new FormBar())
+            {
+                frm.ShowDialog(this);
+            }
+        }
+        private void FlagIsNotHaveModem_Click(object sender, EventArgs e)
+        {
+            bool state = ((CheckBox)sender).Checked;
+            if (state)
+            {
+                if (!OperatorRiskAgreeModem())
+                {
+                    ((CheckBox)sender).Checked = false;
+                    return;
+                }
+            }
+            HaveModemChange(state);
+            ChangeTrackViewRow();
+            SaveHaveModemProp(state);
+        }
+        private void BtnDbConnect_Click(object sender, EventArgs e)
+        {
+            if (!_dataConfigured)
+            {
+                if (!Arm_ConfigDataComponents()) return;
+                _dataConfigured = true;
+                BtnDbConnectSetImage(true);
+                TimerStart();
+                BtnReplace.Enabled = true;
+            }
+            else
+            {
+                _dataConfigured = false;
+                BtnDbConnectSetImage(false);
+                TimerStop();
+                _dsQuarry.Clear();
+                BtnReplace.Enabled = false;
+            }
+            StaticMethods.DataGridViewSetColumnWidth(TrackerView);
+            TrackerViewSetFilter();
+        }
+        private void BtnDbConfig_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new FormSettings())
+            {
+                dialog.ShowDialog(this);
+            }
+            return;
+            
+            var sqlb = new SqlConnectionStringBuilder(Properties.Settings.Default.ConnectionString);
+            if (string.IsNullOrEmpty(sqlb.ToString()))
+            {
+                AppStaticMethods.CreateAndStoreConnectionString();
+                return;
+            }
+            using (var dialog = AppStaticMethods.CreateDataConnectionDialog())
+            {
+                dialog.DataSources.Add(DataSource.SqlDataSource);
+                dialog.ConnectionString = sqlb.ToString();
+                dialog.HelpButton = false;
+                DialogResult dialogResult = DataConnectionDialog.Show(dialog);
+                if (dialogResult == DialogResult.OK)
+                {
+                    sqlb.ConnectionString = dialog.ConnectionString;
+                    Properties.Settings.Default["ConnectionString"] = sqlb.ToString();
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+        private void BtnAllObjectType_Click(object sender, EventArgs e)
+        {
+            FlagPersonal.Checked = true;
+            FlagTransport.Checked = true;
+            FlagTechnics.Checked = true;
+            TrackerViewSetFilter();
+        }
+        private void BtnAllField_Click(object sender, EventArgs e)
+        {
+            FlagIsInField.Checked = true;
+            FlagIsNotInField.Checked = true;
+            FlagLongTimeInField.Checked = false;
+            InputHoursVisibility();
+            TrackerViewSetFilter();
+        }
+        private void BtnRModuleConnect_Click(object sender, EventArgs e)
+        {
+            if (!_rModuleConnected)
+            {
+                if (!ConnectToRModule()) return;
+                if (_rModule != null) _rModule.StartCommunication();
+                _rModuleConnected = true;
+                BtnRModuleConnectSetImage(true);
+                ChangeTrackViewRow();
+            }
+            else
+            {
+                if (_rModule != null) _rModule.StopCommunication();
+                _rModuleConnected = false;
+                BtnRModuleConnectSetImage(false);
+                ButtonsFieldSetEnabled(null);
+            }
+        }
+        private void BtnInField_Click(object sender, EventArgs e)
+        {
+            ChangeInFieldState();
+        }
+        private void BtnNotInField_Click(object sender, EventArgs e)
+        {
+            ChangeInFieldState();
+        }
+
+        private void FlagPersonal_Click(object sender, EventArgs e)
+        {
+            TrackerViewSetFilter();
+        }
+        private void FlagTransport_CheckedChanged(object sender, EventArgs e)
+        {
+            TrackerViewSetFilter();
+        }
+        private void FlagTechnics_CheckedChanged(object sender, EventArgs e)
+        {
+            TrackerViewSetFilter();
+        }
+        private void FlagIsInField_Click(object sender, EventArgs e)
+        {
+            FlagLongTimeInField.Checked = false;
+            InputHoursVisibility();
+            TrackerViewSetFilter();
+        }
+        private void FlagIsNotInField_Click(object sender, EventArgs e)
+        {
+            FlagLongTimeInField.Checked = false;
+            InputHoursVisibility();
+            TrackerViewSetFilter();
+        }
+        private void FlagLongTimeInField_Click(object sender, EventArgs e)
+        {
+            FlagIsInField.Checked = false;
+            FlagIsNotInField.Checked = false;
+            InputHoursVisibility();
+            TrackerViewSetFilter();
+        }
+
+        private void ToolStripTextBoxHours_Validated(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.LongTime = ((ToolStripTextBox)sender).Text;
+            Properties.Settings.Default.Save();
+            TrackerViewSetFilter();
+        }
+        private void ToolStripTextBoxHours_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string strVal = ((ToolStripTextBox)sender).Text;
+            int val;
+            if (int.TryParse(strVal, out val))
+            {
+                if (val >= 1 && val <= 99) return;
+            }
+            e.Cancel = true;
+            MessageBox.Show("Вводимое значение должно быть целым числом от 1 до 99", "Неверные данные",
+                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        private void ToolStripTextBoxHours_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                Validate();
+                e.Handled = true;
+                return;
+            }
+        }
+        private void ToolStripTextBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (_dsQuarry == null) return;
+            Image img = Properties.Resources.SearchIco;
+            if (ToolStripTextBoxSearch.Text.Length > 0) img = Properties.Resources.DelCross;
+            ToolStripButtonSearch.Image = img;
+
+            SetFullFilter(ToolStripTextBoxSearch.Text);
+        }
+        private void ToolStripButtonSearch_Click(object sender, EventArgs e)
+        {
+            ToolStripTextBoxSearch.Clear();
+        }
+
+        private void RModule_OnErrReceived(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void RModule_OnAckReceived(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void RModule_OnDataReceived(object sender, EventArgs e)
+        {
+            _mreHaveData.Set();
+        }
+        private void RModule_OnPortError(object sender, EventArgs e)
+        {
+            _rModule.StopCommunication();
+            _rModule.Dispose();
+            _rModule = null;
+            _rModuleConnected = false;
+            BtnRModuleConnectSetImage(false);
+            ButtonsFieldSetEnabled(null);
+        }
+
+        #endregion
+
         private void GetDefaultParamValues()
         {
             ToolStripTextBoxHours.Text = Properties.Settings.Default.LongTime;
@@ -129,37 +415,7 @@ namespace ArmRegistrator
             SetFullFilter(ToolStripTextBoxSearch.Text);
             //bs.Filter = sbType.ToString();
         }
-        private void TrackerView_SelectionChanged(object sender, EventArgs e)
-        {
-            ChangeTrackViewRow();
-            //var dgv = (DataGridView)sender;
-            //var dgvCard = CardView;
-            //if (dgv.CurrentRow == null)
-            //{
-            //    ButtonsFieldSetEnabled(null);
-            //    dgvCard.DataSource = null;
-            //    return;
-            //}
-            //if (dgv.CurrentRow.Index < 0) return;
-            ////if (_lastRow == dgv.CurrentRow) return;
-            ////_lastRow = dgv.CurrentRow;
-
-            //var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
-            //if (_rModuleConnected) ButtonsFieldSetEnabled((bool)row["InField"]);
-
-            //var objectType = (int)row["ObjectTypeId"];
-
-            //DataTable table = _dsQuarry.Tables["ObjectVT"];
-
-            //if (objectType == 1)
-            //{
-            //    table = _dsQuarry.Tables["ObjectET"];
-            //}
-            //if (table == null) return;
-            //if (dgvCard.DataSource == null) dgvCard.DataSource = table;
-            //else if (!dgvCard.DataSource.Equals(table)) dgvCard.DataSource = table;
-            //TransposedTableRefresh(row, table);
-        }
+        
 
         private void ChangeTrackViewRow ()
         {
@@ -190,34 +446,14 @@ namespace ArmRegistrator
             TransposedTableRefresh(row, table);
         }
         
-        private void CardView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            var dgv = (DataGridView)sender;
-            var row = ((DataRowView)dgv.Rows[e.RowIndex].DataBoundItem).Row;
-            if (row["Name"].ToString() == "InFieldTime" && dgv.Columns[e.ColumnIndex].Name == "Value")
-            {
-                var dgvTrack = TrackerView;
-                if (dgvTrack.CurrentRow != null)
-                {
-                    var inField = (bool)((DataRowView)dgvTrack.CurrentRow.DataBoundItem).Row["InField"];
-                    //var longTime = (bool)((DataRowView)dgvTrack.CurrentRow.DataBoundItem).Row["LongTimeInField"];
-                    var style = e.CellStyle;
-                    Color col = Color.LightGreen;
-                    //if (longTime) col = Color.Orange;
-                    if (!inField) col = Color.OrangeRed;
-                    style.BackColor = col;
-                    e.CellStyle.ApplyStyle(style);
-                }
-            }
-        }
+        
 
         private void TimerStart()
         {
             if (_timer == null)
             {
                 _timer = new Timer();
-                _timer.Tick += TimerTick;
+                _timer.Tick += Timer_Tick;
             }
             int interval = Properties.Settings.Default.RefreshTime * 1000;
             if (interval == 0) return;
@@ -228,7 +464,8 @@ namespace ArmRegistrator
         {
             if (_timer !=null) _timer.Stop();
         }
-        private void TimerTick(object sender, EventArgs e)
+
+        private void Timer_Tick(object sender, EventArgs e)
         {
             RefreshDataSetTables(_dsQuarry, _adapters,null);
         }
@@ -473,82 +710,7 @@ namespace ArmRegistrator
             return;
         }
         
-        private void BtnDbConnect_Click(object sender, EventArgs e)
-        {
-            if (!_dataConfigured)
-            {
-                if (!Arm_ConfigDataComponents()) return;
-                _dataConfigured = true;
-                BtnDbConnectSetImage(true);
-                TimerStart();
-                BtnReplace.Enabled = true;
-            }
-            else
-            {
-                _dataConfigured = false;
-                BtnDbConnectSetImage(false);
-                TimerStop();
-                _dsQuarry.Clear();
-                BtnReplace.Enabled = false;
-            }
-            StaticMethods.DataGridViewSetColumnWidth(TrackerView);
-            TrackerViewSetFilter();
-        }
-        private void BtnDbConfig_Click(object sender, EventArgs e)
-        {
-            var sqlb = new SqlConnectionStringBuilder(Properties.Settings.Default.ConnectionString);
-            if (string.IsNullOrEmpty(sqlb.ToString()))
-            {
-                AppStaticMethods.CreateAndStoreConnectionString();
-                return;
-            }
-            using (var dialog = AppStaticMethods.CreateDataConnectionDialog())
-            {
-                dialog.DataSources.Add(DataSource.SqlDataSource);
-                dialog.ConnectionString = sqlb.ToString();
-                dialog.HelpButton = false;
-                DialogResult dialogResult = DataConnectionDialog.Show(dialog);
-                if (dialogResult == DialogResult.OK)
-                {
-                    sqlb.ConnectionString = dialog.ConnectionString;
-                    Properties.Settings.Default["ConnectionString"] = sqlb.ToString();
-                    Properties.Settings.Default.Save();
-                }
-            }
-        }
-        private void BtnAllObjectType_Click(object sender, EventArgs e)
-        {
-            FlagPersonal.Checked = true;
-            FlagTransport.Checked = true;
-            FlagTechnics.Checked = true;
-            TrackerViewSetFilter();
-        }
-        private void BtnAllField_Click(object sender, EventArgs e)
-        {
-            FlagIsInField.Checked = true;
-            FlagIsNotInField.Checked = true;
-            FlagLongTimeInField.Checked = false;
-            InputHoursVisibility();
-            TrackerViewSetFilter();
-        }
-        private void BtnRModuleConnect_Click(object sender, EventArgs e)
-        {
-            if (!_rModuleConnected)
-            {
-                if (!ConnectToRModule()) return;
-                if (_rModule != null) _rModule.StartCommunication();
-                _rModuleConnected = true;
-                BtnRModuleConnectSetImage(true);
-                ChangeTrackViewRow();
-            }
-            else
-            {
-                if (_rModule!=null) _rModule.StopCommunication();
-                _rModuleConnected = false;
-                BtnRModuleConnectSetImage(false);
-                ButtonsFieldSetEnabled(null);
-            }
-        }
+        
         private void BtnDbConnectSetImage(bool isConnected)
         {
             var newImg = isConnected ? Properties.Resources.ImageConnectionActive : Properties.Resources.ImageConnectionDeactive;
@@ -587,14 +749,7 @@ namespace ArmRegistrator
             }
 
         }
-        private void BtnInField_Click(object sender, EventArgs e)
-        {
-            ChangeInFieldState();
-        }
-        private void BtnNotInField_Click(object sender, EventArgs e)
-        {
-            ChangeInFieldState();
-        }
+        
         private void ChangeInFieldState()
         {
             if (TrackerView.SelectedRows.Count > 1)
@@ -723,10 +878,10 @@ namespace ArmRegistrator
             Properties.Settings.Default.ComPortName = portName;
             Properties.Settings.Default.ComPortBaudRate = baudRate;
             Properties.Settings.Default.Save();
-            _rModule.OnPortError += RModuleOnPortError;
-            _rModule.OnDataReceived += RModuleOnDataReceived;
-            //_rModule.OnAckReceived += RModuleOnAckReceived;
-            //_rModule.OnErrReceived += RModuleOnErrReceived;
+            _rModule.OnPortError += RModule_OnPortError;
+            _rModule.OnDataReceived += RModule_OnDataReceived;
+            //_rModule.OnAckReceived += RModule_OnAckReceived;
+            //_rModule.OnErrReceived += RModule_OnErrReceived;
             return true;
         }
 
@@ -764,101 +919,6 @@ namespace ArmRegistrator
             BtnNotInField.Enabled = enableBtn;
         }
 
-        private void RModuleOnErrReceived(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void RModuleOnAckReceived(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void RModuleOnDataReceived(object sender, EventArgs e)
-        {
-            _mreHaveData.Set();
-        }
-        private void RModuleOnPortError(object sender, EventArgs e)
-        {
-            _rModule.StopCommunication();
-            _rModule.Dispose();
-            _rModule = null;
-            _rModuleConnected = false;
-            BtnRModuleConnectSetImage(false);
-            ButtonsFieldSetEnabled(null);
-        }
-
-        private void FlagPersonal_Click(object sender, EventArgs e)
-        {
-            TrackerViewSetFilter();
-        }
-        private void FlagTransport_CheckedChanged(object sender, EventArgs e)
-        {
-            TrackerViewSetFilter();
-        }
-        private void FlagTechnics_CheckedChanged(object sender, EventArgs e)
-        {
-            TrackerViewSetFilter();
-        }
-        private void FlagIsInField_Click(object sender, EventArgs e)
-        {
-            FlagLongTimeInField.Checked = false;
-            InputHoursVisibility();
-            TrackerViewSetFilter();
-        }
-        private void FlagIsNotInField_Click(object sender, EventArgs e)
-        {
-            FlagLongTimeInField.Checked = false;
-            InputHoursVisibility();
-            TrackerViewSetFilter();
-        }
-        private void FlagLongTimeInField_Click(object sender, EventArgs e)
-        {
-            FlagIsInField.Checked = false;
-            FlagIsNotInField.Checked = false;
-            InputHoursVisibility();
-            TrackerViewSetFilter();
-        }
-
-        
-        private void ToolStripTextBoxHours_Validated(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.LongTime = ((ToolStripTextBox)sender).Text;
-            Properties.Settings.Default.Save();
-            TrackerViewSetFilter();
-        }
-        private void ToolStripTextBoxHours_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string strVal = ((ToolStripTextBox)sender).Text;
-            int val;
-            if (int.TryParse(strVal, out val))
-            {
-                if (val >= 1 && val <= 99) return;
-            }
-            e.Cancel = true;
-            MessageBox.Show("Вводимое значение должно быть целым числом от 1 до 99", "Неверные данные",
-                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-        private void ToolStripTextBoxHours_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
-            {
-                Validate();
-                e.Handled = true;
-                return;
-            }
-        }
-        private void ToolStripTextBoxSearch_TextChanged(object sender, EventArgs e)
-        {
-            if (_dsQuarry == null) return;
-            Image img = Properties.Resources.SearchIco;
-            if (ToolStripTextBoxSearch.Text.Length > 0) img = Properties.Resources.DelCross;
-            ToolStripButtonSearch.Image = img;
-
-            SetFullFilter(ToolStripTextBoxSearch.Text);
-        }
-        private void ToolStripButtonSearch_Click(object sender, EventArgs e)
-        {
-            ToolStripTextBoxSearch.Clear();
-        }
         private void SetFullFilter(string searchFilter)
         {
             var bs = (BindingSource)TrackerView.DataSource;
@@ -866,16 +926,6 @@ namespace ArmRegistrator
             searchFilter=searchFilter.Replace("'", "");
             bs.Filter = String.Format("({0} like '%{1}%' or {2} like '%{1}%') and ({3}) ", "_Object", searchFilter, "Code", _filter);
         }
-
-        private bool _dataConfigured;
-        private bool _rModuleConnected;
-        private readonly DataSet _dsQuarry = new DataSet("QuarryDB");
-        private readonly Dictionary<string, SqlDataAdapter> _adapters = new Dictionary<string, SqlDataAdapter>();
-        private Timer _timer;
-        private string _filter = string.Empty;
-        private RModule _rModule;
-        private readonly ManualResetEvent _mreHaveData = new ManualResetEvent(true);
-        private bool _isNoModem;
 
         private static bool OperatorRiskAgree()
         {
@@ -1022,45 +1072,7 @@ namespace ArmRegistrator
             return retVal;
         }
 
-        private void FormReg_ResizeEnd(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.FormWidth = Width;
-            Properties.Settings.Default.FormHeight = Height;
-            Properties.Settings.Default.Save();
-        }
-
-        private void FormReg_SizeChanged(object sender, EventArgs e)
-        {
-            if (Properties.Settings.Default.IsMaximized != (WindowState == FormWindowState.Maximized))
-            {
-                Properties.Settings.Default.IsMaximized = WindowState == FormWindowState.Maximized;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        private void BtnReplace_Click(object sender, EventArgs e)
-        {
-            using (var frm = new FormReplacement(_dsQuarry,this))
-            {
-                frm.ShowDialog(this);
-            }
-        }
-
-        private void FlagIsNotHaveModem_Click(object sender, EventArgs e)
-        {
-            bool state = ((CheckBox) sender).Checked;
-            if (state)
-            {
-                if (!OperatorRiskAgreeModem())
-                {
-                    ((CheckBox) sender).Checked = false;
-                    return;
-                }
-            }
-            HaveModemChange(state);
-            ChangeTrackViewRow();
-            SaveHaveModemProp(state);
-        }
+        
 
         private static void SaveHaveModemProp(bool state)
         {
@@ -1078,12 +1090,18 @@ namespace ArmRegistrator
             else { BtnRModuleConnect_Click(null, null); }
         }
 
-        private void BtnStartReader_Click(object sender, EventArgs e)
-        {
-            using (var frm = new FormBar())
-            {
-                frm.ShowDialog(this);
-            }
-        }
+        
+
+        #region Private Fields
+        private bool _dataConfigured;
+        private bool _rModuleConnected;
+        private readonly DataSet _dsQuarry = new DataSet("QuarryDB");
+        private readonly Dictionary<string, SqlDataAdapter> _adapters = new Dictionary<string, SqlDataAdapter>();
+        private Timer _timer;
+        private string _filter = string.Empty;
+        private RModule _rModule;
+        private readonly ManualResetEvent _mreHaveData = new ManualResetEvent(true);
+        private bool _isNoModem;
+        #endregion
     }
 }

@@ -81,6 +81,13 @@ namespace ArmRegistrator.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap LOGO2 {
+            get {
+                object obj = ResourceManager.GetObject("LOGO2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap ModemHave {
             get {
                 object obj = ResourceManager.GetObject("ModemHave", resourceCulture);
