@@ -61,18 +61,6 @@ namespace ArmRegistrator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ComPortName {
-            get {
-                return ((string)(this["ComPortName"]));
-            }
-            set {
-                this["ComPortName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("604")]
         public int FormHeight {
             get {
@@ -133,13 +121,73 @@ namespace ArmRegistrator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ComPortBaudRate {
+        [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
+        public string RfidPortIn {
             get {
-                return ((string)(this["ComPortBaudRate"]));
+                return ((string)(this["RfidPortIn"]));
             }
             set {
-                this["ComPortBaudRate"] = value;
+                this["RfidPortIn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM2")]
+        public string RfidPortOut {
+            get {
+                return ((string)(this["RfidPortOut"]));
+            }
+            set {
+                this["RfidPortOut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM3")]
+        public string RModemPort {
+            get {
+                return ((string)(this["RModemPort"]));
+            }
+            set {
+                this["RModemPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("19200")]
+        public string RModemBaudRate {
+            get {
+                return ((string)(this["RModemBaudRate"]));
+            }
+            set {
+                this["RModemBaudRate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RfidUse {
+            get {
+                return ((bool)(this["RfidUse"]));
+            }
+            set {
+                this["RfidUse"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RfidTwoReaders {
+            get {
+                return ((bool)(this["RfidTwoReaders"]));
+            }
+            set {
+                this["RfidTwoReaders"] = value;
             }
         }
     }

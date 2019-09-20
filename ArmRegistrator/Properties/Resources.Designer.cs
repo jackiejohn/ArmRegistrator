@@ -122,5 +122,33 @@ namespace ArmRegistrator.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        public static System.Drawing.Bitmap SerialConnected {
+            get {
+                object obj = ResourceManager.GetObject("SerialConnected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap SerialConnected1 {
+            get {
+                object obj = ResourceManager.GetObject("SerialConnected1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap SerialNoConnected {
+            get {
+                object obj = ResourceManager.GetObject("SerialNoConnected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap SerialNoConnected1 {
+            get {
+                object obj = ResourceManager.GetObject("SerialNoConnected1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

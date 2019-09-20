@@ -1,36 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
+using ArmRegistrator.DataBase;
 using DataGridViewExtendedControls.Utils;
 
 namespace ArmRegistrator
 {
     public partial class FormReplacement : Form
     {
-        public FormReplacement(DataSet dataSet, FormReg form)
+        public FormReplacement(DbWrapper wrapper)
         {
             InitializeComponent();
-            _dataSet = dataSet;
-            _parentForm = form;
-            //ConfigDataComponents();
+            _dbWrapper = wrapper;
         }
 
         private void ConfigDataComponents()
         {
             const string objTableName = "Object";
-            var bsObj = new BindingSource(_dataSet, objTableName) {Filter = "ServiceId>0"};
+            var bsObj = new BindingSource(_dbWrapper.Data, objTableName) { Filter = "ServiceId>0" };
             ObjectView.DataSource = bsObj;
-            var bsMay = new BindingSource(_dataSet, objTableName) {Filter = "ServiceId<0"};
+            var bsMay = new BindingSource(_dbWrapper.Data, objTableName) { Filter = "ServiceId<0" };
             ObjectMayView.DataSource = bsMay;
             return;
         }
 
-        private readonly DataSet _dataSet;
-        private readonly FormReg _parentForm;
-        private DataGridViewCellStyle _defaultStyle;
+        
 
         private void FormReplacement_Load(object sender, EventArgs e)
         {
@@ -95,25 +91,25 @@ namespace ArmRegistrator
 
         private void BtnReplace_Click(object sender, EventArgs e)
         {
-            var objRow = (DataRow)StaticMethods.GetCurrentDataRow(ObjectView);
-            var replRow = (DataRow)StaticMethods.GetCurrentDataRow(ObjectMayView);
+            var objRow = StaticMethods.GetCurrentDataRow(ObjectView);
+            var replRow = StaticMethods.GetCurrentDataRow(ObjectMayView);
             if (objRow==null || replRow==null) return;
             var objId = Convert.ToInt32(objRow["ObjectId"]);
             var activObjId = Convert.ToInt32(replRow["ObjectId"]);
-            ExecSqlAddRepleacePair(objId, activObjId);
-            _parentForm.RefreshObjectTable();
+            _dbWrapper.WriteAddedReplacePair(objId, activObjId);
+            _dbWrapper.RefreshObjectTable();
             EnableDisableButton();
             SetStyleForActiveRows();
 
         }
         private void BtnUnReplace_Click(object sender, EventArgs e)
         {
-            var objRow = (DataRow)StaticMethods.GetCurrentDataRow(ObjectView);
+            var objRow = StaticMethods.GetCurrentDataRow(ObjectView);
             if (objRow == null) return;
             var objId = Convert.ToInt32(objRow["ObjectId"]);
             SetDefaultCellStyleForPair(ObjectView.CurrentRow);
-            ExecSqlDelRepleacePair(objId);
-            _parentForm.RefreshObjectTable();
+            _dbWrapper.WriteDeletedReplacePair(objId);
+            _dbWrapper.RefreshObjectTable();
             EnableDisableButton();
             SetStyleForActiveRows();
         }
@@ -129,11 +125,11 @@ namespace ArmRegistrator
         }
         private void EnableDisableButton()
         {
-            var objRow = (DataRow)StaticMethods.GetCurrentDataRow(ObjectView);
+            var objRow = StaticMethods.GetCurrentDataRow(ObjectView);
             var enableRepl = true;
             if (objRow == null) enableRepl = false;
             
-            var objMayRow = (DataRow)StaticMethods.GetCurrentDataRow(ObjectMayView);
+            var objMayRow = StaticMethods.GetCurrentDataRow(ObjectMayView);
             var enableUnRepl = true;
             if (objMayRow == null) enableUnRepl = false;
             
@@ -146,80 +142,8 @@ namespace ArmRegistrator
             BtnReplace.Enabled = enableRepl && !enableUnRepl;
             BtnUnReplace.Enabled = !enableRepl;//enableUnRepl || !enableRepl;
         }
-        private void ExecSqlAddRepleacePair(int objectId, int activeObjectId)
-        {
-            var sqlb = new SqlConnectionStringBuilder(Properties.Settings.Default.ConnectionString);
-
-            if (sqlb.ToString().Length == 0)
-            {
-                MessageBox.Show("Не определена строка подключения", "Ошибка записи в БД", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                return;
-            }
-            using (var connection = new SqlConnection(sqlb.ToString()))
-            {
-                try
-                {
-                    connection.Open();
-                    var cmd = connection.CreateCommand();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "pa_ArmRegistrAddPair";
-                    cmd.Parameters.AddWithValue("@ObjectId", objectId);
-                    cmd.Parameters.AddWithValue("@ActiveObjectId", activeObjectId);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException exSql)
-                {
-                    MessageBox.Show("Ошибка SQL: " + exSql.Message , "Ошибка записи в БД", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка: " + ex.Message, "Ошибка записи в БД", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            }
-        }
-        private void ExecSqlDelRepleacePair(int objectId)
-        {
-            var sqlb = new SqlConnectionStringBuilder(Properties.Settings.Default.ConnectionString);
-
-            if (sqlb.ToString().Length == 0)
-            {
-                MessageBox.Show("Не определена строка подключения", "Ошибка записи в БД", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                return;
-            }
-            using (var connection = new SqlConnection(sqlb.ToString()))
-            {
-                try
-                {
-                    connection.Open();
-                    var cmd = connection.CreateCommand();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "pa_ArmRegistrDelPair";
-                    cmd.Parameters.AddWithValue("@ObjectId", objectId);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException exSql)
-                {
-                    MessageBox.Show("Ошибка SQL: " + exSql.Message, "Ошибка записи в БД", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка: " + ex.Message, "Ошибка записи в БД", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            }
-        }
+        
+        private readonly DbWrapper _dbWrapper;
+        private DataGridViewCellStyle _defaultStyle;
     }
 }

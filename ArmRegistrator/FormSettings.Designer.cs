@@ -29,22 +29,46 @@
         private void InitializeComponent()
         {
             this.BtnCancel = new System.Windows.Forms.Button();
-            this.BtnAbout = new System.Windows.Forms.Button();
             this.BtnSerial = new System.Windows.Forms.Button();
             this.BtnDbConnect = new System.Windows.Forms.Button();
+            this.BtnAbout = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnCancel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnCancel.Location = new System.Drawing.Point(0, 221);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(117, 68);
             this.BtnCancel.TabIndex = 16;
-            this.BtnCancel.Text = "Отмена";
+            this.BtnCancel.Text = "Закрыть";
             this.BtnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.BtnCancel.UseVisualStyleBackColor = true;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            // 
+            // BtnSerial
+            // 
+            this.BtnSerial.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnSerial.Location = new System.Drawing.Point(0, 73);
+            this.BtnSerial.Name = "BtnSerial";
+            this.BtnSerial.Size = new System.Drawing.Size(117, 68);
+            this.BtnSerial.TabIndex = 14;
+            this.BtnSerial.Text = "Коммуникации";
+            this.BtnSerial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnSerial.UseVisualStyleBackColor = true;
+            this.BtnSerial.Click += new System.EventHandler(this.BtnSerial_Click);
+            // 
+            // BtnDbConnect
+            // 
+            this.BtnDbConnect.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnDbConnect.Location = new System.Drawing.Point(0, -1);
+            this.BtnDbConnect.Name = "BtnDbConnect";
+            this.BtnDbConnect.Size = new System.Drawing.Size(117, 68);
+            this.BtnDbConnect.TabIndex = 13;
+            this.BtnDbConnect.Text = "Подключение к БД";
+            this.BtnDbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnDbConnect.UseVisualStyleBackColor = true;
+            this.BtnDbConnect.Click += new System.EventHandler(this.BtnDbConnect_Click);
             // 
             // BtnAbout
             // 
@@ -58,29 +82,6 @@
             this.BtnAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.BtnAbout.UseVisualStyleBackColor = true;
             this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
-            // 
-            // BtnSerial
-            // 
-            this.BtnSerial.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnSerial.Location = new System.Drawing.Point(0, 73);
-            this.BtnSerial.Name = "BtnSerial";
-            this.BtnSerial.Size = new System.Drawing.Size(117, 68);
-            this.BtnSerial.TabIndex = 14;
-            this.BtnSerial.Text = "Коммуникации";
-            this.BtnSerial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.BtnSerial.UseVisualStyleBackColor = true;
-            // 
-            // BtnDbConnect
-            // 
-            this.BtnDbConnect.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnDbConnect.Location = new System.Drawing.Point(0, -1);
-            this.BtnDbConnect.Name = "BtnDbConnect";
-            this.BtnDbConnect.Size = new System.Drawing.Size(117, 68);
-            this.BtnDbConnect.TabIndex = 13;
-            this.BtnDbConnect.Text = "Подключение к БД";
-            this.BtnDbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.BtnDbConnect.UseVisualStyleBackColor = true;
-            this.BtnDbConnect.Click += new System.EventHandler(this.BtnDbConnect_Click);
             // 
             // FormSettings
             // 

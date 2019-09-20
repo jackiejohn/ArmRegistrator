@@ -8,9 +8,10 @@ using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Data.ConnectionUI;
 
-namespace ArmRegistrator
+namespace ArmRegistrator.DataBase
 {
-    public static class DbWrapper
+    [Obsolete]
+    internal static class DbWrapperOld
     {
         /// <summary>
         /// Возвращает словарь с перечнем имен столбцов и их типов
@@ -18,7 +19,8 @@ namespace ArmRegistrator
         /// <param name="ds">Dataset в котором расположена таблица</param>
         /// <param name="tableName">имя таблицы: по которой необходимо сставить словарь</param>
         /// <returns>возвращает null в случае незаданной таблицы или отсутствия столбцов</returns>
-        public static Dictionary<string, SqlDbType> GetColumnsDictionary(DataSet ds, string tableName)
+        [Obsolete]
+        private static Dictionary<string, SqlDbType> GetColumnsDictionary(DataSet ds, string tableName)
         {
             if (!ds.Tables.Contains(tableName)) return null;
 
@@ -31,7 +33,8 @@ namespace ArmRegistrator
         /// </summary>
         /// <param name="table">Таблица: на основании которой формируется словарь</param>
         /// <returns>возвращает null в случае незаданной таблицы или отсутствия столбцов</returns>
-        public static Dictionary<string, SqlDbType> GetColumnsDictionary(DataTable table)
+        [Obsolete]
+        private static Dictionary<string, SqlDbType> GetColumnsDictionary(DataTable table)
         {
             if (table==null) return null;
 
@@ -95,6 +98,7 @@ namespace ArmRegistrator
             }
         }
 
+        [Obsolete]
         private static DataConnectionDialog CreateDataConnectionDialog()
         {
             var dialog = new DataConnectionDialog();

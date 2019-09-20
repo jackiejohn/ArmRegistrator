@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Windows.Forms;
+using DataGridViewExtendedControls.DataGridViewProgress;
 
 namespace ArmRegistrator
 {
@@ -61,9 +65,9 @@ namespace ArmRegistrator
         }
         public static Collection<string> GetDefaultColumnsWithButton()
         {
-            return new Collection<string>
-            {
-                /*"InField", 
+            return new Collection<string>()
+            /*{
+                "InField", 
                 "BaseStationId", 
                 "Latitude", 
                 "Longitude", 
@@ -82,8 +86,49 @@ namespace ArmRegistrator
                 "Answer",
                 "PacketError",
                 "NoMotion",
-                "NoGpsSignal",*/
+                "NoGpsSignal",
+            }*/
+            ;
+        }
+        public static DataGridViewProgressCell GetDefaultProgressCell()
+        {
+            return new DataGridViewProgressCell
+            {
+                HiLevelColor = Color.FromArgb(203, 235, 108),
+                LowLevelColor = Color.Red,
+                MaxLimit = 15,
+                MidPoint = 2,
+                TextStyle = ProgressCellTextStyle.Percentage,
+                BarStyle = ProgressCellProgressStyle.Invisible
             };
+        }
+
+        public static bool OperatorRiskAgree()
+        {
+            return MessageBox.Show("Трекер не доступен. Изменяем режим под вашу ответственность?"
+                                   , "Изменение режима объекта", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) ==
+                   DialogResult.Yes;
+        }
+
+        public static bool OperatorRiskAgreeModem()
+        {
+            return MessageBox.Show("АРМ прекращает использование радиомодема."
+                + Environment.NewLine + "Изменения режимов будут проводиться под вашей ответственностью."
+                + Environment.NewLine + "Продолжаем?"
+                                   , "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                   DialogResult.Yes;
+        }
+
+        public static void InvokeButtonSetImage(Button ctrl, Bitmap newImage)
+        {
+            if (ctrl.InvokeRequired)
+            {
+                ctrl.BeginInvoke(new Action<Bitmap>(img => { ctrl.Image = img; }), newImage);
+            }
+            else
+            {
+                ctrl.Image = newImage;
+            }
         }
     }
 }

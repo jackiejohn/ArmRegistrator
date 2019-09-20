@@ -78,13 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppStaticMethods.cs" />
-    <Compile Include="ChoisePortDlg.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ChoisePortDlg.Designer.cs">
-      <DependentUpon>ChoisePortDlg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DBWrapper.cs" />
+    <Compile Include="Automation\Logic.cs" />
+    <Compile Include="DataBase\DbWrapper.cs" />
+    <Compile Include="DataBase\DBWrapperOld.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,12 +93,19 @@
     <Compile Include="FormBar.Designer.cs">
       <DependentUpon>FormBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPhoto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPhoto.Designer.cs">
+      <DependentUpon>FormPhoto.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormReg.Designer.cs">
       <DependentUpon>FormReg.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataBase\DataSetHelper.cs" />
     <Compile Include="FormRegHelper.cs" />
     <Compile Include="FormReplacement.cs">
       <SubType>Form</SubType>
@@ -111,6 +114,12 @@
       <DependentUpon>FormReplacement.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReplacementHelper.cs" />
+    <Compile Include="FormSerialSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSerialSettings.Designer.cs">
+      <DependentUpon>FormSerialSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,20 +128,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ChoisePortDlg.resx">
-      <DependentUpon>ChoisePortDlg.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBar.resx">
       <DependentUpon>FormBar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormPhoto.resx">
+      <DependentUpon>FormPhoto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReg.resx">
       <DependentUpon>FormReg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReplacement.resx">
       <DependentUpon>FormReplacement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSerialSettings.resx">
+      <DependentUpon>FormSerialSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
@@ -156,6 +168,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Radio\RModuleWrapper.cs" />
     <Compile Include="WebCam.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,8 +187,12 @@
     <Content Include="Icons\Вызов формы.ico" />
     <None Include="Icons\Модем Используем.ico" />
     <None Include="Icons\Модем Не используем.ico" />
+    <None Include="Icons\Модем Используем1.ico" />
+    <None Include="Icons\Модем Не используем1.ico" />
     <Content Include="Icons\Объединение.ico" />
     <Content Include="Icons\Развод.ico" />
+    <Content Include="Icons\рфид_зелёный.ico" />
+    <Content Include="Icons\рфид_чёррный.ico" />
     <Content Include="LOGO2.ico" />
     <None Include="Resources\LOGO2.ico" />
     <None Include="Resources\Icon1.ico" />

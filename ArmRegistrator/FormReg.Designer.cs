@@ -61,6 +61,8 @@
             this.FlagIsNotHaveModem = new System.Windows.Forms.CheckBox();
             this.BtnRModuleConnect = new System.Windows.Forms.Button();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.BtnSerialConnect = new System.Windows.Forms.Button();
             this.PanelGrids.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -72,6 +74,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // PanelGrids
@@ -83,7 +86,7 @@
             this.PanelGrids.Controls.Add(this.splitContainer1);
             this.PanelGrids.Location = new System.Drawing.Point(3, 119);
             this.PanelGrids.Name = "PanelGrids";
-            this.PanelGrids.Size = new System.Drawing.Size(960, 444);
+            this.PanelGrids.Size = new System.Drawing.Size(1057, 444);
             this.PanelGrids.TabIndex = 0;
             // 
             // toolStrip1
@@ -98,7 +101,7 @@
             this.ToolStripLabelHoursPost});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(960, 50);
+            this.toolStrip1.Size = new System.Drawing.Size(1057, 50);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -174,8 +177,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.BtnInField);
             this.splitContainer1.Panel2.Controls.Add(this.CardView);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(957, 416);
-            this.splitContainer1.SplitterDistance = 591;
+            this.splitContainer1.Size = new System.Drawing.Size(1054, 416);
+            this.splitContainer1.SplitterDistance = 650;
             this.splitContainer1.TabIndex = 0;
             // 
             // TrackerView
@@ -189,7 +192,7 @@
             this.TrackerView.Location = new System.Drawing.Point(0, 28);
             this.TrackerView.Name = "TrackerView";
             this.TrackerView.ReadOnly = true;
-            this.TrackerView.Size = new System.Drawing.Size(588, 388);
+            this.TrackerView.Size = new System.Drawing.Size(647, 388);
             this.TrackerView.TabIndex = 0;
             this.TrackerView.SelectionChanged += new System.EventHandler(this.TrackerView_SelectionChanged);
             // 
@@ -212,7 +215,7 @@
             this.BtnReplace.Enabled = false;
             this.BtnReplace.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnReplace.Image = ((System.Drawing.Image)(resources.GetObject("BtnReplace.Image")));
-            this.BtnReplace.Location = new System.Drawing.Point(256, 342);
+            this.BtnReplace.Location = new System.Drawing.Point(294, 342);
             this.BtnReplace.Name = "BtnReplace";
             this.BtnReplace.Size = new System.Drawing.Size(74, 68);
             this.BtnReplace.TabIndex = 10;
@@ -261,7 +264,7 @@
             this.CardView.Name = "CardView";
             this.CardView.ReadOnly = true;
             this.CardView.RowHeadersVisible = false;
-            this.CardView.Size = new System.Drawing.Size(325, 305);
+            this.CardView.Size = new System.Drawing.Size(363, 305);
             this.CardView.TabIndex = 0;
             this.CardView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.CardView_CellPainting);
             // 
@@ -270,7 +273,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.BtnDbConfig);
             this.groupBox1.Controls.Add(this.BtnDbConnect);
-            this.groupBox1.Location = new System.Drawing.Point(748, 15);
+            this.groupBox1.Location = new System.Drawing.Point(845, 15);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(206, 98);
             this.groupBox1.TabIndex = 8;
@@ -503,18 +506,43 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(86, 47);
             this.toolStripLabel1.Text = "toolStripLabel1";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.BtnSerialConnect);
+            this.groupBox5.Location = new System.Drawing.Point(750, 15);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(89, 98);
+            this.groupBox5.TabIndex = 19;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Считыватели";
+            // 
+            // BtnSerialConnect
+            // 
+            this.BtnSerialConnect.Enabled = false;
+            this.BtnSerialConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnSerialConnect.Image = global::ArmRegistrator.Properties.Resources.SerialNoConnected;
+            this.BtnSerialConnect.Location = new System.Drawing.Point(10, 21);
+            this.BtnSerialConnect.Name = "BtnSerialConnect";
+            this.BtnSerialConnect.Size = new System.Drawing.Size(68, 68);
+            this.BtnSerialConnect.TabIndex = 17;
+            this.BtnSerialConnect.Text = "Связь";
+            this.BtnSerialConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BtnSerialConnect.UseVisualStyleBackColor = true;
+            this.BtnSerialConnect.Click += new System.EventHandler(this.BtnSerialConnect_Click);
+            // 
             // FormReg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(966, 566);
+            this.ClientSize = new System.Drawing.Size(1063, 566);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.PanelGrids);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(982, 604);
+            this.MinimumSize = new System.Drawing.Size(1079, 604);
             this.Name = "FormReg";
             this.Text = "СПА-Карьер: АРМ регистрации";
             this.Load += new System.EventHandler(this.FormReg_Load);
@@ -533,6 +561,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -571,6 +600,8 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.CheckBox FlagIsNotHaveModem;
         private System.Windows.Forms.Button BtnStartReader;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button BtnSerialConnect;
     }
 }
 

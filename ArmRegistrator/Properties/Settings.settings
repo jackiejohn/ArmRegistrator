@@ -11,9 +11,6 @@
     <Setting Name="LongTime" Type="System.String" Scope="User">
       <Value Profile="(Default)">12</Value>
     </Setting>
-    <Setting Name="ComPortName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="FormHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">604</Value>
     </Setting>
@@ -29,8 +26,23 @@
     <Setting Name="HaveModemState" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ComPortBaudRate" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="RfidPortIn" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM1</Value>
+    </Setting>
+    <Setting Name="RfidPortOut" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM2</Value>
+    </Setting>
+    <Setting Name="RModemPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM3</Value>
+    </Setting>
+    <Setting Name="RModemBaudRate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">19200</Value>
+    </Setting>
+    <Setting Name="RfidUse" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RfidTwoReaders" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

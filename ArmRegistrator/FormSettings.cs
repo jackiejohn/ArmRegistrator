@@ -13,15 +13,19 @@ namespace ArmRegistrator
         {
             InitializeComponent();
         }
+        public FormSettings(Delegate serialDelegate):this()
+        {
+            _serialDelegate = serialDelegate;
+        }
 
         private void BtnDbConnect_Click(object sender, EventArgs e)
         {
             var sqlb = new SqlConnectionStringBuilder(Properties.Settings.Default.ConnectionString);
             if (string.IsNullOrEmpty(sqlb.ToString()))
             {
-                //Hide();
+                Hide();
                 AppStaticMethods.CreateAndStoreConnectionString();
-                //Close();
+                Close();
                 return;
             }
             using (var dialog = AppStaticMethods.CreateDataConnectionDialog())
@@ -64,6 +68,23 @@ namespace ArmRegistrator
             //Close();
             return;
         }
+
+        private void BtnSerial_Click(object sender, EventArgs e)
+        {
+            using (var frm = new FormSerialSettings())
+            {
+                Visible = false;
+                var dialogResult=frm.ShowDialog(this);
+                if (dialogResult == DialogResult.OK)
+                {
+                    if (_serialDelegate != null) _serialDelegate.DynamicInvoke();
+                }
+            }
+            Visible = true;
+            return;
+        }
+
+        private Delegate _serialDelegate;
         
     }
 }
