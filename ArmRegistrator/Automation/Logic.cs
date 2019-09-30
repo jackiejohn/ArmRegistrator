@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Threading;
 using ArmRegistrator.DataBase;
 using ArmRegistrator.Radio;
 using RfidLib;
@@ -7,41 +8,85 @@ using SharedTypes.Paks;
 
 namespace ArmRegistrator.Automation
 {
-    public class Logic
+    public class Logic:IDisposable
     {
         public Logic(string portIn, string portOut, DbWrapper dbWrapper, RModuleWrapper rmWrapper)
             : this(portIn, dbWrapper, rmWrapper)
         {
-            _readerOut=new SerialReader(new SerialPort(portOut));
+            _readerOut=new SerialReader(new SerialPort(portOut){ReadTimeout = 5000});
             _readerOut.OnSerialStringReaded += ReaderOut_OnSerialStringReaded;
             _twoReaders = true;
         }
         public Logic(string port, DbWrapper dbWrapper, RModuleWrapper rmWrapper)
         {
-            _readerIn = new SerialReader(new SerialPort(port));
+            _readerIn = new SerialReader(new SerialPort(port){ReadTimeout = 5000});
             _readerIn.OnSerialStringReaded += ReaderIn_OnSerialStringReaded;
             _dbWrapper = dbWrapper;
             _rmWrapper = rmWrapper;
         }
 
-        public bool Start()
+        public void Dispose()
         {
-            _readerIn.StartReading();
-            if (_readerIn.Error != SerialReaderErrorEnum.None)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed)
             {
-                _readerIn.StopReading();
-                return false;
-            }
-            if (_twoReaders)
-            {
-                _readerOut.StartReading();
-                if (_readerOut.Error != SerialReaderErrorEnum.None)
+                if (disposing)
                 {
-                    _readerIn.StopReading();
-                    _readerOut.StopReading();
-                    return false;
+                    //Stop();
+                    IsStarted = false;
+                    if (_readerIn != null)
+                    {
+                        _readerIn.Dispose();
+                        _readerIn = null;
+                    }
+                    if (_readerOut != null)
+                    {
+                        _readerOut.Dispose();
+                        _readerOut = null;
+                    }
                 }
             }
+            _isDisposed = true;
+        }
+
+        public bool Start()
+        {
+            var waitStarting = (int)TimeSpan.FromSeconds(10).TotalMilliseconds;
+            var mre = new ManualResetEvent(false);
+            //_readerIn.StartReading();
+            _readerIn.StartReading(new[]{mre});
+            mre.WaitOne(waitStarting);
+            if (_readerIn.Error == SerialReaderErrorEnum.PortOpenError)
+            {
+                _error |= (int)LogicErrorEnum.PortInOpenError;
+                _readerIn.StopReading();
+                mre.Close();
+                return false;
+            }
+            
+            if (_twoReaders)
+            {
+                var mreOut = new ManualResetEvent(false);
+                _readerOut.StartReading(new[] { mreOut });
+                mreOut.WaitOne(waitStarting);
+                mreOut.Close();
+                if (_readerOut.Error == SerialReaderErrorEnum.PortOpenError)
+                {
+                    _error |= (int)LogicErrorEnum.PortOutOpenError;
+                    _readerIn.StopReading();
+                    mre.Close();
+                    _readerOut.StopReading();
+                    mreOut.Close();
+                    return false;
+                }
+                mreOut.Close();
+            }
+            mre.Close();
+            _error = (int)LogicErrorEnum.None;
             IsStarted = true;
             return true;
         }
@@ -69,9 +114,9 @@ namespace ArmRegistrator.Automation
 
         }
 
-
-        public event EventHandler OnObjectToWork;
-        public event EventHandler OnObjectToLamp;
+        public delegate void ObjectChangeStateHandler(object sender, ObjectChangeStateEventArgs e);
+        public event ObjectChangeStateHandler OnObjectToWork;
+        public event ObjectChangeStateHandler OnObjectToLamp;
 
         
         private DbWrapper.ObjectRecordValue GetObjectRecValue(string rfidLabel)
@@ -108,7 +153,7 @@ namespace ArmRegistrator.Automation
             if (isWrited)
             {
                 _dbWrapper.RefreshDataSetAllTables();
-                InvokeOnObjectToWork(new EventArgs());
+                InvokeOnObjectToWork(new ObjectChangeStateEventArgs(objectState.ObjectId));
                 //TrackerViewRowChanged();
             }
         }
@@ -146,35 +191,34 @@ namespace ArmRegistrator.Automation
                 _dbWrapper.RefreshDataSetAllTables();
                 if (objectState.InField)
                 {
-                    InvokeOnObjectToLamp(new EventArgs());
+                    InvokeOnObjectToLamp(new ObjectChangeStateEventArgs(objectState.ObjectId));
                 }
                 else
                 {
-                    InvokeOnObjectToWork(new EventArgs());
-                    
+                    InvokeOnObjectToWork(new ObjectChangeStateEventArgs(objectState.ObjectId));
                 }
                 //TrackerViewRowChanged();
             }
         }
 
-        private void InvokeOnObjectToWork(EventArgs e)
+        public void InvokeOnObjectToWork(ObjectChangeStateEventArgs e)
         {
-            EventHandler handler = OnObjectToWork;
+            ObjectChangeStateHandler handler = OnObjectToWork;
             if (handler != null) handler(this, e);
         }
 
-        private void InvokeOnObjectToLamp(EventArgs e)
+        public void InvokeOnObjectToLamp(ObjectChangeStateEventArgs e)
         {
-            EventHandler handler = OnObjectToLamp;
+            ObjectChangeStateHandler handler = OnObjectToLamp;
             if (handler != null) handler(this, e);
         }
 
-        
+        public LogicErrorEnum Error { get { return (LogicErrorEnum)_error; } }
 
 
 
-        private readonly SerialReader _readerIn;
-        private readonly SerialReader _readerOut;
+        private SerialReader _readerIn;
+        private SerialReader _readerOut;
         private readonly bool _twoReaders;
         private readonly DbWrapper _dbWrapper;
         private readonly RModuleWrapper _rmWrapper;
@@ -182,5 +226,8 @@ namespace ArmRegistrator.Automation
         private bool _isStarted;
 
         private readonly object _lockerIsStarted=new object();
+
+        private int _error;
+        private bool _isDisposed;
     }
 }

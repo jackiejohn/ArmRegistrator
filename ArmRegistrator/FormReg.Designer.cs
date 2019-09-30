@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReg));
             this.PanelGrids = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -63,6 +64,7 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.BtnSerialConnect = new System.Windows.Forms.Button();
+            this.TtBtnSerial = new System.Windows.Forms.ToolTip(this.components);
             this.PanelGrids.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -530,6 +532,11 @@
             this.BtnSerialConnect.UseVisualStyleBackColor = true;
             this.BtnSerialConnect.Click += new System.EventHandler(this.BtnSerialConnect_Click);
             // 
+            // TtBtnSerial
+            // 
+            this.TtBtnSerial.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Error;
+            this.TtBtnSerial.ToolTipTitle = "Ошибка связи";
+            // 
             // FormReg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -602,6 +609,7 @@
         private System.Windows.Forms.Button BtnStartReader;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button BtnSerialConnect;
+        private System.Windows.Forms.ToolTip TtBtnSerial;
     }
 }
 

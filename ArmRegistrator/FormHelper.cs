@@ -7,7 +7,7 @@ using DataGridViewExtendedControls.DataGridViewProgress;
 
 namespace ArmRegistrator
 {
-    class FormRegHelper
+    class FormHelper
     {
         public static Dictionary<string, string> GetDefaultTrackerColumnTitles()
         {
@@ -128,6 +128,28 @@ namespace ArmRegistrator
             else
             {
                 ctrl.Image = newImage;
+            }
+        }
+        public static void InvokeLableSetText(Label ctrl, string text)
+        {
+            if (ctrl.InvokeRequired)
+            {
+                ctrl.BeginInvoke(new Action<string>(txt => { ctrl.Text = txt; }), text);
+            }
+            else
+            {
+                ctrl.Text = text;
+            }
+        }
+        public static void InvokePictureBoxSetImage(PictureBox ctrl, Image picture)
+        {
+            if (ctrl.InvokeRequired)
+            {
+                ctrl.BeginInvoke(new Action<Image>(img => { ctrl.Image = img; }), picture);
+            }
+            else
+            {
+                ctrl.Image = picture;
             }
         }
     }

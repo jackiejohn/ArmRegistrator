@@ -79,6 +79,8 @@
   <ItemGroup>
     <Compile Include="AppStaticMethods.cs" />
     <Compile Include="Automation\Logic.cs" />
+    <Compile Include="Automation\LogicErrorEnum.cs" />
+    <Compile Include="Automation\ObjectChangeStateEventArgs.cs" />
     <Compile Include="DataBase\DbWrapper.cs" />
     <Compile Include="DataBase\DBWrapperOld.cs" />
     <Compile Include="FormAbout.cs">
@@ -106,7 +108,7 @@
       <DependentUpon>FormReg.cs</DependentUpon>
     </Compile>
     <Compile Include="DataBase\DataSetHelper.cs" />
-    <Compile Include="FormRegHelper.cs" />
+    <Compile Include="FormHelper.cs" />
     <Compile Include="FormReplacement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +128,9 @@
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="MultiScreen\ScreenInformation.cs" />
+    <Compile Include="MultiScreen\ScreenRectangle.cs" />
+    <Compile Include="MultiScreen\DeskScreen.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormAbout.resx">
@@ -194,6 +199,8 @@
     <Content Include="Icons\рфид_зелёный.ico" />
     <Content Include="Icons\рфид_чёррный.ico" />
     <Content Include="LOGO2.ico" />
+    <None Include="Resources\Иванов И.И..jpg" />
+    <None Include="Resources\NoEmployeeImage.png" />
     <None Include="Resources\LOGO2.ico" />
     <None Include="Resources\Icon1.ico" />
     <None Include="Resources\Сигнал отсутствует 48.ico" />

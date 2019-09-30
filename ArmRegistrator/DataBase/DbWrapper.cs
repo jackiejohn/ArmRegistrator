@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
@@ -66,7 +68,7 @@ namespace ArmRegistrator.DataBase
                                           _dsQuarry.Tables[OBJECT_TABLE_NAME].Columns["InFieldTime"],
                                           
                                       };
-            Dictionary<string, string> columnTitles = FormRegHelper.GetDefaultTrackerColumnTitles();
+            Dictionary<string, string> columnTitles = FormHelper.GetDefaultTrackerColumnTitles();
             DataSetHelper.CreateTransposedTable(_dsQuarry, vehicleColumns, string.Format("{0}VT", OBJECT_TABLE_NAME), columnTitles);
             var employeeColumns = new[]
                                       {
@@ -158,8 +160,29 @@ namespace ArmRegistrator.DataBase
             return ExecSqlReadObjectIdByRfid(rfidLabel);
         }
 
-        
+        public PersonalData ReadEmployeeData(int objectId)
+        {
+            var bsObj = new BindingSource(_dsQuarry, OBJECT_TABLE_NAME) { Filter = string.Format("ObjectId={0}", objectId) };
 
+            Image imgTmp = Properties.Resources.NoEmployeeImage2;
+            var persData = new PersonalData();
+            if (bsObj.Count != 1) return persData;
+
+            DataRow row = ((DataRowView)(bsObj.Current)).Row;
+            if (!Convert.IsDBNull(row["Photo"]))
+            {
+                using (var ms = new MemoryStream())
+                {
+                    ms.Write((byte[])row["Photo"], 0, ((byte[])row["Photo"]).Length);
+                    imgTmp = Image.FromStream(ms);
+                }
+            }
+            persData.Photo = imgTmp;
+            persData.ObjectId = objectId;
+            persData.Fio= string.Format("{0} {1} {2}",row["Surname"], row["Name"],row["Patronymic"]);
+            persData.Dolj = row["Position"].ToString();
+            return persData;
+        }
 
         public const string OBJECT_TABLE_NAME = "Object";
 
@@ -310,6 +333,14 @@ namespace ArmRegistrator.DataBase
             internal int ObjectId;
             internal bool InField;
             internal short ActiveObjectId;
+        }
+
+        public struct PersonalData
+        {
+            internal string Fio;
+            internal string Dolj;
+            internal Image Photo;
+            internal int ObjectId;
         }
 
         

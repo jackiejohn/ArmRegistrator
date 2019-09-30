@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -27,8 +28,8 @@ namespace ArmRegistrator
             var logic = Properties.Settings.Default.RfidTwoReaders
                 ? new Logic(Properties.Settings.Default.RfidPortIn, Properties.Settings.Default.RfidPortOut, _dbWrapper, _rModuleWrapper)
                 : new Logic(Properties.Settings.Default.RfidPortIn, _dbWrapper, _rModuleWrapper);
-            logic.OnObjectToLamp += Logic_OnObjectChangeState;
-            logic.OnObjectToWork += Logic_OnObjectChangeState;
+            logic.OnObjectToLamp += Logic_OnObjectChangeStateToLamp;
+            logic.OnObjectToWork += Logic_OnObjectChangeStateToWork;
             return logic;
         }
 
@@ -43,7 +44,9 @@ namespace ArmRegistrator
             CreateCardViewColumns();
             HaveModemChanged();
             if (!Properties.Settings.Default.RfidUse) BtnSerialConnect.Enabled = false;
+            FormPhotoOpen();
         }
+        
         private void FormReg_FormClosed(object sender, FormClosedEventArgs e)
         {
             _rModuleWrapper.StopCommunication();
@@ -108,7 +111,7 @@ namespace ArmRegistrator
             bool state = ((CheckBox)sender).Checked;
             if (state)
             {
-                if (!FormRegHelper.OperatorRiskAgreeModem())
+                if (!FormHelper.OperatorRiskAgreeModem())
                 {
                     ((CheckBox)sender).Checked = false;
                     return;
@@ -181,8 +184,6 @@ namespace ArmRegistrator
         }
         private void BtnSerialConnect_Click(object sender, EventArgs e)
         {
-            
-
             if (Properties.Settings.Default.RfidUse) 
             {
                 if (_logic.IsStarted)
@@ -193,8 +194,11 @@ namespace ArmRegistrator
                 {
                     if (_dirtyLogic)
                     {
-                        _logic.OnObjectToLamp -= Logic_OnObjectChangeState;
-                        _logic.OnObjectToWork -= Logic_OnObjectChangeState;
+                        //_logic.Stop();
+                        _logic.OnObjectToLamp -= Logic_OnObjectChangeStateToLamp;
+                        _logic.OnObjectToWork -= Logic_OnObjectChangeStateToWork;
+                        _logic.Dispose();
+                        
                         _logic = CreateNewLogicAndSubscribeEvents();
                         _dirtyLogic = false;
                     }
@@ -292,10 +296,20 @@ namespace ArmRegistrator
             ButtonsFieldDisable();
         }
 
-        private void Logic_OnObjectChangeState(object sender, EventArgs e)
+        private void Logic_OnObjectChangeStateToLamp(object sender, ObjectChangeStateEventArgs e)
         {
             TrackerViewRowChanged();
+            var info = _dbWrapper.ReadEmployeeData(e.ObjectId);
+            _formPhoto.UpdatePersonalData(info, true,true);
         }
+        private void Logic_OnObjectChangeStateToWork(object sender, ObjectChangeStateEventArgs e)
+        {
+            TrackerViewRowChanged();
+            var info = _dbWrapper.ReadEmployeeData(e.ObjectId);
+            _formPhoto.UpdatePersonalData(info, false,true);
+        }
+
+        
 
         #endregion
 
@@ -313,7 +327,7 @@ namespace ArmRegistrator
         private void CreateCardViewColumns()
         {
             var dgv = CardView;
-            var columns = FormRegHelper.GetDefaultCardColumnTitles();
+            var columns = FormHelper.GetDefaultCardColumnTitles();
             StaticMethods.CreateDataGridViewColumn(dgv, columns);
             var colValue = dgv.Columns["Value"];
             if (colValue == null) throw new NullReferenceException("Столбец Value не найден");
@@ -322,7 +336,7 @@ namespace ArmRegistrator
         private void CreateTrackerViewColumns()
         {
             var dgv = TrackerView;
-            var columns = FormRegHelper.GetVisibleTrackerColumnNames();
+            var columns = FormHelper.GetVisibleTrackerColumnNames();
             StaticMethods.CreateDataGridViewColumn(dgv, columns);
             TrackerViewAddProgressColumns();
             TrackerViewAddCheckBoxColumns();
@@ -353,7 +367,7 @@ namespace ArmRegistrator
             if (col == null) return;
             int indxCharge = col.Index;
 
-            DataGridViewProgressCell cell = FormRegHelper.GetDefaultProgressCell();
+            DataGridViewProgressCell cell = FormHelper.GetDefaultProgressCell();
             cell.BarStyle = ProgressCellProgressStyle.Visible;
             var progressColumn = new DataGridViewProgressColumn(cell)
             {
@@ -426,17 +440,17 @@ namespace ArmRegistrator
         private void BtnDbConnectSetImage(bool isConnected)
         {
             var newImg = isConnected ? Properties.Resources.ImageConnectionActive : Properties.Resources.ImageConnectionDeactive;
-            FormRegHelper.InvokeButtonSetImage(BtnDbConnect, newImg);
+            FormHelper.InvokeButtonSetImage(BtnDbConnect, newImg);
         }
         private void BtnRModuleConnectSetImage(bool isConnected)
         {
             var newImg = isConnected ? Properties.Resources.RModuleConnected : Properties.Resources.RModuleNotConnected;
-            FormRegHelper.InvokeButtonSetImage(BtnRModuleConnect, newImg);
+            FormHelper.InvokeButtonSetImage(BtnRModuleConnect, newImg);
         }
         private void BtnSerialConnectSetImage(bool isConnected)
         {
             var newImg = isConnected ? Properties.Resources.SerialConnected : Properties.Resources.SerialNoConnected;
-            FormRegHelper.InvokeButtonSetImage(BtnSerialConnect, newImg);
+            FormHelper.InvokeButtonSetImage(BtnSerialConnect, newImg);
         }
 
         private void FlagIsNotHaveModemSetImage(bool haveModem)
@@ -513,8 +527,60 @@ namespace ArmRegistrator
         }
         private void LogicStart()
         {
-            _logic.Start();
+            if(!_logic.Start())
+            {
+                MessageBox.Show(this, "Не удается открыть один из последовательных портов", "Ошибка связи",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            }
+            TtBtnSerial.SetToolTip(BtnSerialConnect,
+                                   _logic.Error != LogicErrorEnum.None
+                                       ? String.Format("Ошибка: {0}", _logic.Error)
+                                       : null);
             BtnSerialConnectSetImage(_logic.IsStarted);
+        }
+
+        private void FormPhotoOpen()
+        {
+            //LinkedList<DeskScreen> screens = ScreenInformation.GetAllScreens();
+            var screens = Screen.AllScreens;
+            if (screens.Length > 1)
+            {
+                FormPhotoOpenMaximal(screens);
+            }
+            else
+            {
+                FormPhotoOpenMinimal();
+            }
+        }
+        private void FormPhotoOpenMaximal(IEnumerable<Screen> screens)
+        {
+            var thisScreen = Screen.FromControl(this);
+            foreach (var screen in screens)
+            {
+                if (thisScreen.Bounds.IntersectsWith(screen.Bounds)) continue;
+                FormPhotoClose();
+                _formPhoto = new FormPhoto
+                                 {
+                                     Top = screen.Bounds.Top, 
+                                     Left = screen.Bounds.Left
+                                 };
+                _formPhoto.Show();
+                break;
+            }
+        }
+        private void FormPhotoOpenMinimal()
+        {
+            FormPhotoClose();
+            _formPhoto= new FormPhoto();
+            _formPhoto.Show();
+        }
+        private void FormPhotoClose()
+        {
+            if (_formPhoto != null)
+            {
+                _formPhoto.Close();
+                _formPhoto = null;
+            }
         }
 
         #endregion
@@ -629,21 +695,33 @@ namespace ArmRegistrator
                 addEvent = false;
                 if (!sended)
                 {
-                    if (!FormRegHelper.OperatorRiskAgree()) return;
+                    if (!FormHelper.OperatorRiskAgree()) return;
                     addEvent = true;
                 }
             }
 
             Cursor = Cursors.WaitCursor;
-            bool isChanged = inField 
-                ? InFieldUnSet(!(_isNoModem || lampMode || !sended), addEvent, objectId, activeObjectId)
-                : InFieldSet(!(_isNoModem || workMode || !sended), addEvent, objectId, activeObjectId);
+
+            bool isChanged;
+            var stateEventArg = new ObjectChangeStateEventArgs(objectId);
+            if(inField )
+            {
+                isChanged=InFieldUnSet(!(_isNoModem || lampMode || !sended), addEvent, objectId, activeObjectId);
+                _logic.InvokeOnObjectToLamp(stateEventArg);
+            }
+            else
+            {
+                isChanged=InFieldSet(!(_isNoModem || workMode || !sended), addEvent, objectId, activeObjectId);
+                _logic.InvokeOnObjectToWork(stateEventArg);
+            }
+                
             Cursor = Cursors.Default;
 
             if (isChanged)
             {
                 _dbWrapper.RefreshDataSetAllTables();
                 TrackerViewRowChanged();
+                
             }
         }
         private bool InFieldUnSet(bool setLampMode, bool addEvent, int objectId, int trakObjId)
@@ -683,6 +761,8 @@ namespace ArmRegistrator
         private bool _dirtyLogic;
 
         private delegate void Dirty();
+
+        private FormPhoto _formPhoto;
         #endregion
 
         

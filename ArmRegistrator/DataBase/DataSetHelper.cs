@@ -27,7 +27,7 @@ namespace ArmRegistrator.DataBase
                 ds.Tables.Add(table);
             }
 
-            var buttonCollection = FormRegHelper.GetDefaultColumnsWithButton();
+            var buttonCollection = FormHelper.GetDefaultColumnsWithButton();
             foreach (DataColumn column in columns)
             {
                 if (columnsTitle.ContainsKey(column.ColumnName))
