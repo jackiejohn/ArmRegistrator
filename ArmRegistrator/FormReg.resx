@@ -120,19 +120,7 @@
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>12, 12</value>
   </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>12, 12</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ToolStripButtonSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC7SURBVFhHxY3RCsMwDAP7/z+9EajBtLdGsjfvQC+JdD4M
-        XpCfQ0c/5evQESVtSBrJ0H+kTFVW3d3oSlr71vik7CgPgZLLHmywffZgQ/ZtnVbZQHbKRRPZKxdNZK9c
-        NJG9ubgtG1hOqyyQfZLTKgvYvjyQRw+UXKURkD2W6zq0xifd/U3gSGi7YkOSFYJ6FBuSdFOCRE9Z0Huk
-        DMkiBPUiY9DxyBh0PDIGHY+MQccjY9DxlVH+ejxIx4/jDe21FvhqNqVUAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="BtnReplace.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -162,6 +150,15 @@
         6CyS62fIGB8510iW5l4yZr1gFZ4VcoSp7slIasVyBzUUILtpa17h3jMffvRBLBisIYYPEb7r+flIfdcb
         b9V5cx1t9H0UD1bqUjafaQWy8ERyN/eSz8PNfoNqIKRcDWJZ/Z7vx43tkSCSKtnQO0thQZDbkH3Taay0
         0GVCAwWQfM2FlKALybVhQSxbG/93hmFksfwD2pxI2U7wE/4AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="ToolStripButtonSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC7SURBVFhHxY3RCsMwDAP7/z+9EajBtLdGsjfvQC+JdD4M
+        XpCfQ0c/5evQESVtSBrJ0H+kTFVW3d3oSlr71vik7CgPgZLLHmywffZgQ/ZtnVbZQHbKRRPZKxdNZK9c
+        NJG9ubgtG1hOqyyQfZLTKgvYvjyQRw+UXKURkD2W6zq0xifd/U3gSGi7YkOSFYJ6FBuSdFOCRE9Z0Huk
+        DMkiBPUiY9DxyBh0PDIGHY+MQccjY9DxlVH+ejxIx4/jDe21FvhqNqVUAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="BtnDbConfig.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using ArmRegistrator.DataBase;
-using ThTimer = System.Timers.Timer;
+using Timer = System.Timers.Timer;
 
-namespace ArmRegistrator
+namespace ArmRegistrator.Photo
 {
     public partial class FormPhoto : Form
     {
@@ -11,7 +11,7 @@ namespace ArmRegistrator
         {
             InitializeComponent();
             _timerInterval = (int) TimeSpan.FromSeconds(30).TotalMilliseconds;
-            _timerIn= new ThTimer()
+            _timerIn= new Timer()
                          {
                              Interval = _timerInterval
                          };
@@ -19,7 +19,7 @@ namespace ArmRegistrator
             _timerIn.Start();
             //_timerIn.Enabled = false;
 
-            _timerOut = new ThTimer
+            _timerOut = new Timer
                             {
                                 Interval = _timerInterval
                             };
@@ -41,10 +41,14 @@ namespace ArmRegistrator
 
         public void Maximized()
         {
+            WindowState = FormWindowState.Maximized;
+            FormPhotoHelper.ScaleControls(Controls,Size);
             
         }
         public void Standartized()
         {
+            WindowState = FormWindowState.Normal;
+            FormPhotoHelper.SetDefaultState(this);
             
         }
         public void UpdatePersonalData(DbWrapper.PersonalData data, bool inData, bool enableTimer)
@@ -78,8 +82,8 @@ namespace ArmRegistrator
             }
         }
 
-        private readonly ThTimer _timerIn;
-        private readonly ThTimer _timerOut;
+        private readonly Timer _timerIn;
+        private readonly Timer _timerOut;
         private readonly int _timerInterval;
     }
 }

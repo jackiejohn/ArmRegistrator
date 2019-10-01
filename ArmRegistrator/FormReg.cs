@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using ArmRegistrator.Automation;
 using ArmRegistrator.DataBase;
+using ArmRegistrator.Photo;
 using ArmRegistrator.Radio;
 using DataGridViewExtendedControls.DataGridViewProgress;
 using DataGridViewExtendedControls.Utils;
@@ -558,13 +559,17 @@ namespace ArmRegistrator
             foreach (var screen in screens)
             {
                 if (thisScreen.Bounds.IntersectsWith(screen.Bounds)) continue;
+                
                 FormPhotoClose();
                 _formPhoto = new FormPhoto
                                  {
                                      Top = screen.Bounds.Top, 
                                      Left = screen.Bounds.Left
                                  };
+                
+                //FormPhotoHelper.ScaleControls(_formPhoto.Controls,_formPhoto.Size);
                 _formPhoto.Show();
+                _formPhoto.Maximized();
                 break;
             }
         }
@@ -764,7 +769,6 @@ namespace ArmRegistrator
 
         private FormPhoto _formPhoto;
         #endregion
-
         
     }
 }

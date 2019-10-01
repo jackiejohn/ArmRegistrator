@@ -95,10 +95,10 @@
     <Compile Include="FormBar.Designer.cs">
       <DependentUpon>FormBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPhoto.cs">
+    <Compile Include="Photo\FormPhoto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPhoto.Designer.cs">
+    <Compile Include="Photo\FormPhoto.Designer.cs">
       <DependentUpon>FormPhoto.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReg.cs">
@@ -131,6 +131,7 @@
     <Compile Include="MultiScreen\ScreenInformation.cs" />
     <Compile Include="MultiScreen\ScreenRectangle.cs" />
     <Compile Include="MultiScreen\DeskScreen.cs" />
+    <Compile Include="Photo\FormPhotoHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormAbout.resx">
@@ -139,7 +140,7 @@
     <EmbeddedResource Include="FormBar.resx">
       <DependentUpon>FormBar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPhoto.resx">
+    <EmbeddedResource Include="Photo\FormPhoto.resx">
       <DependentUpon>FormPhoto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReg.resx">

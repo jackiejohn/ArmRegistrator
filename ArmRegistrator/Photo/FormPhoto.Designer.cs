@@ -1,4 +1,4 @@
-﻿namespace ArmRegistrator
+﻿namespace ArmRegistrator.Photo
 {
     partial class FormPhoto
     {
@@ -211,6 +211,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 392);
+            this.ControlBox = false;
             this.Controls.Add(this.lblInId);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lblInDolj);
@@ -228,6 +229,7 @@
             this.Controls.Add(this.BackLabelOut);
             this.Controls.Add(this.BackLabelIn);
             this.Name = "FormPhoto";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Сотрудники";
             ((System.ComponentModel.ISupportInitialize)(this.PhotoOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoIn)).EndInit();
