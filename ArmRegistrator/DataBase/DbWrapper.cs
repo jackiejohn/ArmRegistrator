@@ -157,7 +157,7 @@ namespace ArmRegistrator.DataBase
         public ObjectRecordValue ReadObjectId(string rfidLabel)
         {
             if (string.IsNullOrEmpty(rfidLabel)) return new ObjectRecordValue();
-            return ExecSqlReadObjectIdByRfid(rfidLabel);
+            return ExecSql_ReadObjectIdByRfid(rfidLabel);
         }
 
         public PersonalData ReadEmployeeData(int objectId)
@@ -245,7 +245,6 @@ namespace ArmRegistrator.DataBase
             ExecSqlNonQuery(cmd);
             return;
         }
-
         private void ExecSql_DelRepleacePair(int objectId)
         {
             var cmd = new SqlCommand { CommandType = CommandType.StoredProcedure, CommandText = "pa_ArmRegistrDelPair" };
@@ -253,7 +252,8 @@ namespace ArmRegistrator.DataBase
             ExecSqlNonQuery(cmd);
             return;
         }
-        private ObjectRecordValue ExecSqlReadObjectIdByRfid(string labelString)
+
+        private ObjectRecordValue ExecSql_ReadObjectIdByRfid(string labelString)
         {
             var cmd = new SqlCommand { CommandType = CommandType.StoredProcedure, CommandText = "pa_ArmRegistrGetObjectIdByRfid" };
             cmd.Parameters.AddWithValue("@label", labelString);
