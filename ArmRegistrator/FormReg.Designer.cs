@@ -86,9 +86,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.PanelGrids.Controls.Add(this.toolStrip1);
             this.PanelGrids.Controls.Add(this.splitContainer1);
-            this.PanelGrids.Location = new System.Drawing.Point(3, 119);
+            this.PanelGrids.Location = new System.Drawing.Point(4, 183);
+            this.PanelGrids.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PanelGrids.Name = "PanelGrids";
-            this.PanelGrids.Size = new System.Drawing.Size(1057, 444);
+            this.PanelGrids.Size = new System.Drawing.Size(1586, 683);
             this.PanelGrids.TabIndex = 0;
             // 
             // toolStrip1
@@ -103,7 +104,8 @@
             this.ToolStripLabelHoursPost});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1057, 50);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(1586, 77);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -112,7 +114,7 @@
             this.ToolStripTextBoxSearch.AutoSize = false;
             this.ToolStripTextBoxSearch.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ToolStripTextBoxSearch.Name = "ToolStripTextBoxSearch";
-            this.ToolStripTextBoxSearch.Size = new System.Drawing.Size(250, 27);
+            this.ToolStripTextBoxSearch.Size = new System.Drawing.Size(373, 36);
             this.ToolStripTextBoxSearch.ToolTipText = "Фильтр объекта";
             this.ToolStripTextBoxSearch.TextChanged += new System.EventHandler(this.ToolStripTextBoxSearch_TextChanged);
             // 
@@ -131,12 +133,12 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 50);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 77);
             // 
             // ToolStripLabelHoursPre
             // 
             this.ToolStripLabelHoursPre.Name = "ToolStripLabelHoursPre";
-            this.ToolStripLabelHoursPre.Size = new System.Drawing.Size(95, 47);
+            this.ToolStripLabelHoursPre.Size = new System.Drawing.Size(141, 74);
             this.ToolStripLabelHoursPre.Text = "На смене более";
             this.ToolStripLabelHoursPre.Visible = false;
             // 
@@ -145,7 +147,7 @@
             this.ToolStripTextBoxHours.Font = new System.Drawing.Font("Tahoma", 12F);
             this.ToolStripTextBoxHours.MaxLength = 2;
             this.ToolStripTextBoxHours.Name = "ToolStripTextBoxHours";
-            this.ToolStripTextBoxHours.Size = new System.Drawing.Size(25, 50);
+            this.ToolStripTextBoxHours.Size = new System.Drawing.Size(36, 77);
             this.ToolStripTextBoxHours.Text = "00";
             this.ToolStripTextBoxHours.Visible = false;
             this.ToolStripTextBoxHours.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ToolStripTextBoxHours_KeyDown);
@@ -155,7 +157,7 @@
             // ToolStripLabelHoursPost
             // 
             this.ToolStripLabelHoursPost.Name = "ToolStripLabelHoursPost";
-            this.ToolStripLabelHoursPost.Size = new System.Drawing.Size(53, 47);
+            this.ToolStripLabelHoursPost.Size = new System.Drawing.Size(79, 74);
             this.ToolStripLabelHoursPost.Text = "часа(ов)";
             this.ToolStripLabelHoursPost.Visible = false;
             // 
@@ -164,7 +166,8 @@
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 38);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -179,8 +182,9 @@
             this.splitContainer1.Panel2.Controls.Add(this.BtnInField);
             this.splitContainer1.Panel2.Controls.Add(this.CardView);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(1054, 416);
-            this.splitContainer1.SplitterDistance = 650;
+            this.splitContainer1.Size = new System.Drawing.Size(1581, 640);
+            this.splitContainer1.SplitterDistance = 975;
+            this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 0;
             // 
             // TrackerView
@@ -191,10 +195,11 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.TrackerView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TrackerView.Location = new System.Drawing.Point(0, 28);
+            this.TrackerView.Location = new System.Drawing.Point(0, 43);
+            this.TrackerView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.TrackerView.Name = "TrackerView";
             this.TrackerView.ReadOnly = true;
-            this.TrackerView.Size = new System.Drawing.Size(647, 388);
+            this.TrackerView.Size = new System.Drawing.Size(970, 597);
             this.TrackerView.TabIndex = 0;
             this.TrackerView.SelectionChanged += new System.EventHandler(this.TrackerView_SelectionChanged);
             // 
@@ -202,9 +207,10 @@
             // 
             this.BtnStartReader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnStartReader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnStartReader.Location = new System.Drawing.Point(169, 342);
+            this.BtnStartReader.Location = new System.Drawing.Point(254, 526);
+            this.BtnStartReader.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnStartReader.Name = "BtnStartReader";
-            this.BtnStartReader.Size = new System.Drawing.Size(74, 68);
+            this.BtnStartReader.Size = new System.Drawing.Size(111, 105);
             this.BtnStartReader.TabIndex = 11;
             this.BtnStartReader.Text = "Ридер";
             this.BtnStartReader.UseVisualStyleBackColor = true;
@@ -217,9 +223,10 @@
             this.BtnReplace.Enabled = false;
             this.BtnReplace.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnReplace.Image = ((System.Drawing.Image)(resources.GetObject("BtnReplace.Image")));
-            this.BtnReplace.Location = new System.Drawing.Point(294, 342);
+            this.BtnReplace.Location = new System.Drawing.Point(441, 526);
+            this.BtnReplace.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnReplace.Name = "BtnReplace";
-            this.BtnReplace.Size = new System.Drawing.Size(74, 68);
+            this.BtnReplace.Size = new System.Drawing.Size(111, 105);
             this.BtnReplace.TabIndex = 10;
             this.BtnReplace.Text = "Замена";
             this.BtnReplace.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -231,9 +238,10 @@
             this.BtnNotInField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnNotInField.Enabled = false;
             this.BtnNotInField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnNotInField.Location = new System.Drawing.Point(89, 342);
+            this.BtnNotInField.Location = new System.Drawing.Point(134, 526);
+            this.BtnNotInField.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnNotInField.Name = "BtnNotInField";
-            this.BtnNotInField.Size = new System.Drawing.Size(74, 68);
+            this.BtnNotInField.Size = new System.Drawing.Size(111, 105);
             this.BtnNotInField.TabIndex = 9;
             this.BtnNotInField.Text = "Закончить смену";
             this.BtnNotInField.UseVisualStyleBackColor = true;
@@ -244,9 +252,10 @@
             this.BtnInField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnInField.Enabled = false;
             this.BtnInField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnInField.Location = new System.Drawing.Point(3, 342);
+            this.BtnInField.Location = new System.Drawing.Point(4, 526);
+            this.BtnInField.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnInField.Name = "BtnInField";
-            this.BtnInField.Size = new System.Drawing.Size(74, 68);
+            this.BtnInField.Size = new System.Drawing.Size(111, 105);
             this.BtnInField.TabIndex = 8;
             this.BtnInField.Text = "Начать смену";
             this.BtnInField.UseVisualStyleBackColor = true;
@@ -262,22 +271,24 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.CardView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CardView.ColumnHeadersVisible = false;
-            this.CardView.Location = new System.Drawing.Point(3, 28);
+            this.CardView.Location = new System.Drawing.Point(4, 43);
+            this.CardView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CardView.Name = "CardView";
             this.CardView.ReadOnly = true;
             this.CardView.RowHeadersVisible = false;
-            this.CardView.Size = new System.Drawing.Size(363, 305);
+            this.CardView.Size = new System.Drawing.Size(544, 469);
             this.CardView.TabIndex = 0;
             this.CardView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.CardView_CellPainting);
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.BtnDbConfig);
             this.groupBox1.Controls.Add(this.BtnDbConnect);
-            this.groupBox1.Location = new System.Drawing.Point(845, 15);
+            this.groupBox1.Location = new System.Drawing.Point(1268, 23);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(206, 98);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(309, 151);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "База данных";
@@ -286,9 +297,10 @@
             // 
             this.BtnDbConfig.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnDbConfig.Image = ((System.Drawing.Image)(resources.GetObject("BtnDbConfig.Image")));
-            this.BtnDbConfig.Location = new System.Drawing.Point(102, 21);
+            this.BtnDbConfig.Location = new System.Drawing.Point(153, 32);
+            this.BtnDbConfig.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnDbConfig.Name = "BtnDbConfig";
-            this.BtnDbConfig.Size = new System.Drawing.Size(96, 68);
+            this.BtnDbConfig.Size = new System.Drawing.Size(144, 105);
             this.BtnDbConfig.TabIndex = 12;
             this.BtnDbConfig.Text = "Настройка";
             this.BtnDbConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -299,9 +311,10 @@
             // 
             this.BtnDbConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnDbConnect.Image = global::ArmRegistrator.Properties.Resources.ImageConnectionDeactive;
-            this.BtnDbConnect.Location = new System.Drawing.Point(6, 21);
+            this.BtnDbConnect.Location = new System.Drawing.Point(9, 32);
+            this.BtnDbConnect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnDbConnect.Name = "BtnDbConnect";
-            this.BtnDbConnect.Size = new System.Drawing.Size(96, 68);
+            this.BtnDbConnect.Size = new System.Drawing.Size(144, 105);
             this.BtnDbConnect.TabIndex = 11;
             this.BtnDbConnect.Text = "Подключение";
             this.BtnDbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -314,9 +327,11 @@
             this.groupBox2.Controls.Add(this.BtnAllObjectType);
             this.groupBox2.Controls.Add(this.FlagTransport);
             this.groupBox2.Controls.Add(this.FlagPersonal);
-            this.groupBox2.Location = new System.Drawing.Point(3, 15);
+            this.groupBox2.Location = new System.Drawing.Point(4, 23);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(285, 98);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Size = new System.Drawing.Size(428, 151);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Управление списком";
@@ -328,9 +343,10 @@
             this.FlagTechnics.CheckState = System.Windows.Forms.CheckState.Checked;
             this.FlagTechnics.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FlagTechnics.Image = ((System.Drawing.Image)(resources.GetObject("FlagTechnics.Image")));
-            this.FlagTechnics.Location = new System.Drawing.Point(210, 21);
+            this.FlagTechnics.Location = new System.Drawing.Point(315, 32);
+            this.FlagTechnics.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FlagTechnics.Name = "FlagTechnics";
-            this.FlagTechnics.Size = new System.Drawing.Size(68, 68);
+            this.FlagTechnics.Size = new System.Drawing.Size(102, 105);
             this.FlagTechnics.TabIndex = 13;
             this.FlagTechnics.Text = "Техника";
             this.FlagTechnics.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -343,9 +359,10 @@
             this.BtnAllObjectType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.BtnAllObjectType.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnAllObjectType.Image = ((System.Drawing.Image)(resources.GetObject("BtnAllObjectType.Image")));
-            this.BtnAllObjectType.Location = new System.Drawing.Point(6, 21);
+            this.BtnAllObjectType.Location = new System.Drawing.Point(9, 32);
+            this.BtnAllObjectType.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnAllObjectType.Name = "BtnAllObjectType";
-            this.BtnAllObjectType.Size = new System.Drawing.Size(68, 68);
+            this.BtnAllObjectType.Size = new System.Drawing.Size(102, 105);
             this.BtnAllObjectType.TabIndex = 1;
             this.BtnAllObjectType.Text = "Все";
             this.BtnAllObjectType.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -359,9 +376,10 @@
             this.FlagTransport.CheckState = System.Windows.Forms.CheckState.Checked;
             this.FlagTransport.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FlagTransport.Image = ((System.Drawing.Image)(resources.GetObject("FlagTransport.Image")));
-            this.FlagTransport.Location = new System.Drawing.Point(142, 21);
+            this.FlagTransport.Location = new System.Drawing.Point(213, 32);
+            this.FlagTransport.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FlagTransport.Name = "FlagTransport";
-            this.FlagTransport.Size = new System.Drawing.Size(68, 68);
+            this.FlagTransport.Size = new System.Drawing.Size(102, 105);
             this.FlagTransport.TabIndex = 12;
             this.FlagTransport.Text = "Транспорт";
             this.FlagTransport.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -375,9 +393,10 @@
             this.FlagPersonal.Checked = true;
             this.FlagPersonal.CheckState = System.Windows.Forms.CheckState.Checked;
             this.FlagPersonal.Image = ((System.Drawing.Image)(resources.GetObject("FlagPersonal.Image")));
-            this.FlagPersonal.Location = new System.Drawing.Point(74, 21);
+            this.FlagPersonal.Location = new System.Drawing.Point(111, 32);
+            this.FlagPersonal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FlagPersonal.Name = "FlagPersonal";
-            this.FlagPersonal.Size = new System.Drawing.Size(68, 68);
+            this.FlagPersonal.Size = new System.Drawing.Size(102, 105);
             this.FlagPersonal.TabIndex = 11;
             this.FlagPersonal.Text = "Персонал";
             this.FlagPersonal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -391,9 +410,11 @@
             this.groupBox3.Controls.Add(this.FlagIsNotInField);
             this.groupBox3.Controls.Add(this.FlagIsInField);
             this.groupBox3.Controls.Add(this.BtnAllField);
-            this.groupBox3.Location = new System.Drawing.Point(294, 15);
+            this.groupBox3.Location = new System.Drawing.Point(441, 23);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(284, 98);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox3.Size = new System.Drawing.Size(426, 151);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Фильтр";
@@ -403,9 +424,10 @@
             this.FlagLongTimeInField.Appearance = System.Windows.Forms.Appearance.Button;
             this.FlagLongTimeInField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FlagLongTimeInField.Image = ((System.Drawing.Image)(resources.GetObject("FlagLongTimeInField.Image")));
-            this.FlagLongTimeInField.Location = new System.Drawing.Point(210, 21);
+            this.FlagLongTimeInField.Location = new System.Drawing.Point(315, 32);
+            this.FlagLongTimeInField.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FlagLongTimeInField.Name = "FlagLongTimeInField";
-            this.FlagLongTimeInField.Size = new System.Drawing.Size(68, 68);
+            this.FlagLongTimeInField.Size = new System.Drawing.Size(102, 105);
             this.FlagLongTimeInField.TabIndex = 16;
             this.FlagLongTimeInField.Text = "Более";
             this.FlagLongTimeInField.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -420,9 +442,10 @@
             this.FlagIsNotInField.CheckState = System.Windows.Forms.CheckState.Checked;
             this.FlagIsNotInField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FlagIsNotInField.Image = ((System.Drawing.Image)(resources.GetObject("FlagIsNotInField.Image")));
-            this.FlagIsNotInField.Location = new System.Drawing.Point(142, 21);
+            this.FlagIsNotInField.Location = new System.Drawing.Point(213, 32);
+            this.FlagIsNotInField.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FlagIsNotInField.Name = "FlagIsNotInField";
-            this.FlagIsNotInField.Size = new System.Drawing.Size(68, 68);
+            this.FlagIsNotInField.Size = new System.Drawing.Size(102, 105);
             this.FlagIsNotInField.TabIndex = 15;
             this.FlagIsNotInField.Text = "На складе";
             this.FlagIsNotInField.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -437,9 +460,10 @@
             this.FlagIsInField.CheckState = System.Windows.Forms.CheckState.Checked;
             this.FlagIsInField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FlagIsInField.Image = ((System.Drawing.Image)(resources.GetObject("FlagIsInField.Image")));
-            this.FlagIsInField.Location = new System.Drawing.Point(74, 21);
+            this.FlagIsInField.Location = new System.Drawing.Point(111, 32);
+            this.FlagIsInField.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FlagIsInField.Name = "FlagIsInField";
-            this.FlagIsInField.Size = new System.Drawing.Size(68, 68);
+            this.FlagIsInField.Size = new System.Drawing.Size(102, 105);
             this.FlagIsInField.TabIndex = 14;
             this.FlagIsInField.Text = "Выданы";
             this.FlagIsInField.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -451,9 +475,10 @@
             // 
             this.BtnAllField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnAllField.Image = ((System.Drawing.Image)(resources.GetObject("BtnAllField.Image")));
-            this.BtnAllField.Location = new System.Drawing.Point(6, 21);
+            this.BtnAllField.Location = new System.Drawing.Point(9, 32);
+            this.BtnAllField.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnAllField.Name = "BtnAllField";
-            this.BtnAllField.Size = new System.Drawing.Size(68, 68);
+            this.BtnAllField.Size = new System.Drawing.Size(102, 105);
             this.BtnAllField.TabIndex = 5;
             this.BtnAllField.Text = "Все";
             this.BtnAllField.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -464,9 +489,11 @@
             // 
             this.groupBox4.Controls.Add(this.FlagIsNotHaveModem);
             this.groupBox4.Controls.Add(this.BtnRModuleConnect);
-            this.groupBox4.Location = new System.Drawing.Point(584, 15);
+            this.groupBox4.Location = new System.Drawing.Point(876, 23);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(160, 98);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox4.Size = new System.Drawing.Size(240, 151);
             this.groupBox4.TabIndex = 18;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Радиомодем";
@@ -479,9 +506,10 @@
             this.FlagIsNotHaveModem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.FlagIsNotHaveModem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FlagIsNotHaveModem.Image = global::ArmRegistrator.Properties.Resources.ModemNotHave;
-            this.FlagIsNotHaveModem.Location = new System.Drawing.Point(84, 21);
+            this.FlagIsNotHaveModem.Location = new System.Drawing.Point(126, 32);
+            this.FlagIsNotHaveModem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FlagIsNotHaveModem.Name = "FlagIsNotHaveModem";
-            this.FlagIsNotHaveModem.Size = new System.Drawing.Size(68, 68);
+            this.FlagIsNotHaveModem.Size = new System.Drawing.Size(102, 105);
             this.FlagIsNotHaveModem.TabIndex = 18;
             this.FlagIsNotHaveModem.Text = "Модем";
             this.FlagIsNotHaveModem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -493,9 +521,10 @@
             // 
             this.BtnRModuleConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnRModuleConnect.Image = global::ArmRegistrator.Properties.Resources.RModuleNotConnected;
-            this.BtnRModuleConnect.Location = new System.Drawing.Point(10, 21);
+            this.BtnRModuleConnect.Location = new System.Drawing.Point(15, 32);
+            this.BtnRModuleConnect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnRModuleConnect.Name = "BtnRModuleConnect";
-            this.BtnRModuleConnect.Size = new System.Drawing.Size(68, 68);
+            this.BtnRModuleConnect.Size = new System.Drawing.Size(102, 105);
             this.BtnRModuleConnect.TabIndex = 17;
             this.BtnRModuleConnect.Text = "Связь";
             this.BtnRModuleConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -511,9 +540,11 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.BtnSerialConnect);
-            this.groupBox5.Location = new System.Drawing.Point(750, 15);
+            this.groupBox5.Location = new System.Drawing.Point(1125, 23);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(89, 98);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox5.Size = new System.Drawing.Size(134, 151);
             this.groupBox5.TabIndex = 19;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Считыватели";
@@ -523,9 +554,10 @@
             this.BtnSerialConnect.Enabled = false;
             this.BtnSerialConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnSerialConnect.Image = global::ArmRegistrator.Properties.Resources.SerialNoConnected;
-            this.BtnSerialConnect.Location = new System.Drawing.Point(10, 21);
+            this.BtnSerialConnect.Location = new System.Drawing.Point(15, 32);
+            this.BtnSerialConnect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnSerialConnect.Name = "BtnSerialConnect";
-            this.BtnSerialConnect.Size = new System.Drawing.Size(68, 68);
+            this.BtnSerialConnect.Size = new System.Drawing.Size(102, 105);
             this.BtnSerialConnect.TabIndex = 17;
             this.BtnSerialConnect.Text = "Связь";
             this.BtnSerialConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -539,9 +571,9 @@
             // 
             // FormReg
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1063, 566);
+            this.ClientSize = new System.Drawing.Size(1594, 871);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.PanelGrids);
             this.Controls.Add(this.groupBox1);
@@ -549,7 +581,8 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1079, 604);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MinimumSize = new System.Drawing.Size(1608, 900);
             this.Name = "FormReg";
             this.Text = "СПА-Карьер: АРМ регистрации";
             this.Load += new System.EventHandler(this.FormReg_Load);

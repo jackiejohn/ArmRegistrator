@@ -36,10 +36,13 @@
             // 
             // BtnCancel
             // 
+            this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCancel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnCancel.Location = new System.Drawing.Point(0, 221);
+            this.BtnCancel.Location = new System.Drawing.Point(0, 340);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(117, 68);
+            this.BtnCancel.Size = new System.Drawing.Size(176, 105);
             this.BtnCancel.TabIndex = 16;
             this.BtnCancel.Text = "Закрыть";
             this.BtnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -48,10 +51,13 @@
             // 
             // BtnSerial
             // 
+            this.BtnSerial.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnSerial.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnSerial.Location = new System.Drawing.Point(0, 73);
+            this.BtnSerial.Location = new System.Drawing.Point(0, 112);
+            this.BtnSerial.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnSerial.Name = "BtnSerial";
-            this.BtnSerial.Size = new System.Drawing.Size(117, 68);
+            this.BtnSerial.Size = new System.Drawing.Size(176, 105);
             this.BtnSerial.TabIndex = 14;
             this.BtnSerial.Text = "Коммуникации";
             this.BtnSerial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -60,10 +66,13 @@
             // 
             // BtnDbConnect
             // 
+            this.BtnDbConnect.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnDbConnect.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnDbConnect.Location = new System.Drawing.Point(0, -1);
+            this.BtnDbConnect.Location = new System.Drawing.Point(0, -2);
+            this.BtnDbConnect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnDbConnect.Name = "BtnDbConnect";
-            this.BtnDbConnect.Size = new System.Drawing.Size(117, 68);
+            this.BtnDbConnect.Size = new System.Drawing.Size(176, 105);
             this.BtnDbConnect.TabIndex = 13;
             this.BtnDbConnect.Text = "Подключение к БД";
             this.BtnDbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -72,11 +81,14 @@
             // 
             // BtnAbout
             // 
+            this.BtnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnAbout.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnAbout.Image = global::ArmRegistrator.Properties.Resources.LOGO2;
-            this.BtnAbout.Location = new System.Drawing.Point(0, 147);
+            this.BtnAbout.Location = new System.Drawing.Point(0, 226);
+            this.BtnAbout.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnAbout.Name = "BtnAbout";
-            this.BtnAbout.Size = new System.Drawing.Size(117, 68);
+            this.BtnAbout.Size = new System.Drawing.Size(176, 105);
             this.BtnAbout.TabIndex = 15;
             this.BtnAbout.Text = "О программе";
             this.BtnAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -85,15 +97,16 @@
             // 
             // FormSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(119, 290);
+            this.ClientSize = new System.Drawing.Size(178, 446);
             this.ControlBox = false;
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnAbout);
             this.Controls.Add(this.BtnSerial);
             this.Controls.Add(this.BtnDbConnect);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSettings";
