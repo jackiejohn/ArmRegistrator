@@ -53,7 +53,10 @@ namespace ArmRegistrator.Radio
             if (_rModule == null)
             {
                 var config = Configuration.GetDefault();
-                _rModule = new RModule(portName, config) { BaudRate = Convert.ToInt32(baudRate) };
+                _rModule = new RModule(portName, config) {
+                        BaudRate = Convert.ToInt32(baudRate)
+                        , TimeBetweenPak = 300
+                    };
             }
             if (_rModule.IsInit)
             {

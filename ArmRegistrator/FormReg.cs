@@ -671,21 +671,25 @@ namespace ArmRegistrator
             if (!Convert.IsDBNull(row["_ActiveObjectId"])) activeObjectId = Convert.ToInt32(row["_ActiveObjectId"]);
             
             bool inField = Convert.ToBoolean(row["InField"]);
-            bool lampMode = true;
-            bool workMode = true;
+            bool toLampMode = true;
+            bool toWorkMode = true;
             bool sended = true;
             bool addEvent = true;
             if (!_isNoModem)
             {
                 UInt16 status;
                 Cursor = Cursors.WaitCursor;
+                // TODO: заглушка до выяснения
                 sended = _rModuleWrapper.ObjectGetStatus(out status, activeObjectId);
+                //sended = true;
+
                 Cursor = Cursors.Default;
                 var statusWord = new PakStatusWord(status);
-                lampMode = statusWord.LampMode;
-                workMode = sended && !(statusWord.Error || statusWord.Charge < 9);
+                //var statusWord = new PakStatusWord(1039);
+                toLampMode =  !statusWord.LampMode;
+                toWorkMode =  sended && !(statusWord.Error || statusWord.Charge < 9) && statusWord.LampMode;
 
-                if (!inField)
+                if (!inField && (!sended || statusWord.Error || statusWord.Charge < 9))
                 {
                     var sb = new StringBuilder("Изменение режима НЕ ДОПУСТИМО по следующим причинам:");
                     sb.AppendLine();
@@ -711,12 +715,14 @@ namespace ArmRegistrator
             var stateEventArg = new ObjectChangeStateEventArgs(objectId);
             if(inField )
             {
-                isChanged=InFieldUnSet(!(_isNoModem || lampMode || !sended), addEvent, objectId, activeObjectId);
+                isChanged=InFieldUnSet(!(_isNoModem || toWorkMode || !sended), addEvent, objectId, activeObjectId);
+                //isChanged = InFieldUnSet(true, addEvent, objectId, activeObjectId);
                 _logic.InvokeOnObjectToLamp(stateEventArg);
             }
             else
             {
-                isChanged=InFieldSet(!(_isNoModem || workMode || !sended), addEvent, objectId, activeObjectId);
+                isChanged=InFieldSet(!(_isNoModem || toLampMode || !sended), addEvent, objectId, activeObjectId);
+                //isChanged = InFieldSet(true, addEvent, objectId, activeObjectId);
                 _logic.InvokeOnObjectToWork(stateEventArg);
             }
                 
@@ -733,7 +739,15 @@ namespace ArmRegistrator
         {
             bool isChanged = true;
             UInt16 status;
-            if (setLampMode) isChanged = _rModuleWrapper.ObjectSendPassiveMode(out status, trakObjId);
+            if (setLampMode)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    isChanged = _rModuleWrapper.ObjectSendPassiveMode(out status, trakObjId);
+                    if (isChanged) break;
+                }
+                
+            }
             if(isChanged) _dbWrapper.WriteObjectInFieldState(addEvent, objectId, true);
             return isChanged;
         }
@@ -742,8 +756,13 @@ namespace ArmRegistrator
             bool isChanged = true;
             if (setWorkMode)
             {
-                UInt16 status;
-                isChanged = _rModuleWrapper.ObjectSendWorkMode(out status, trakObjId);
+                ushort status=0;
+                for (int i = 0; i < 3; i++)
+                {
+                    isChanged = _rModuleWrapper.ObjectSendWorkMode(out status, trakObjId);
+                    if (isChanged) break;
+                }
+                
                 isChanged = isChanged && !PakStatusWord.Instance(status).LampMode;
             }
 

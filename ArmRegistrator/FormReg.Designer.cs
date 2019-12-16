@@ -89,7 +89,7 @@
             this.PanelGrids.Location = new System.Drawing.Point(4, 183);
             this.PanelGrids.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PanelGrids.Name = "PanelGrids";
-            this.PanelGrids.Size = new System.Drawing.Size(1586, 683);
+            this.PanelGrids.Size = new System.Drawing.Size(1586, 457);
             this.PanelGrids.TabIndex = 0;
             // 
             // toolStrip1
@@ -182,7 +182,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.BtnInField);
             this.splitContainer1.Panel2.Controls.Add(this.CardView);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(1581, 640);
+            this.splitContainer1.Size = new System.Drawing.Size(1581, 414);
             this.splitContainer1.SplitterDistance = 975;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 0;
@@ -199,7 +199,8 @@
             this.TrackerView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.TrackerView.Name = "TrackerView";
             this.TrackerView.ReadOnly = true;
-            this.TrackerView.Size = new System.Drawing.Size(970, 597);
+            this.TrackerView.RowTemplate.Height = 28;
+            this.TrackerView.Size = new System.Drawing.Size(970, 366);
             this.TrackerView.TabIndex = 0;
             this.TrackerView.SelectionChanged += new System.EventHandler(this.TrackerView_SelectionChanged);
             // 
@@ -207,7 +208,7 @@
             // 
             this.BtnStartReader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnStartReader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnStartReader.Location = new System.Drawing.Point(254, 526);
+            this.BtnStartReader.Location = new System.Drawing.Point(254, 292);
             this.BtnStartReader.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnStartReader.Name = "BtnStartReader";
             this.BtnStartReader.Size = new System.Drawing.Size(111, 105);
@@ -223,7 +224,7 @@
             this.BtnReplace.Enabled = false;
             this.BtnReplace.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnReplace.Image = ((System.Drawing.Image)(resources.GetObject("BtnReplace.Image")));
-            this.BtnReplace.Location = new System.Drawing.Point(441, 526);
+            this.BtnReplace.Location = new System.Drawing.Point(441, 292);
             this.BtnReplace.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnReplace.Name = "BtnReplace";
             this.BtnReplace.Size = new System.Drawing.Size(111, 105);
@@ -238,7 +239,7 @@
             this.BtnNotInField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnNotInField.Enabled = false;
             this.BtnNotInField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnNotInField.Location = new System.Drawing.Point(134, 526);
+            this.BtnNotInField.Location = new System.Drawing.Point(134, 292);
             this.BtnNotInField.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnNotInField.Name = "BtnNotInField";
             this.BtnNotInField.Size = new System.Drawing.Size(111, 105);
@@ -252,7 +253,7 @@
             this.BtnInField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnInField.Enabled = false;
             this.BtnInField.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnInField.Location = new System.Drawing.Point(4, 526);
+            this.BtnInField.Location = new System.Drawing.Point(4, 292);
             this.BtnInField.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnInField.Name = "BtnInField";
             this.BtnInField.Size = new System.Drawing.Size(111, 105);
@@ -276,7 +277,8 @@
             this.CardView.Name = "CardView";
             this.CardView.ReadOnly = true;
             this.CardView.RowHeadersVisible = false;
-            this.CardView.Size = new System.Drawing.Size(544, 469);
+            this.CardView.RowTemplate.Height = 28;
+            this.CardView.Size = new System.Drawing.Size(544, 240);
             this.CardView.TabIndex = 0;
             this.CardView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.CardView_CellPainting);
             // 
@@ -573,7 +575,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1594, 871);
+            this.ClientSize = new System.Drawing.Size(1594, 645);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.PanelGrids);
             this.Controls.Add(this.groupBox1);
@@ -582,7 +584,7 @@
             this.Controls.Add(this.groupBox4);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MinimumSize = new System.Drawing.Size(1608, 900);
+            this.MinimumSize = new System.Drawing.Size(1608, 600);
             this.Name = "FormReg";
             this.Text = "СПА-Карьер: АРМ регистрации";
             this.Load += new System.EventHandler(this.FormReg_Load);
