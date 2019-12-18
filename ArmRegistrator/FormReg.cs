@@ -607,6 +607,7 @@ namespace ArmRegistrator
                         if (frm.ShowDialog(this) != DialogResult.OK) return false;
                     }
                     portName = Properties.Settings.Default.RModemPort;
+                    baudRate = Properties.Settings.Default.RModemBaudRate;
                     if (string.IsNullOrEmpty(portName)) return false;
                 }
                 tryConnect = !_rModuleWrapper.TryConnect(portName, baudRate);
@@ -669,25 +670,20 @@ namespace ArmRegistrator
             
             int activeObjectId = objectId;
             if (!Convert.IsDBNull(row["_ActiveObjectId"])) activeObjectId = Convert.ToInt32(row["_ActiveObjectId"]);
-            
             bool inField = Convert.ToBoolean(row["InField"]);
-            bool toLampMode = true;
-            bool toWorkMode = true;
-            bool sended = true;
+
+            bool connectPresent = !_isNoModem;
+
             bool addEvent = true;
-            if (!_isNoModem)
+
+            if (connectPresent)
             {
                 UInt16 status;
-                Cursor = Cursors.WaitCursor;
-                // TODO: заглушка до выяснения
-                sended = _rModuleWrapper.ObjectGetStatus(out status, activeObjectId);
-                //sended = true;
-
-                Cursor = Cursors.Default;
+                //Cursor = Cursors.WaitCursor;
+                bool sended = _rModuleWrapper.ObjectGetStatus(out status, activeObjectId);
+                
+                //Cursor = Cursors.Default;
                 var statusWord = new PakStatusWord(status);
-                //var statusWord = new PakStatusWord(1039);
-                toLampMode =  !statusWord.LampMode;
-                toWorkMode =  sended && !(statusWord.Error || statusWord.Charge < 9) && statusWord.LampMode;
 
                 if (!inField && (!sended || statusWord.Error || statusWord.Charge < 9))
                 {
@@ -700,33 +696,34 @@ namespace ArmRegistrator
                         if (statusWord.Charge < 9) sb.AppendLine(" - низкий заряд батареи");
                     }
                     MessageBox.Show(sb.ToString(), "Изменение режима", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
                 addEvent = false;
                 if (!sended)
                 {
                     if (!FormHelper.OperatorRiskAgree()) return;
+                    connectPresent = false;
                     addEvent = true;
                 }
             }
 
-            Cursor = Cursors.WaitCursor;
+            //Cursor = Cursors.WaitCursor;
 
-            bool isChanged;
+            
             var stateEventArg = new ObjectChangeStateEventArgs(objectId);
+            bool isChanged;
             if(inField )
             {
-                isChanged=InFieldUnSet(!(_isNoModem || toWorkMode || !sended), addEvent, objectId, activeObjectId);
-                //isChanged = InFieldUnSet(true, addEvent, objectId, activeObjectId);
+                isChanged = InFieldUnSet(connectPresent, addEvent, objectId, activeObjectId);
                 _logic.InvokeOnObjectToLamp(stateEventArg);
             }
             else
             {
-                isChanged=InFieldSet(!(_isNoModem || toLampMode || !sended), addEvent, objectId, activeObjectId);
-                //isChanged = InFieldSet(true, addEvent, objectId, activeObjectId);
+                isChanged = InFieldSet(connectPresent, addEvent, objectId, activeObjectId);
                 _logic.InvokeOnObjectToWork(stateEventArg);
             }
                 
-            Cursor = Cursors.Default;
+            //Cursor = Cursors.Default;
 
             if (isChanged)
             {
@@ -735,35 +732,48 @@ namespace ArmRegistrator
                 
             }
         }
-        private bool InFieldUnSet(bool setLampMode, bool addEvent, int objectId, int trakObjId)
+        private bool InFieldUnSet(bool sendToDevice, bool addEvent, int objectId, int trakObjId)
         {
+            bool isSended = true;
             bool isChanged = true;
-            UInt16 status;
-            if (setLampMode)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    isChanged = _rModuleWrapper.ObjectSendPassiveMode(out status, trakObjId);
-                    if (isChanged) break;
-                }
-                
-            }
-            if(isChanged) _dbWrapper.WriteObjectInFieldState(addEvent, objectId, true);
-            return isChanged;
-        }
-        private bool InFieldSet(bool setWorkMode, bool addEvent, int objectId, int trakObjId)
-        {
-            bool isChanged = true;
-            if (setWorkMode)
+            if (sendToDevice)
             {
                 ushort status=0;
                 for (int i = 0; i < 3; i++)
                 {
-                    isChanged = _rModuleWrapper.ObjectSendWorkMode(out status, trakObjId);
-                    if (isChanged) break;
+                    isSended = _rModuleWrapper.ObjectSendPassiveMode(out status, trakObjId);
+                    if (isSended) break;
                 }
-                
-                isChanged = isChanged && !PakStatusWord.Instance(status).LampMode;
+                bool isWork = !PakStatusWord.Instance(status).LampMode;
+                if (isSended && isWork)
+                {
+                    isSended=_rModuleWrapper.ObjectGetStatus(out status, trakObjId);
+                    isWork = !PakStatusWord.Instance(status).LampMode;
+                }
+                isChanged = isSended && !isWork ;
+            }
+            if(isChanged) _dbWrapper.WriteObjectInFieldState(addEvent, objectId, true);
+            return isChanged;
+        }
+        private bool InFieldSet(bool sendToDevice, bool addEvent, int objectId, int trakObjId)
+        {
+            bool isSended = true;
+            bool isChanged = true;
+            if (sendToDevice)
+            {
+                ushort status=0;
+                for (int i = 0; i < 3; i++)
+                {
+                    isSended = _rModuleWrapper.ObjectSendWorkMode(out status, trakObjId);
+                    if (isSended) break;
+                }
+                bool isLamp = PakStatusWord.Instance(status).LampMode;
+                if(isSended && isLamp)
+                {
+                    isSended = _rModuleWrapper.ObjectGetStatus(out status, trakObjId);
+                    isLamp = (PakStatusWord.Instance(status).LampMode);
+                }
+                isChanged = isSended && !isLamp;
             }
 
             if (isChanged) _dbWrapper.WriteObjectInFieldState(addEvent, objectId, false);
