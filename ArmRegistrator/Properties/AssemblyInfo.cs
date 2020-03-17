@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("АРМ Регистратор")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
+//[assembly: AssemblyCompany("")]
 [assembly: AssemblyCompany("PWDA")]
 [assembly: AssemblyProduct("ArmRegistrator")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]

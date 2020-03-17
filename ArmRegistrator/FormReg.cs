@@ -428,9 +428,9 @@ namespace ArmRegistrator
             var row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
             if (_rModuleWrapper.IsConnected || _isNoModem) ButtonsFieldEnabled((bool)row["InField"]);
 
-            var objectType = (int)row["ObjectTypeId"];
+            var objectTypeId = (int)row["ObjectTypeId"];
 
-            var table = _dbWrapper.DataTableForObjectType(objectType);
+            var table = _dbWrapper.DataTableForObjectType(objectTypeId);
             if(table==null) return;
 
             if (dgvCard.DataSource == null) dgvCard.DataSource = table;
@@ -470,13 +470,17 @@ namespace ArmRegistrator
 
         private void ButtonsFieldEnabled(bool isEnable)
         {
-            BtnInField.Enabled = !isEnable;
-            BtnNotInField.Enabled = isEnable;
+            FormHelper.InvokeButtonEnable(BtnInField, !isEnable);
+            FormHelper.InvokeButtonEnable(BtnNotInField, isEnable);
+            //BtnInField.Enabled = !isEnable;
+            //BtnNotInField.Enabled = isEnable;
         }
         private void ButtonsFieldDisable()
         {
-            BtnInField.Enabled = false;
-            BtnNotInField.Enabled = false;
+            FormHelper.InvokeButtonEnable(BtnInField, false);
+            FormHelper.InvokeButtonEnable(BtnNotInField, false);
+            //BtnInField.Enabled = false;
+            //BtnNotInField.Enabled = false;
         }
 
         private void InputHoursVisibility()

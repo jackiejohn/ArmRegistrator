@@ -152,5 +152,16 @@ namespace ArmRegistrator
                 ctrl.Image = picture;
             }
         }
+        public static void InvokeButtonEnable(Button ctrl, bool enabled)
+        {
+            if (ctrl.InvokeRequired)
+            {
+                ctrl.BeginInvoke(new Action<bool>(flag => { ctrl.Enabled = flag; }), enabled);
+            }
+            else
+            {
+                ctrl.Enabled = enabled;
+            }
+        }
     }
 }
