@@ -152,7 +152,7 @@ namespace ArmRegistrator
         private void TrackerViewPrepare()
         {
             var bsP = new BindingSource(_dbWrapper.Data, DbWrapper.OBJECT_TABLE_NAME);
-            TrackerView.DataSource = bsP;
+            TrackViewSetDataSource(bsP);// TrackerView.DataSource = bsP;
         }
         private void BtnDbConfig_Click(object sender, EventArgs e)
         {
@@ -420,7 +420,7 @@ namespace ArmRegistrator
             if (dgv.CurrentRow == null)
             {
                 ButtonsFieldDisable();
-                dgvCard.DataSource = null;
+                CardViewSetDataSource(null);//dgvCard.DataSource = null;
                 return;
             }
             if (dgv.CurrentRow.Index < 0) return;
@@ -433,8 +433,8 @@ namespace ArmRegistrator
             var table = _dbWrapper.DataTableForObjectType(objectTypeId);
             if(table==null) return;
 
-            if (dgvCard.DataSource == null) dgvCard.DataSource = table;
-            else if (!dgvCard.DataSource.Equals(table)) dgvCard.DataSource = table;
+            if (dgvCard.DataSource == null) CardViewSetDataSource(table);//dgvCard.DataSource = table;
+            else if (!dgvCard.DataSource.Equals(table)) CardViewSetDataSource(table);//dgvCard.DataSource = table;
             DataSetHelper.TransposedTableRefresh(row, table);
         }
 
@@ -481,6 +481,15 @@ namespace ArmRegistrator
             FormHelper.InvokeButtonEnable(BtnNotInField, false);
             //BtnInField.Enabled = false;
             //BtnNotInField.Enabled = false;
+        }
+
+        private void CardViewSetDataSource(object datasource)
+        {
+            FormHelper.InvokeDataGridViewDataSource(CardView,datasource);
+        }
+        private void TrackViewSetDataSource(object datasource)
+        {
+            FormHelper.InvokeDataGridViewDataSource(TrackerView,datasource);
         }
 
         private void InputHoursVisibility()

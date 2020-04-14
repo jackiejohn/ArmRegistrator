@@ -163,5 +163,16 @@ namespace ArmRegistrator
                 ctrl.Enabled = enabled;
             }
         }
+        public static void InvokeDataGridViewDataSource(DataGridView ctrl, object source)
+        {
+            if (ctrl.InvokeRequired)
+            {
+                ctrl.BeginInvoke(new Action<bool>(src => { ctrl.DataSource = src; }), source);
+            }
+            else
+            {
+                ctrl.DataSource = source;
+            }
+        }
     }
 }
